@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = `mongodb+srv://henry-pi:PHC3594LaXa924XZ@henry.yepnpbp.mongodb.net/?retryWrites=true&w=majority`;
+const MONGODB_URI = `mongodb+srv://henry-pi:gNLTLjHr520k99Vz@cluster0.imxmqtn.mongodb.net/?retryWrites=true&w=majority`;
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
