@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
+import * as dotenv from 'dotenv'
 
-const MONGODB_URI = `mongodb+srv://henry-pi:gNLTLjHr520k99Vz@cluster0.imxmqtn.mongodb.net/?retryWrites=true&w=majority`;
+dotenv.config()
+const {
+  DB_USER, DB_PASSWORD, DB_HOST
+} = process.env;
+
+const MONGODB_URI = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/?retryWrites=true&w=majority`;
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,

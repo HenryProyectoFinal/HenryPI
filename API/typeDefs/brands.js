@@ -18,7 +18,8 @@ export const typeDefs = gql`
 
   extend type Query {
     brandCount: Int!,
-    allBrands: [Brand]!
+    allBrands (active: Boolean): [Brand]!
+    findBrand (name: String!): Brand!
   }
 
   extend type Mutation {
@@ -43,13 +44,37 @@ export const resolvers = {
   Query: {
     /*
     * Number of record in the DB
+    *
+    * @return Int
     */
     brandCount: () => Brand.collection.countDocuments(),
     /*
-    * Return all brands
+    * Return all brands, active brand or inactive brand
+    *
+    * @param Boolean active (no required)
+    * @return [Brand]
     */
     allBrands: async (root, args) => {
-      return Brand.find({})
+      if(!args.active) return Brand.find({})
+
+      return Brand.find({ active: args.active })
+    },
+    /*
+    * Find a specific brand
+    *
+    * @param String name
+    * 
+    * @return Brand
+    */
+    findBrand: async (root, args) => {
+      const { name } = args
+      try {
+        return Brand.findOne({ name })
+      }catch(error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args
+        })
+      }
     }
   },
 
