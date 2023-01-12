@@ -1,9 +1,6 @@
 import { createSlice  } from '@reduxjs/toolkit';
 
-export interface CounterState {
-  value: number;
-  status: 'idle' | 'loading' | 'failed';
-}
+
 
 const initialState = {
   cardItems: [],
