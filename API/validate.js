@@ -6,6 +6,7 @@ dotenv.config()
 const { AUTH0_DOMAIN, AUDIENCE } = process.env;
 
 export const verifyToken = async (bearerToken) => {
+  console.log("me ejecuto")
   const client = jwksClient({
     jwksUri: `https://${AUTH0_DOMAIN}/.well-known/jwks.json`
   });
