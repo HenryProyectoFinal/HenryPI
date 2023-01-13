@@ -1,4 +1,4 @@
-import { gql, UserInputError } from "apollo-server"
+import { AuthenticationError, gql, UserInputError } from "apollo-server"
 import Brand from '../models/brand.js'
 
 /*
@@ -15,17 +15,9 @@ import Brand from '../models/brand.js'
 *   (to set a data as required, use !)
 */
 export const typeDefs = gql`
-
-  extend type Query {
-    brandCount: Int!,
-    allBrands (active: Boolean): [Brand]!
-    findBrand (name: String!): Brand!
-  }
-
-  extend type Mutation {
-    createBrand(name: String!): Brand,
-    editBrand(name: String!, id: ID!): Brand,
-    deleteBrand(id: ID!): Boolean
+  enum YesNo {
+    YES
+    NO
   }
 
   type Brand {
@@ -33,12 +25,24 @@ export const typeDefs = gql`
     active: Boolean!
     id: ID!
   }
+
+  extend type Query {
+    brandCount: Int!,
+    allBrands (active: YesNo): [Brand]!
+    findBrand (name: String!): Brand
+  }
+
+  extend type Mutation {
+    createBrand(name: String!): Brand,
+    editBrand(name: String!, id: ID!): Brand,
+    deleteBrand(id: ID!): Boolean
+  }
 `
 
 /*
 * Resolvers:
-*   Estas son las querys y mutaciones que difinimos arriba.
-*   Aqui las definimos y impactamos sobre la DB
+*   These are the queries and mutations that we defined above..
+*   Here we define them and impact on the DB
 */
 export const resolvers = {
   Query: {
@@ -54,10 +58,12 @@ export const resolvers = {
     * @param Boolean active (no required)
     * @return [Brand]
     */
-    allBrands: async (root, args) => {
+    allBrands: async (root, args, { isAuthenticated }) => {
+      if(!isAuthenticated) throw new AuthenticationError('Not authenticated')
+      
       if(!args.active) return Brand.find({})
 
-      return Brand.find({ active: args.active })
+      return Brand.find({ active: args.active === 'YES'})
     },
     /*
     * Find a specific brand
@@ -66,10 +72,17 @@ export const resolvers = {
     * 
     * @return Brand
     */
-    findBrand: async (root, args) => {
+    findBrand: async (root, args, { isAuthenticated }) => {
+      if(!isAuthenticated) throw new AuthenticationError('Not authenticated')
+
       const { name } = args
       try {
-        return Brand.findOne({ name })
+        const brand = Brand.findOne({ name })
+        if(!brand.name){
+          return brand
+        }
+        
+        return 
       }catch(error) {
         throw new UserInputError(error.message, {
           invalidArgs: args
@@ -87,7 +100,9 @@ export const resolvers = {
     * 
     * @return: Brand
     */
-    createBrand: async (root, args) => {
+    createBrand: async (root, args, { isAuthenticated }) => {
+      if(!isAuthenticated) throw new AuthenticationError('Not authenticated')
+      
       const brand = new Brand({...args})
       try {
         await brand.save()
@@ -107,7 +122,9 @@ export const resolvers = {
     *
     * @return Brand
     */
-    editBrand: async (root, args) => {
+    editBrand: async (root, args, { isAuthenticated }) => {
+      if(!isAuthenticated) throw new AuthenticationError('Not authenticated')
+
       const brand = await Brand.findById({_id: args.id})
       if (!brand) return
 
@@ -128,7 +145,9 @@ export const resolvers = {
     * 
     * @return Boolean
     */
-    deleteBrand: async (root, args) => {
+    deleteBrand: async (root, args, { isAuthenticated }) => {
+      if(!isAuthenticated) throw new AuthenticationError('Not authenticated')
+
       const brand = await Brand.findById({_id: args.id})
       if (!brand) return
 
