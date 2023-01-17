@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
-    "typescript-plugin-css-modules": "^4.1.1"
+    "typescript-plugin-css-modules": "^4.1.1",
+    "typings-for-css-modules-loader": "^1.7.0"
   }
 }
