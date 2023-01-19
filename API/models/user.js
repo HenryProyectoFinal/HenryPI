@@ -1,25 +1,21 @@
-const { Schema, model }= require('mongoose');
+const {Schema, model}= require('mongoose')
 
-// const location = require("./location.js");
-// const product = require("./product.js");
-// const cartProduct = require("./cartProduct.js");
-
-const userSchema = new Schema ({
-    firstName: {
+const schema = new Schema ({
+    name: {
         type: String,
         required: true,
-        minlength: 2
+        minlength:5
     },
     lastName: {
         type: String,
         required: true,
-        minlength: 5
+        minlength:5
     },
     userName: {
         type: String,
         required: true,
         unique: true,
-        minlength: 5
+        minlength:5
     },
     email: {
         type: String,
@@ -32,60 +28,70 @@ const userSchema = new Schema ({
         required: true,
         unique: true,
         default: true,
-        minlength: 8
+        minlength:8
     },
-    phoneNumber: {
+    phone: {
         type: String,
         required: true,
         unique: true,
         default: true,
-        minlength: 8
-    },
-    location:{
-        type: Schema.ObjectId,
-        ref: "location",
-        required: true
-        },
-    shoppingCart: {
-        type: [ //Al ser un arreglo, [] es el valor por defecto, por eso no es necesario poner "default"
-            {
-                _id: false, //Evita que se cree un id innecesario para cada objeto (ya se tiene el id del producto)...
-                // unique: true, //No está soportado para arreglos, rompe si se deja...
-                product: {
-                    type: Schema.ObjectId,
-                    ref: "product",
-                    required: true,
-                    // unique: true //No aplica a objetos. Hay que validar que no se repita...
-                },
-                quantity: {
-                    type: Number,
-                    default: 1
-                }
-            },
-        ]
-    },
-    favorites: {
-        type: [
-            {
-                _id: false,
-                // unique: true,
-                product: {
-                    type: Schema.ObjectId,
-                    ref: "product",
-                    required: true,
-                    // unique: true
-                }
-        }
-    ]
+        minlength:8
     },
     active: {
-      type: Boolean,
-      required: true,
-      default: true
-    },
+        type: Boolean,
+        required: true,
+        default: true
+      },
+    location:[
+        {
+            province: {
+                type: String,
+                required: true
+            },
+            address: {
+                type: String,
+                required: true,
+                minlength:5
+            },
+            cyty: {
+                type: String,
+                required: true,
+                minlength:3
+            },
+            cp: {
+                type: Number,
+                required: true,
+                minlength:5
+            }
+        }
+    ],
+    ShoppingCart: [
+        {
+            product:[
+                {
+                    productName: {
+                        type: String,
+                        required: true,
+                    },
+                    description: {
+                        type: String,
+                        required: true,
+                    },
+                    price: {
+                        type: Number,
+                        required: true,
+                    }
+                }
+            ] ,
+            units: {
+                type: Number,
+                required: true,
+            },
+        },
+    ]
 }, {
   timestamps: true
 })
 
 
-module.exports = model('User', userSchema);
+module.exports= model('User', schema)

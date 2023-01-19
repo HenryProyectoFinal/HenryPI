@@ -1,12 +1,12 @@
-const { Schema, model } = require("mongoose");
-// import uniqueValidator from 'mongoose-unique-validator';
+import mongoose from 'mongoose'
+import uniqueValidator from 'mongoose-unique-validator';
 
-const schemaBrand = new Schema({
+const schema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
     unique: true,
-    minlength: 2
+    minlength: 5
   },
   active: {
     type: Boolean,
@@ -17,6 +17,6 @@ const schemaBrand = new Schema({
   timestamps: true
 })
 
-// schema.plugin(uniqueValidator)
+schema.plugin(uniqueValidator)
 
-module.exports = model('Brand', schemaBrand);
+export default mongoose.model('Brand', schema)
