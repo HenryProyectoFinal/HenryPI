@@ -1,10 +1,10 @@
 const { Schema, model } = require("mongoose");
 
 const saleSchema = new Schema({
-  date: { //¿Es necesario si usamos timeStamps?
-    type: Date,
-    required: true
-  },
+  // date: { //¿Es necesario si usamos timeStamps? 
+  //   type: Date,
+  //   required: true
+  // },
   status: {
     type: String,
     enum: ["ordered", "paid", "shipped", "delivered", "claim", "canceled", "closed"],
@@ -67,7 +67,6 @@ const saleSchema = new Schema({
     required: true
   },
   shippingCost: { //tal vez debería ser un arreglo dependiendo del número de productos y su procedencia (sucursal), en tal caso se requeriría un modelo "shipment" para cada envío...
-    type: String,
     type: Number,
     required: true
   },
@@ -81,7 +80,6 @@ const saleSchema = new Schema({
   },
   active: {
     type: Boolean,
-    required: true,
     default: true
   }
 }, {timestamps: true});
