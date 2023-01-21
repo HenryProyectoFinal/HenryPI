@@ -31,45 +31,27 @@ const getAllProducts = async () => {
   return productsDB;
 };
 
-const createProduct = async (name, description, price, images, category, brand, reviews = [], questions = []) => {
+const createProduct = async (name, description, price, images, category, brand) => {
   const newProduct = new Product({
     name,
     description,
     price,
     images,
-    category: Types.ObjectId(category),
+    category: Types.ObjectId(category), //Puede ser un arreglo de categorías...
     brand: Types.ObjectId(brand),
-    reviews: reviews.map(review => {
-      return Types.ObjectId(review);
-    }),
-    questions: questions.map(question => {
-      return Types.ObjectId(question);
-    })
+    //En el estado global se cargan al iniciar categorías y marcas(objetos), el Json que se recibe por body contiene los IDs...
   });
   const savedProduct = await newProduct.save();
   return savedProduct;
 };
 
 const getProduct = async id => {
-  const productDB = await Product.findById(id);
-  if(productDB === null) throw new Error("The product with the provided id could not be found.");
-  const product = {
-    name: productDB.name,
-    description: productDB.description,
-    price: productDB.price,
-    images: productDB.images,
-    category: productDB.category.toString(),
-    brand: productDB.brand.toString(),
-    reviews: productDB.reviews.map(review => {
-      return review.toString();
-    }),
-    questions: productDB.questions.map(question => {
-      return question.toString();
-    }),
-    active: productDB.active,
-    createdAt: productDB.createdAt,
-    updatedAt: productDB.updatedAt
-  };
+  const product = await Product.findById(id)
+  .populate("category")
+  .populate("brand")
+  .populate("reviews")
+  .populate("questions");
+  if(product === null) throw new Error("The product with the provided id could not be found.");
   return product;
 };
 
