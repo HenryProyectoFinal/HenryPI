@@ -78,6 +78,10 @@ const userSchema = new Schema ({
         }
     ]
     },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
     active: {
       type: Boolean,
       required: true,

@@ -47,7 +47,6 @@ productsRouter.put("/product/:id", cors(), async (req, res) => {
   try {
     const { id } = req.params;
     const update = req.body; //Hay que preguntar a los del frontend si están usando Axios o similares...
-    //Recibe active por body, en caso de que el admin quiera hacer un borrado lógico...
     const updatedProduct = await updateProduct(id, update);
     res.json(updatedProduct);
   } catch (error) {
