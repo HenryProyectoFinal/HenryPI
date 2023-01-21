@@ -3,32 +3,13 @@ require("../connection.js");
 const Product = require("../Models/product.js");
 
 const getAllProducts = async () => {
-  const productsDB = await Product.find({})
+  const products = await Product.find({})
   .populate('category', {
     name: 1
   }).populate('brand', {
     name: 1
   });
-  /* const products = productsDB.map(productDB => {
-    return {
-      name: productDB.name,
-      description: productDB.description,
-      price: productDB.price,
-      images: productDB.images,
-      category: productDB.category.toString(),
-      brand: productDB.brand.toString(),
-      reviews: productDB.reviews.map(review => {
-        return review.toString();
-      }),
-      questions: productDB.questions.map(question => {
-        return question.toString();
-      }),
-      active: productDB.active,
-      createdAt: productDB.createdAt,
-      updatedAt: productDB.updatedAt
-    };
-  }); */
-  return productsDB;
+  return products;
 };
 
 const createProduct = async (name, description, price, images, category, brand) => {
@@ -69,40 +50,46 @@ const updateProduct = async (id, update) => {
     questions: update.questions.map(question => {
       return Types.ObjectId(question);
     }),
-    active: update.active
   });
-  const productDB = await Product.findById(id); //Devuelve el producto actualizado...
-  if(productDB === null) throw new Error("The product with the provided id could not be found.");
-  const updatedProduct = {
-    name: productDB.name,
-    description: productDB.description,
-    price: productDB.price,
-    images: productDB.images,
-    category: productDB.category.toString(),
-    brand: productDB.brand.toString(),
-    reviews: productDB.reviews.map(review => {
-      return review.toString();
-    }),
-    questions: productDB.questions.map(question => {
-      return question.toString();
-    }),
-    active: productDB.active,
-    createdAt: productDB.createdAt,
-    updatedAt: productDB.updatedAt
-  };
-  return updatedProduct;
+  const product = await Product.findById(id) //Devuelve el producto actualizado...
+  .populate("category")
+  .populate("brand")
+  .populate("reviews")
+  .populate("questions");
+  if(product === null) throw new Error("The product with the provided id could not be found.");
+  return product;
 };
 
-const deleteProduct = async id => {
-  const productDB = await Product.findById(id);
-  if(productDB === null) throw new Error("The product with the provided id could not be found.");
-  await Product.findByIdAndDelete(id);
+// const deleteProduct = async id => { //Borrado lógico con petición delete
+//   const productDB = await Product.findById(id);
+//   if(productDB === null) throw new Error("The product with the provided id could not be found.");
+//   await Product.findByIdAndUpdate(id, {active: false});
+// };
+
+// const recoverProduct = async id => { //Borrado lógico con petición patch (también lo revierte)
+//   const product = await Product.findById(id);
+//   if(product === null) throw new Error("The product with the provided id could not be found.");
+//   await Product.findByIdAndUpdate(id, {active: true});
+// };
+
+const switchProduct = async (id, active) => { //Borrado lógico con petición patch (también lo revierte)
+  const product = await Product.findById(id);
+  if(product === null) throw new Error("The product with the provided id could not be found.");
+  await Product.findByIdAndUpdate(id, {active: active});
 };
+
+// const deleteProduct = async id => { //Borrado físico
+//   const productDB = await Product.findById(id);
+//   if(productDB === null) throw new Error("The product with the provided id could not be found.");
+//   await Product.findByIdAndDelete(id);
+// };
 
 module.exports = {
   getAllProducts,
   createProduct,
   getProduct,
   updateProduct,
-  deleteProduct
+  // deleteProduct,
+  // recoverProduct,
+  switchProduct
 };

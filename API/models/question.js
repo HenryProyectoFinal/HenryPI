@@ -1,10 +1,12 @@
 const {model, Schema} = require('mongoose');
 
+const User = require("./user.js");
+
 const questionSchema = new Schema( 
   {
       user:{
-          type: Schema.ObjectId,
-          ref: "user"
+          type: Schema.Types.ObjectId,
+          ref: "User"
       },
       description: {
           type: String
