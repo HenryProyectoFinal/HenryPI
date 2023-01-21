@@ -3,8 +3,13 @@ require("../connection.js");
 const Product = require("../Models/product.js");
 
 const getAllProducts = async () => {
-  const productsDB = await Product.find();
-  const products = productsDB.map(productDB => {
+  const productsDB = await Product.find({})
+  .populate('category', {
+    name: 1
+  }).populate('brand', {
+    name: 1
+  });
+  /* const products = productsDB.map(productDB => {
     return {
       name: productDB.name,
       description: productDB.description,
@@ -22,11 +27,11 @@ const getAllProducts = async () => {
       createdAt: productDB.createdAt,
       updatedAt: productDB.updatedAt
     };
-  });
-  return products;
+  }); */
+  return productsDB;
 };
 
-const createProduct = async (name, description, price, images, category, brand, reviews, questions) => {
+const createProduct = async (name, description, price, images, category, brand, reviews = [], questions = []) => {
   const newProduct = new Product({
     name,
     description,

@@ -29,13 +29,13 @@ const productSchema = new Schema(
             required: true
         },
         category:{
-            type: Schema.ObjectId,
-            ref: "category",
+            type: Schema.Types.ObjectId,
+            ref: "Category",
             required: true
         },
         brand:{
-            type: Schema.ObjectId,
-            ref: "brand",
+            type: Schema.Types.ObjectId,
+            ref: "Brand",
             required: true
         },
         reviews:{
