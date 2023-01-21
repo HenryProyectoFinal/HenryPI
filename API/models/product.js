@@ -1,9 +1,7 @@
 const { Schema, model } = require('mongoose');
 
-// const question = require("./question.js");
-// const review = require("./review.js");
-// const category = require("./category.js");
-// const brand = require("./brand.js");
+const Review = require("./review.js"); //Si se borra no funcionará .populate para los arreglos...
+const Question = require("./question.js");
 
 const productSchema = new Schema(
     {
@@ -11,13 +9,13 @@ const productSchema = new Schema(
             type: String,
             required: true,
             unique: true,
-            minLength: 10,
+            minLength: 5,
             maxLength: 50
         },
         description:{
             type: String,
             required: true,
-            minLength: 50,
+            minLength: 5,
             maxLength: 250
         },
         price:{
@@ -39,12 +37,12 @@ const productSchema = new Schema(
             required: true
         },
         reviews:{
-            type: [Schema.ObjectId],
-            ref: "review"
+            type: [Schema.Types.ObjectId],
+            ref: "Review"
         },
         questions:{
-            type: [Schema.ObjectId],
-            ref: "question"
+            type: [Schema.Types.ObjectId],
+            ref: "Question"
         },
         active:{
             type: Boolean,

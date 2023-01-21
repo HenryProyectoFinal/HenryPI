@@ -13,7 +13,7 @@ const categorySchema = new Schema ({
     father:
         {
           type: Schema.ObjectId,
-          ref: "category"
+          ref: "Category"
         },
     active: {
         type: Boolean,
