@@ -3,11 +3,16 @@ const cors = require("cors");
 const { 
   getAllProducts, 
   createProduct, 
-  getProduct, 
+
   updateProduct,
   // deleteProduct,
   // recoverProduct, 
-  switchProduct } = require("../Controllers/products.js");
+  switchProduct,
+  getNameProduct} = require("../Controllers/products.js");
+
+  /*updateProduct, 
+  deleteProduct,
+  getNameProduct } = require("../Controllers/products.js");*/
 
 productsRouter = Router();
 
@@ -24,8 +29,10 @@ productsRouter.get("/products", cors(), async (req, res) => {
 productsRouter.post("/products", cors(), async (req, res) => {
   //Si algún dato no es válido o falta, se lanzan los errores correspondientes. Faltan las funciones validadoras.
   try {
-    const { name, description, price, images, category, brand } = req.body;
-    const newProduct = await createProduct(name, description, price, images, category, brand);
+    const { name, description, price, images, category, brand, reviews, questions } = req.body;
+    const newProduct = await createProduct(
+      name, description, price, images, category, brand, reviews, questions
+    );
     res.status(201).json(newProduct);
   } catch (error) {
     console.log(error);
@@ -47,6 +54,7 @@ productsRouter.put("/product/:id", cors(), async (req, res) => {
   try {
     const { id } = req.params;
     const update = req.body; //Hay que preguntar a los del frontend si están usando Axios o similares...
+    //Recibe active por body, en caso de que el admin quiera hacer un borrado lógico...
     const updatedProduct = await updateProduct(id, update);
     res.json(updatedProduct);
   } catch (error) {
@@ -89,6 +97,7 @@ productsRouter.patch("/product/:id", cors(), async (req, res) => { //Ruta para c
   };
 });
 
+
 // productsRouter.delete("/product/:id", cors(), async (req, res) => { //Ruta para borrado físico
 //   try {
 //     const { id } = req.params;
@@ -99,6 +108,22 @@ productsRouter.patch("/product/:id", cors(), async (req, res) => { //Ruta para c
 //     res.status(404).send(error.message);
 //   };
 // });
+
+//buscar producto por name
+productsRouter.get('/products/search', cors(), async (req, res, next) => {
+  try{
+      const { name } = req.query;
+      if (name) {
+          const product = await getNameProduct(name)
+          return res.json(product)
+      } else {
+          next()
+      }
+  }catch (error) {
+    res.status(404).json(error.message);
+  };
+});
+
 
 const router = Router();
 router.use("/", productsRouter);
