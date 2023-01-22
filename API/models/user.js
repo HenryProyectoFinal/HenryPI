@@ -1,8 +1,7 @@
-const { Schema, model }= require('mongoose');
+const { Schema, model, models }= require('mongoose');
 
-// const location = require("./location.js");
-// const product = require("./product.js");
-// const cartProduct = require("./cartProduct.js");
+const Location = require("./location.js");
+const Product = require("./product.js");
 
 const userSchema = new Schema ({
     firstName: {
@@ -29,22 +28,21 @@ const userSchema = new Schema ({
     },
     password: {
         type: String,
-        required: true,
-        unique: true,
-        default: true,
+        // required: true,
+        // unique: true,
         minlength: 8
     },
     phoneNumber: {
         type: String,
-        required: true,
+        // required: true,
         unique: true,
-        default: true,
+        // default: true,
         minlength: 8
     },
     location:{
-        type: Schema.ObjectId,
-        ref: "location",
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: "Location",
+        // required: true
         },
     shoppingCart: {
         type: [ //Al ser un arreglo, [] es el valor por defecto, por eso no es necesario poner "default"
@@ -52,8 +50,8 @@ const userSchema = new Schema ({
                 _id: false, //Evita que se cree un id innecesario para cada objeto (ya se tiene el id del producto)...
                 // unique: true, //No está soportado para arreglos, rompe si se deja...
                 product: {
-                    type: Schema.ObjectId,
-                    ref: "product",
+                    type: Schema.Types.ObjectId,
+                    ref: "Product",
                     required: true,
                     // unique: true //No aplica a objetos. Hay que validar que no se repita...
                 },
@@ -65,18 +63,8 @@ const userSchema = new Schema ({
         ]
     },
     favorites: {
-        type: [
-            {
-                _id: false,
-                // unique: true,
-                product: {
-                    type: Schema.ObjectId,
-                    ref: "product",
-                    required: true,
-                    // unique: true
-                }
-        }
-    ]
+        type: [Schema.Types.ObjectId],
+        ref: "Product"
     },
     isAdmin: {
         type: Boolean,
@@ -92,4 +80,4 @@ const userSchema = new Schema ({
 })
 
 
-module.exports = model('User', userSchema);
+module.exports = models["User"] || model("User", userSchema);

@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, models } = require("mongoose");
 // import uniqueValidator from 'mongoose-unique-validator';
 
 const reviewSchema = new Schema({
@@ -23,4 +23,4 @@ const reviewSchema = new Schema({
 
 // schema.plugin(uniqueValidator)
 
-module.exports = model('Review', reviewSchema);
+module.exports = models["Review"] || model("Review", reviewSchema);
