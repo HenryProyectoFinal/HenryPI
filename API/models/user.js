@@ -52,8 +52,8 @@ const userSchema = new Schema ({
                 _id: false, //Evita que se cree un id innecesario para cada objeto (ya se tiene el id del producto)...
                 // unique: true, //No está soportado para arreglos, rompe si se deja...
                 product: {
-                    type: Schema.ObjectId,
-                    ref: "product",
+                    type: Schema.Types.ObjectId,
+                    ref: "Product",
                     required: true,
                     // unique: true //No aplica a objetos. Hay que validar que no se repita...
                 },

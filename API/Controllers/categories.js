@@ -1,22 +1,10 @@
 const { Types } = require("mongoose");
-require("../connection.js");
 const Category = require("../Models/category.js");
 
 const getAllCategories = async ()=>{
-    const categoriesDB = await Category.find();
-    const categories = categoriesDB.map(categoryDB => {
-        return {
-            name: categoryDB.name,
-            description: categoryDB.description,
-            father: categoryDB.category.toString(),
-            active: categoryDB.active,
-            createdAt: categoryDB.createdAt,
-            updatedAt: categoryDB.updatedAt
-        };
-    });
+    const categoriesDB = await Category.find({});
 
-    return categories;
-
+    return categoriesDB;
 };
 
 const createCategory = async (name, description, father = null) => {

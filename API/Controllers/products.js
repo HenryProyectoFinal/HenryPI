@@ -5,29 +5,12 @@ const Product = require("../Models/product.js");
 const getAllProducts = async () => {
   const productsDB = await Product.find({})
   .populate('category', {
-    name: 1
+    name: 1,
+    _id: 0
   }).populate('brand', {
-    name: 1
+    name: 1,
+    _id: 0
   });
-  /* const products = productsDB.map(productDB => {
-    return {
-      name: productDB.name,
-      description: productDB.description,
-      price: productDB.price,
-      images: productDB.images,
-      category: productDB.category.toString(),
-      brand: productDB.brand.toString(),
-      reviews: productDB.reviews.map(review => {
-        return review.toString();
-      }),
-      questions: productDB.questions.map(question => {
-        return question.toString();
-      }),
-      active: productDB.active,
-      createdAt: productDB.createdAt,
-      updatedAt: productDB.updatedAt
-    };
-  }); */
   return productsDB;
 };
 
@@ -99,10 +82,31 @@ const deleteProduct = async id => {
   await Product.findByIdAndDelete(id);
 };
 
+//funcion en la busco producto por name
+const getNameProduct = async (name) => {
+  try {
+    const productName = await Product.find({"name": {$regex: name}})
+    .populate("category", {
+      name: 1,
+      _id: 0
+    })
+    .populate('brand', {
+      name: 1,
+      _id: 0
+    })
+    /* .populate('questions') */
+    .populate('reviews')
+    return productName
+  } catch (error) {
+      res.status(400).json(error.message)
+  }
+}
+
 module.exports = {
   getAllProducts,
   createProduct,
   getProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  getNameProduct
 };
