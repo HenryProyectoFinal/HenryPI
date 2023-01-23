@@ -4,8 +4,13 @@ const brandRoute = require("./Routes/brandRoute.js");
 const branchOfficeRoute = require("./Routes/branchOfficeRoute.js");
 const categoryRoute = require("./Routes/categoriesRoute.js");
 const saleRoute = require("./Routes/salesRoute");
-const userRoute = require("./Routes/userRoute");
+
+const usersRoute = require("./Routes/userRoute.js");
+const loginRoute = require("./Routes/loginRoute.js");
+
+
 const locationRoute = require("./Routes/locationRoute");
+
 
 const app = express();
 const port = 3001;
@@ -17,7 +22,8 @@ app.use("/", brandRoute);
 app.use("/", branchOfficeRoute);
 app.use("/", categoryRoute);
 app.use("/", saleRoute);
-app.use("/", userRoute);
+app.use("/", usersRoute);
+app.use("/", loginRoute);
 app.use("/", locationRoute);
 
 app.listen(port, () => {

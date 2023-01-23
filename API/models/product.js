@@ -1,5 +1,7 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, models } = require('mongoose');
 
+const Category = require("./category.js");
+const Brand = require("./brand.js");
 const Review = require("./review.js"); //Si se borra no funcionará .populate para los arreglos...
 const Question = require("./question.js");
 
@@ -54,4 +56,4 @@ const productSchema = new Schema(
         timestamps: true
     }
 )
-module.exports = model('Product', productSchema);
+module.exports = models["Product"] || model("Product", productSchema);

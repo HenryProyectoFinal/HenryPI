@@ -1,10 +1,12 @@
-const {model, Schema} = require('mongoose');
+const {model, Schema, models} = require('mongoose');
+
+const User = require("./user.js");
 
 const questionSchema = new Schema( 
   {
       user:{
-          type: Schema.ObjectId,
-          ref: "user"
+          type: Schema.Types.ObjectId,
+          ref: "User"
       },
       description: {
           type: String
@@ -15,4 +17,4 @@ const questionSchema = new Schema(
       
   }, {timestamps: true});
 
-module.exports = model("Question", questionSchema);
+  module.exports = models["Question"] || model("Question", questionSchema);

@@ -3,10 +3,16 @@ const cors = require("cors");
 const { 
   getAllProducts, 
   createProduct, 
-  getProduct, 
-  updateProduct, 
+
+  updateProduct,
+  // deleteProduct,
+  // recoverProduct, 
+  switchProduct,
+  getNameProduct} = require("../Controllers/products.js");
+
+  /*updateProduct, 
   deleteProduct,
-  getNameProduct } = require("../Controllers/products.js");
+  getNameProduct } = require("../Controllers/products.js");*/
 
 productsRouter = Router();
 
@@ -57,16 +63,51 @@ productsRouter.put("/product/:id", cors(), async (req, res) => {
   };
 });
 
-productsRouter.delete("/product/:id", cors(), async (req, res) => {
+// productsRouter.delete("/product/:id", cors(), async (req, res) => { //Ruta para borrado lógico
+//   try {
+//     const { id } = req.params;
+//     await deleteProduct(id);
+//     return res.status(204).send("Done");
+//   } catch (error) {
+//     console.log(error);
+//     res.status(404).send(error.message);
+//   };
+// });
+
+// productsRouter.patch("/product/:id", cors(), async (req, res) => { //Ruta para revertir borrado lógico
+//   try {
+//     const { id } = req.params;
+//     await recoverProduct(id);
+//     return res.status(204).send("Done");
+//   } catch (error) {
+//     console.log(error);
+//     res.status(404).send(error.message);
+//   };
+// });
+
+productsRouter.patch("/product/:id", cors(), async (req, res) => { //Ruta para cambiar "active" a true o false
   try {
     const { id } = req.params;
-    await deleteProduct(id);
-    res.status(204);
+    const { active } = req.body;
+    await switchProduct(id, active);
+    return res.status(204).send("Done"); //Sin el .send, se queda cargando y la respuesta nunca llega...
   } catch (error) {
     console.log(error);
     res.status(404).send(error.message);
   };
 });
+
+
+// productsRouter.delete("/product/:id", cors(), async (req, res) => { //Ruta para borrado físico
+//   try {
+//     const { id } = req.params;
+//     await deleteProduct(id);
+//     return res.status(204).send("Done");
+//   } catch (error) {
+//     console.log(error);
+//     res.status(404).send(error.message);
+//   };
+// });
 
 //buscar producto por name
 productsRouter.get('/products/search', cors(), async (req, res, next) => {
@@ -82,6 +123,7 @@ productsRouter.get('/products/search', cors(), async (req, res, next) => {
     res.status(404).json(error.message);
   };
 });
+
 
 const router = Router();
 router.use("/", productsRouter);
