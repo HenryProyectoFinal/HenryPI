@@ -1,36 +1,33 @@
-import { ApolloServer } from 'apollo-server'
-import './db.js'
-import { typeDefs, resolvers } from './schema.js'
-import { verifyToken } from './validate.js'
+const express = require("express");
+const productsRoute = require("./Routes/productsRoute.js");
+const brandRoute = require("./Routes/brandRoute.js");
+const branchOfficeRoute = require("./Routes/branchOfficeRoute.js");
+const categoryRoute = require("./Routes/categoriesRoute.js");
+const saleRoute = require("./Routes/salesRoute");
 
-//cargamos los definiciones y los resolvers
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: async ({ req }) => {
-    //const { authorization: token } = req.headers;
-    let isAuthenticated = false;
-    try{
-      const authHeader = req.headers.authorization || ""
+const usersRoute = require("./Routes/userRoute.js");
+const loginRoute = require("./Routes/loginRoute.js");
 
-      if(authHeader) {
-        const token = authHeader.split(" ")[1]
-        const payload = await verifyToken(token)
-        isAuthenticated = payload && payload.sub ? true : false
-      }
-    }catch(error) {
-      console.error(error.message)
-    }
 
-    return { isAuthenticated }    
-  }
-})
+const locationRoute = require("./Routes/locationRoute");
 
-//Iniciamos server de apolo que se va a conectar con MongoDB
-server.listen()
-.then(({url}) => {
-  console.log('Server is runnning on', url)
-})
-.catch((error) => {
-  console.log('Error '. error.message)
-})
+
+const app = express();
+const port = 3001;
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+
+app.use("/", productsRoute);
+app.use("/", brandRoute);
+app.use("/", branchOfficeRoute);
+app.use("/", categoryRoute);
+app.use("/", saleRoute);
+app.use("/", usersRoute);
+app.use("/", loginRoute);
+app.use("/", locationRoute);
+
+app.listen(port, () => {
+  console.log(`Listening at http://localhost:${port}`);
+});
+
+module.exports = app;
