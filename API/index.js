@@ -4,11 +4,9 @@ const brandRoute = require("./Routes/brandRoute.js");
 const branchOfficeRoute = require("./Routes/branchOfficeRoute.js");
 const categoryRoute = require("./Routes/categoriesRoute.js");
 const saleRoute = require("./Routes/salesRoute");
-
 const usersRoute = require("./Routes/userRoute.js");
 const loginRoute = require("./Routes/loginRoute.js");
-
-
+const reviewsRoute = require("./Routes/reviewsRoute.js");
 const locationRoute = require("./Routes/locationRoute");
 
 
@@ -25,6 +23,7 @@ app.use("/", saleRoute);
 app.use("/", usersRoute);
 app.use("/", loginRoute);
 app.use("/", locationRoute);
+app.use("/", reviewsRoute);
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
