@@ -5,9 +5,11 @@ const Product = require("../models/product.js");
 const getAllProducts = async () => {
   const products = await Product.find({})
   .populate('category', {
-    name: 1
+    name: 1,
+    _id: 0
   }).populate('brand', {
-    name: 1
+    name: 1,
+    _id: 0
   });
   return products;
 };
@@ -78,11 +80,33 @@ const switchProduct = async (id, active) => { //Borrado lógico con petición pa
   await Product.findByIdAndUpdate(id, {active: active});
 };
 
+
 // const deleteProduct = async id => { //Borrado físico
 //   const productDB = await Product.findById(id);
 //   if(productDB === null) throw new Error("The product with the provided id could not be found.");
 //   await Product.findByIdAndDelete(id);
 // };
+
+//funcion en la busco producto por name
+const getNameProduct = async (name) => {
+  try {
+    const productName = await Product.find({"name": {$regex: name}})
+    .populate("category", {
+      name: 1,
+      _id: 0
+    })
+    .populate('brand', {
+      name: 1,
+      _id: 0
+    })
+    /* .populate('questions') */
+    .populate('reviews')
+    return productName
+  } catch (error) {
+      res.status(400).json(error.message)
+  }
+}
+
 
 module.exports = {
   getAllProducts,
@@ -91,5 +115,7 @@ module.exports = {
   updateProduct,
   // deleteProduct,
   // recoverProduct,
-  switchProduct
+  switchProduct,
+  // deleteProduct,
+  getNameProduct
 };

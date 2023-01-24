@@ -1,0 +1,37 @@
+Front:
+  - Integrantes:
+    - Nicolas
+    - Santiago
+    - Mateo
+
+  Para el lunes:
+    - Login (Auth0) ❌ -> Trabajando
+    - Home ✅
+    - Listar productos ✅
+    - SearchBar ✅
+    - Filtros ✅
+    - Ordenamientos (logica front) ✅
+    - Paginado ✅
+    - Diferenciador de usuario logueado y no logueado ❌
+      - Favoritos * ✅ (trabaja en localStore, hay que tirarlo a la db del usuario logueado luego)
+    - Uso de localStorage ✅
+    - Armado de pc * ❌
+    - Carrito * ❌
+    - Reviews * ❌
+
+Back:
+  - Integrantes:
+    - Juan Guillermo
+    - Lourdes
+    - Lucas
+    - Matías
+    - Juan Díaz
+
+  Para el lunes:
+    - Ruta login ❌ -> Trabajando Juan
+    - Ruta productos ✅
+    - Ruta de busqueda ✅
+    - Filtros ❌ -> Se hizo en el front por lo menos para el primer sprint
+    - Respuesta diferenciador usuario logueado ❌ -> Trabajando Juan
+
+* Opcional
