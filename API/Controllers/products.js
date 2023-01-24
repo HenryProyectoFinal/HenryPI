@@ -6,9 +6,11 @@ const getAllProducts = async () => {
   const products = await Product.find({})
   .populate('category', {
     name: 1,
+    _id: 0,
     _id: 0
   }).populate('brand', {
     name: 1,
+    _id: 0,
     _id: 0
   });
   return products;
@@ -108,6 +110,27 @@ const getNameProduct = async (name) => {
 }
 
 
+//funcion en la busco producto por name
+const getNameProduct = async (name) => {
+  try {
+    const productName = await Product.find({"name": {$regex: name}})
+    .populate("category", {
+      name: 1,
+      _id: 0
+    })
+    .populate('brand', {
+      name: 1,
+      _id: 0
+    })
+    /* .populate('questions') */
+    .populate('reviews')
+    return productName
+  } catch (error) {
+      res.status(400).json(error.message)
+  }
+}
+
+
 module.exports = {
   getAllProducts,
   createProduct,
@@ -117,5 +140,7 @@ module.exports = {
   // recoverProduct,
   switchProduct,
   // deleteProduct,
+  getNameProduct
+  deleteProduct,
   getNameProduct
 };
