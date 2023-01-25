@@ -1,4 +1,4 @@
-const { Schema, model }= require('mongoose')
+const { Schema, model, models }= require('mongoose')
 
 const categorySchema = new Schema ({
     name: {
@@ -13,7 +13,7 @@ const categorySchema = new Schema ({
     father:
         {
           type: Schema.ObjectId,
-          ref: "category"
+          ref: "Category"
         },
     active: {
         type: Boolean,
@@ -22,4 +22,4 @@ const categorySchema = new Schema ({
     },
 }, {timestamps: true}) //Agregarlo a todos...
 
-module.exports= model('Category', categorySchema)
+module.exports = models["Category"] || model("Category", categorySchema);

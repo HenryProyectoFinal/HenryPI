@@ -1,9 +1,9 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, models } = require('mongoose');
 
-// const question = require("./question.js");
-// const review = require("./review.js");
-// const category = require("./category.js");
-// const brand = require("./brand.js");
+const Category = require("./category.js");
+const Brand = require("./brand.js");
+const Review = require("./review.js"); //Si se borra no funcionará .populate para los arreglos...
+const Question = require("./question.js");
 
 const productSchema = new Schema(
     {
@@ -11,13 +11,13 @@ const productSchema = new Schema(
             type: String,
             required: true,
             unique: true,
-            minLength: 10,
+            minLength: 5,
             maxLength: 50
         },
         description:{
             type: String,
             required: true,
-            minLength: 50,
+            minLength: 5,
             maxLength: 250
         },
         price:{
@@ -29,22 +29,22 @@ const productSchema = new Schema(
             required: true
         },
         category:{
-            type: Schema.ObjectId,
-            ref: "category",
+            type: Schema.Types.ObjectId,
+            ref: "Category",
             required: true
         },
         brand:{
-            type: Schema.ObjectId,
-            ref: "brand",
+            type: Schema.Types.ObjectId,
+            ref: "Brand",
             required: true
         },
         reviews:{
-            type: [Schema.ObjectId],
-            ref: "review"
+            type: [Schema.Types.ObjectId],
+            ref: "Review"
         },
         questions:{
-            type: [Schema.ObjectId],
-            ref: "question"
+            type: [Schema.Types.ObjectId],
+            ref: "Question"
         },
         active:{
             type: Boolean,
@@ -56,4 +56,4 @@ const productSchema = new Schema(
         timestamps: true
     }
 )
-module.exports = model('Product', productSchema);
+module.exports = models["Product"] || model("Product", productSchema);
