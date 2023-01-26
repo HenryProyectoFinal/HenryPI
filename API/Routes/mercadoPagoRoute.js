@@ -5,6 +5,7 @@ const { Router, request } = require("express");
 const mercadopago = require("mercadopago");
 
 mercadopago.configure({
+  sandbox: true,
   access_token: 'TEST-755464907478831-012523-437728e9301c03e9e1a2c87894d46995-3863482'
 });
 
@@ -40,7 +41,8 @@ mercadoPagoRouter.post("/api/pay", async (req, res, next) => {
 
   const response = await mercadopago.preferences.create(preference);
   const preferenceId = response.body.id;
-
+  
+  res.setHeader("Content-Security-Policy", "frame-src 'self' https://www.mercadopago.com.uy/ https://www.mercadopago.com.ar/; frame-ancestors 'self' *.mercadolibre.com");
   res.send(response);
 });
 
