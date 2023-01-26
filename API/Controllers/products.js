@@ -10,6 +10,9 @@ const getAllProducts = async () => {
   }).populate('brand', {
     name: 1,
     _id: 0
+  }).populate('reviews', {
+    review: 1,
+    _id: 0
   });
   return products;
 };
@@ -115,7 +118,7 @@ module.exports = {
   updateProduct,
   // deleteProduct,
   // recoverProduct,
-  switchProduct
-  deleteProduct,
+  switchProduct,
+  //deleteProduct,
   getNameProduct
 };
