@@ -7,7 +7,11 @@ const saleRoute = require("./Routes/salesRoute");
 const usersRoute = require("./Routes/userRoute.js");
 const loginRoute = require("./Routes/loginRoute.js");
 const locationRoute = require("./Routes/locationRoute");
+const reviewsRoute = require("./Routes/reviewsRoute.js");
+const questionsRoute = require("./Routes/questionsRoute.js");
+const claimsRoute = require("./Routes/claimsRoute.js");
 const mercadoPagoRouter = require("./Routes/mercadoPagoRoute");
+
 
 const app = express();
 const port = 3001;
@@ -33,6 +37,9 @@ app.use("/", usersRoute);
 app.use("/", loginRoute);
 app.use("/", locationRoute);
 app.use("/", mercadoPagoRouter);
+app.use("/", reviewsRoute);
+app.use("/", questionsRoute);
+app.use("/", claimsRoute);
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
