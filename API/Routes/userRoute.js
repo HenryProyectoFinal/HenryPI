@@ -1,7 +1,12 @@
 const { Router } = require('express');
-const {getUsers, getUsersId, createUser, deletedUser,updateUsers}= require('../Controllers/user.js')
+const {getUsers, getUsersId, createUser, deletedUser,updateUsers}= require('../Controllers/users.js')
 const router = Router();
-const cors = require("cors");
+const cors = require("cors");     //Prueba para validators
+const {validateNewUser} = require('../Validators/user.js')
+const {validate} = require("../Helpers/validateHelper.js")
+
+
+
 
 //traer todos los usuarios
 router.get('/users',async (req, res) => {
@@ -25,17 +30,7 @@ router.get('/users/:id',async (req, res) => {
 });
 
 // Post crear nuevo usuario
-router.post('/user', cors(), async (req, res) => {
-    try {
-        const { firstName, lastName, userName, phoneNumber, email, password, location } = req.body;
-        const newUser = await createUser(
-            firstName, lastName, userName, phoneNumber, email, password, location
-        )
-        res.status(201).json(newUser);
-    } catch (err) {
-        res.status(404).send(err.message)
-    }
-})
+router.post('/user', cors(), validate(validateNewUser), createUser)
 
 // Delete usuario (borrado lógico de usuario)
 router.delete("/users/:id", async (req, res) => {

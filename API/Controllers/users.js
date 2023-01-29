@@ -33,8 +33,9 @@ const deletedUser= async (id) => {
 
 
 //funcion para crear usuario
-const createUser = async (firstName, lastName, userName, phoneNumber, email, password, location) => {
+const createUser = async (req, res) => {
     try {
+        const { firstName, lastName, userName, phoneNumber, email, password, location } = req.body;
         const createUser = new User({
             firstName,
             lastName,
@@ -46,7 +47,7 @@ const createUser = async (firstName, lastName, userName, phoneNumber, email, pas
             }
         )
         const newUser= await createUser.save()
-        return newUser
+        res.status(201).json(newUser) 
         } catch (error) {
         res.status(400).json(error.message)
     }
@@ -70,7 +71,7 @@ const updateUsers= async (id, update) => {
             )
             const newUser = await User.findById({_id: id}); 
             if(newUser === null) {
-                const updatUser= {
+                const updateUser= {
                     firstName: newUser.firstName,
                     lastName: newUser.lastName,
                     userName:newUser.userName,
@@ -79,10 +80,10 @@ const updateUsers= async (id, update) => {
                     password:newUser.password,
                     location: Types.ObjectId(newUser.location),
                 }
-                return updatUser
+                return updateUser
             }
     } catch (error) {
-    res.status(400).json(error.message)
+        res.status(400).json(error.message)
 }
 }
 
