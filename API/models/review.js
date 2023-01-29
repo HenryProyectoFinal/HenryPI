@@ -1,16 +1,16 @@
 const { Schema, model, models } = require("mongoose");
-// import uniqueValidator from 'mongoose-unique-validator';
 
 const reviewSchema = new Schema({
   description: {
     type: String,
     required: true,
-    minlength: 4
+    minlength: 25,
+    maxlength: 500
   },
   review: {
     type: Number,
     min: 1,
-    max: 5,
+    max: 5
   },
   active: {
     type: Boolean,
@@ -19,8 +19,6 @@ const reviewSchema = new Schema({
   },
 }, {
   timestamps: true
-})
-
-// schema.plugin(uniqueValidator)
+});
 
 module.exports = models["Review"] || model("Review", reviewSchema);

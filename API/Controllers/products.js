@@ -7,9 +7,14 @@ const getAllProducts = async () => {
   const products = await Product.find({})
   .populate('category', {
     name: 1,
+    _id: 0,
     _id: 0
   }).populate('brand', {
     name: 1,
+    _id: 0,
+    _id: 0
+  }).populate('reviews', {
+    review: 1,
     _id: 0
   });
   return products;
@@ -126,7 +131,6 @@ const getNameProduct = async (name) => {
       res.status(400).json(error.message)
   }
 }
-
 
 module.exports = {
   getAllProducts,
