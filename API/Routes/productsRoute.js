@@ -30,6 +30,7 @@ productsRouter.post("/products", cors(), async (req, res) => {
   //Si algún dato no es válido o falta, se lanzan los errores correspondientes. Faltan las funciones validadoras.
   try {
     const { name, description, price, images, category, brand, reviews, questions } = req.body;
+    console.log(name, description, price, images, category, brand);
     const newProduct = await createProduct(
       name, description, price, images, category, brand, reviews, questions
     );
