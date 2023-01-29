@@ -1,5 +1,5 @@
 const { Types } = require("mongoose");
-const User = require("../models/user.js");
+const User = require("../Models/user.js");
 
 //funcion en la que me traigo todos los usurios
 const getUsers= async () => {
@@ -48,7 +48,7 @@ const createUser = async (req, res) => {
         )
         const newUser= await createUser.save()
         res.status(201).json(newUser) 
-        } catch (error) {
+    } catch (error) {
         res.status(400).json(error.message)
     }
 }

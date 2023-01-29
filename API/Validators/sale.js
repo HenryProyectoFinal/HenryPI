@@ -1,6 +1,5 @@
 const { body } = require('express-validator');
-const User = require("../models/user.js");
-const {getUsersId} = require("../Controllers/users")
+const User = require("../Models/user.js");
 
 const validateNewSale = 
     [

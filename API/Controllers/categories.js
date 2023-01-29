@@ -1,5 +1,5 @@
 const { Types } = require("mongoose");
-const Category = require("../models/category.js");
+const Category = require("../Models/category.js");
 
 const getAllCategories = async ()=>{
     const categoriesDB = await Category.find({});

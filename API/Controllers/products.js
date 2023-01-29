@@ -1,6 +1,6 @@
 const { Types } = require("mongoose");
 require("../connection.js");
-const Product = require("../models/product.js");
+const Product = require("../Models/product.js");
 
 const getAllProducts = async () => {
   const products = await Product.find({})
