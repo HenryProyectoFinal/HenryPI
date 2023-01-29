@@ -115,7 +115,6 @@ module.exports = {
   updateProduct,
   // deleteProduct,
   // recoverProduct,
-  switchProduct
-  deleteProduct,
+  switchProduct,
   getNameProduct
 };
