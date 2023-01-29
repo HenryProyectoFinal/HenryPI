@@ -51,11 +51,11 @@ categoryRouter.put("/category/:id", cors(), async (req, res) => {
 
 categoryRouter.delete("/category/:id", cors(), async (req, res) => {
     try {
-      const { id } = req.params;
-      await deleteCategory(id);
-        res.status(204).send('Category deleted succesfully');
+        const { id } = req.params;
+        const category = await deleteCategory(id);
+        res.status(204).send(category);
     } catch (error) {
-          res.status(404).send(error.message);
+        res.status(404).json(error.message);
     };
 });
 
