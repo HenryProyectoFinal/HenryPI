@@ -1,6 +1,7 @@
 const { Types } = require("mongoose");
 require("../connection.js");
 const Product = require("../models/product.js");
+const {uploadImage} = require('../cloudinary/cloudinary.js');
 
 const getAllProducts = async () => {
   const products = await Product.find({})
@@ -14,17 +15,36 @@ const getAllProducts = async () => {
   return products;
 };
 
+// const createProduct = async (name, description, price, images, category, brand) => {
+//   const newProduct = new Product({
+//     name,
+//     description,
+//     price,
+//     images,
+//     category: Types.ObjectId(category), //Puede ser un arreglo de categorías...
+//     brand: Types.ObjectId(brand),
+//     //En el estado global se cargan al iniciar categorías y marcas(objetos), el Json que se recibe por body contiene los IDs...
+//   });
+//   const savedProduct = await newProduct.save();
+//   return savedProduct;
+// };
+
 const createProduct = async (name, description, price, images, category, brand) => {
   const newProduct = new Product({
     name,
     description,
     price,
     images,
-    category: Types.ObjectId(category), //Puede ser un arreglo de categorías...
+    category: Types.ObjectId(category),
     brand: Types.ObjectId(brand),
-    //En el estado global se cargan al iniciar categorías y marcas(objetos), el Json que se recibe por body contiene los IDs...
   });
   const savedProduct = await newProduct.save();
+   console.log('lulu4', images);
+  if (images) {
+      const imageUploaded = await uploadImage(images) 
+      return imageUploaded
+  };
+
   return savedProduct;
 };
 
@@ -115,7 +135,7 @@ module.exports = {
   updateProduct,
   // deleteProduct,
   // recoverProduct,
-  switchProduct
-  deleteProduct,
+  switchProduct,
+  //deleteProduct,
   getNameProduct
 };
