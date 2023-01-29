@@ -1,5 +1,8 @@
-import mongoose from "mongoose";
-import * as dotenv from 'dotenv'
+// import mongoose from "mongoose";
+// import * as dotenv from 'dotenv'
+
+require("dotenv").config()
+const mongoose = require("mongoose")
 
 dotenv.config()
 const {
