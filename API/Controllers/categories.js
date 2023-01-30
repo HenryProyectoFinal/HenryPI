@@ -7,11 +7,11 @@ const getAllCategories = async ()=>{
     return categoriesDB;
 };
 
-const createCategory = async (name, description, father = null) => {
+const createCategory = async (name, description, father) => {
     const newCategory = new Category({
         name,
         description,
-        father
+        father: father || null
     });
     const savedCategory = await newCategory.save();
     return savedCategory;
@@ -51,8 +51,8 @@ const updateCategory = async (id, update) => {
 };
 
 const deleteCategory = async id => {
-    const categoryDB = await Category.findByIdAndUpdate(id, { $set: {'active': false} }, { new: true             });
-    if(categoryDB === null) throw new Error("The category                with the provided id could not be found.");
+    const categoryDB = await Category.findByIdAndUpdate(id, { $set: {'active': false} }, { new: true });
+    if(categoryDB === null) throw new Error("The category with the provided id could not be found.");
 };
 
 module.exports = { getAllCategories, createCategory, getCategoryById, updateCategory, deleteCategory }

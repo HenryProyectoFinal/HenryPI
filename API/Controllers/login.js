@@ -1,4 +1,4 @@
-const User = require("../models/user.js");
+const User = require("../Models/user.js");
 
 const getUserData = async (email, email_verified, family_name, given_name, nickname, picture) => {
   if(!email_verified) throw new Error("The provided email is not verified");
