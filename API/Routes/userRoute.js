@@ -1,5 +1,12 @@
 const { Router } = require('express');
-const {getUsers, getUsersId, createUser, deletedUser,updateUsers}= require('../Controllers/users.js')
+const {
+    checkRequiredPermissions,
+    validateAccessToken} = require("../Auth0/auth0.middleware.js");
+  const {
+    userPermissions,
+    adminPermissions
+  } = require("../Auth0/auth0.permissions.js");
+const {getUsers, getUsersId, createUser, deletedUser, updateUsers}= require('../Controllers/users.js');
 const usersRouter = Router();
 const cors = require("cors");     //Prueba para validators
 const {validateNewUser} = require('../Validators/user.js')
@@ -9,7 +16,11 @@ const {validate} = require("../Helpers/validateHelper.js")
 
 
 //traer todos los usuarios
-usersRouter.get('/users',async (req, res) => {
+usersRouter.get(
+    '/users',
+    validateAccessToken,
+    checkRequiredPermissions([]),
+    async (req, res) => {
     try{
         const users= await getUsers();
         return res.send(users);
@@ -19,7 +30,11 @@ usersRouter.get('/users',async (req, res) => {
 });
 
 //buscar usuario por id
-usersRouter.get('/users/:id',async (req, res) => {
+usersRouter.get(
+    '/users/:id',
+    validateAccessToken,
+    checkRequiredPermissions([]),
+    async (req, res) => {
     const {id}=req.params;
     try{
         const userId= await getUsersId(id);
@@ -31,10 +46,14 @@ usersRouter.get('/users/:id',async (req, res) => {
 
 
 // Post crear nuevo usuario
-usersRouter.post('/user', cors(), validate(validateNewUser), createUser)
+usersRouter.post('/user', cors(), validateAccessToken, checkRequiredPermissions([]), validate(validateNewUser), createUser)
 
 // Delete usuario (borrado lógico de usuario)
-usersRouter.delete("/users/:id", async (req, res) => {
+usersRouter.delete(
+    "/users/:id",
+    validateAccessToken,
+    checkRequiredPermissions([]),
+    async (req, res) => {
     const { id } = req.params;
     try {
         await deletedUser(id);
@@ -45,7 +64,11 @@ usersRouter.delete("/users/:id", async (req, res) => {
 })
 
 //modificar usuario
-usersRouter.put("/users/:id", async (req, res) => {
+usersRouter.put(
+    "/users/:id",
+    validateAccessToken,
+    checkRequiredPermissions([]),
+    async (req, res) => {
     const {id}= req.params;
     const update=req.body;
     try{
