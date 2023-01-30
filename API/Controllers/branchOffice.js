@@ -1,5 +1,5 @@
 const { Types } = require("mongoose");
-const BranchOffice = require("../Models/branchOffice.js");
+const BranchOffice = require("../models/branchOffice.js");
 
 const getAllBranchOffices = async () => {
   const branchOffice = await BranchOffice.find({});

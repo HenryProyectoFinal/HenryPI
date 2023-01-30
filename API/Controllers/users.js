@@ -1,5 +1,5 @@
 const { Types } = require("mongoose");
-const User = require("../Models/user.js");
+const User = require("../models/user.js");
 
 //funcion en la que me traigo todos los usurios
 const getUsers= async () => {
