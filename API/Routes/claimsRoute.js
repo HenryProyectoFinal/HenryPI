@@ -1,5 +1,11 @@
 const { Router } = require("express");
-const cors = require("cors");
+const {
+  checkRequiredPermissions,
+  validateAccessToken} = require("../Auth0/auth0.middleware.js");
+const {
+  userPermissions,
+  adminPermissions
+} = require("../Auth0/auth0.permissions.js");
 const { 
   getAllClaims,
   createClaim,
@@ -9,7 +15,11 @@ const {
 
 claimsRouter = Router();
 
-claimsRouter.get("/claims", cors(), async (req, res) => {
+claimsRouter.get(
+  "/claims",
+  validateAccessToken,
+  checkRequiredPermissions([adminPermissions.claim]),
+  async (req, res) => {
   try {
     const allClaims = await getAllClaims();
     res.json(allClaims);
@@ -18,7 +28,11 @@ claimsRouter.get("/claims", cors(), async (req, res) => {
   };
 });
 
-claimsRouter.post("/claims", cors(), async (req, res) => {
+claimsRouter.post(
+  "/claims",
+  validateAccessToken,
+  checkRequiredPermissions([userPermissions.claim]),
+  async (req, res) => {
   try {
     const { sale, issue, description, user, status, solution } = req.body;
     const newClaim = await createClaim(sale, issue, description, user, status, solution);
@@ -28,7 +42,11 @@ claimsRouter.post("/claims", cors(), async (req, res) => {
   };
 });
 
-claimsRouter.get("/claim/:id", cors(), async (req, res) => {
+claimsRouter.get(
+  "/claim/:id",
+  validateAccessToken,
+  checkRequiredPermissions([userPermissions.claim]),
+  async (req, res) => {
   try {
     const { id } = req.params;
     const claim = await getClaim(id);
@@ -39,7 +57,11 @@ claimsRouter.get("/claim/:id", cors(), async (req, res) => {
   };
 });
 
-claimsRouter.put("/claim/:id", cors(), async(req, res) => {
+claimsRouter.put(
+  "/claim/:id",
+  validateAccessToken,
+  checkRequiredPermissions([adminPermissions.claim]),
+  async(req, res) => {
   try {
     const { id } = req.params;
     const update = req.body;
@@ -51,7 +73,11 @@ claimsRouter.put("/claim/:id", cors(), async(req, res) => {
   };
 });
 
-claimsRouter.patch("/claim/:id", cors(), async(req, res) => {
+claimsRouter.patch(
+  "/claim/:id",
+  validateAccessToken,
+  checkRequiredPermissions([userPermissions.claim]),
+  async(req, res) => {
   try {
     const { id } = req.params;
     const { active } = req.body;
