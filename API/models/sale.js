@@ -60,7 +60,7 @@ const saleSchema = new Schema({
   },
   trackingCode: { //tal vez debería ser un arreglo dependiendo del número de productos y su procedencia (sucursal), en tal caso se requeriría un modelo "shipment" para cada envío...
     type: String,
-    required: true
+    //required: true
   },
   subtotal: { //Suma de los precios de los productos...
     type: Number,

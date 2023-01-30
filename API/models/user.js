@@ -24,19 +24,17 @@ const userSchema = new Schema ({
         type: String,
         required: true,
         unique: true,
-        default: true
+        //default: true
     },
     password: {
         type: String,
-        // required: true,
-        // unique: true,
-        minlength: 8
+        minlength: 8,
+        required: true,
     },
     phoneNumber: {
         type: String,
         // required: true,
         unique: true,
-        // default: true,
         minlength: 8
     },
     location:{
@@ -72,7 +70,7 @@ const userSchema = new Schema ({
     },
     active: {
       type: Boolean,
-      required: true,
+      //required: true,
       default: true
     },
 }, {

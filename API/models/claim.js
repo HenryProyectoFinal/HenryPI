@@ -1,7 +1,5 @@
 const { Schema, model, models } = require('mongoose');
 
-const Sale = require("./sale.js");
-const User = require("./user.js");
 
 const claimSchema = new Schema({
   sale: {

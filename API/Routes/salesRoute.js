@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const cors = require("cors");
 const { getAllSales, createSale, getSaleById, updateSale, deleteSale } = require('../Controllers/sales.js')
+const { validateNewSale } = require("../Validators/sale.js");
+const {validate} = require("../Helpers/validateHelper.js")
 
 saleRouter = Router();
 
@@ -13,29 +15,9 @@ saleRouter.get("/sale", cors(), async (req, res) => {
         return res.status(400).json({ message: error.message })
     };
   });
-  
-saleRouter.post("/sale", cors(), async (req, res) => {
+
+saleRouter.post("/sale", cors(),validate(validateNewSale), createSale);
   //Si algún dato no es válido o falta, se lanzan los errores correspondientes. Faltan las funciones validadoras.
-    try {
-        const { status, claim, products, user, location, paymentMethod, trackingCode, subtotal, shippingCost, taxes, total } = req.body;
-        const newSale = await createSale(
-            status,
-            claim, 
-            products, 
-            user, 
-            location,
-            paymentMethod, 
-            trackingCode, 
-            subtotal, 
-            shippingCost, 
-            taxes, 
-            total
-        );
-        res.status(201).json(newSale);
-    } catch (error) {
-        console.log(error);
-    };
-});
 
 saleRouter.get("/sale/:id", cors(), async (req, res) => {
     try {
