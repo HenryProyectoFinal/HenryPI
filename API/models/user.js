@@ -24,25 +24,24 @@ const userSchema = new Schema ({
         type: String,
         required: true,
         unique: true,
-        default: true
+        //default: true
     },
-    password: {
-        type: String,
-        // required: true,
-        // unique: true,
-        minlength: 8
-    },
+    // password: {
+    //     type: String,
+    //     // required: true,
+    //     // unique: true,
+    //     minlength: 8
+    // },
     phoneNumber: {
         type: String,
-        // required: true,
+        required: true,
         unique: true,
-        // default: true,
         minlength: 8
     },
     location:{
         type: Schema.Types.ObjectId,
         ref: "Location",
-        // required: true
+        required: true
         },
     shoppingCart: {
         type: [ //Al ser un arreglo, [] es el valor por defecto, por eso no es necesario poner "default"
@@ -72,7 +71,6 @@ const userSchema = new Schema ({
     },
     active: {
       type: Boolean,
-      required: true,
       default: true
     },
 }, {

@@ -11,11 +11,11 @@ const getAllCategories = async ()=>{
     return categoriesDB;
 };
 
-const createCategory = async (name, description, father = null) => {
+const createCategory = async (name, description, father) => {
     const newCategory = new Category({
         name,
         description,
-        father
+        father: father || null
     });
     const savedCategory = await newCategory.save();
     return savedCategory;

@@ -1,5 +1,4 @@
-const mongoose = require("mongoose")
-const Location = require("../models/location")
+const Location = require("../Models/location")
 
 //funcion en la que me traigo todas las locations
 const getLocations= async () => {

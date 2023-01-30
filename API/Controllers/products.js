@@ -20,37 +20,27 @@ const getAllProducts = async () => {
   return products;
 };
 
-// const createProduct = async (name, description, price, images, category, brand) => {
-//   const newProduct = new Product({
-//     name,
-//     description,
-//     price,
-//     images,
-//     category: Types.ObjectId(category), //Puede ser un arreglo de categorías...
-//     brand: Types.ObjectId(brand),
-//     //En el estado global se cargan al iniciar categorías y marcas(objetos), el Json que se recibe por body contiene los IDs...
-//   });
-//   const savedProduct = await newProduct.save();
-//   return savedProduct;
-// };
-
-const createProduct = async (name, description, price, images, category, brand) => {
-  const newProduct = new Product({
-    name,
-    description,
-    price,
-    images,
-    category: Types.ObjectId(category),
-    brand: Types.ObjectId(brand),
-  });
-  const savedProduct = await newProduct.save();
-   console.log('lulu4', images);
-  if (images) {
+const createProduct = async (req, res) => {
+  try {
+    const { name, description, price, images, category, brand } = req.body;
+    const newProduct = new Product({
+      name,
+      description,
+      price,
+      images,
+      category: Types.ObjectId(category), //Puede ser un arreglo de categorías...
+      brand: Types.ObjectId(brand),
+      //En el estado global se cargan al iniciar categorías y marcas(objetos), el Json que se recibe por body contiene los IDs...
+    });
+    const savedProduct = await newProduct.save();
+     if (images) {
       const imageUploaded = await uploadImage(images) 
       return imageUploaded
   };
-
-  return savedProduct;
+    res.status(201).json(savedProduct);
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
 };
 
 const getProduct = async id => {
@@ -87,11 +77,11 @@ const updateProduct = async (id, update) => {
   return product;
 };
 
-// const deleteProduct = async id => { //Borrado lógico con petición delete
-//   const productDB = await Product.findById(id);
-//   if(productDB === null) throw new Error("The product with the provided id could not be found.");
-//   await Product.findByIdAndUpdate(id, {active: false});
-// };
+const deleteProduct = async id => { //Borrado lógico con petición delete
+  const productDB = await Product.findById(id);
+  if(productDB === null) throw new Error("The product with the provided id could not be found.");
+  await Product.findByIdAndUpdate(id, {active: false});
+};
 
 // const recoverProduct = async id => { //Borrado lógico con petición patch (también lo revierte)
 //   const product = await Product.findById(id);
