@@ -1,5 +1,11 @@
 const { Router } = require("express");
-const cors = require("cors");
+const {
+  checkRequiredPermissions,
+  validateAccessToken} = require("../Auth0/auth0.middleware.js");
+const {
+  userPermissions,
+  adminPermissions
+} = require("../Auth0/auth0.permissions.js");
 const { 
   getAllProducts, 
   createProduct, 
@@ -16,7 +22,9 @@ const {
 
 productsRouter = Router();
 
-productsRouter.get("/products", cors(), async (req, res) => {
+productsRouter.get(
+  "/products",
+  async (req, res) => {
   //Si no hay productos en la BD, devuelve un arreglo vacío. NO es un error...
   try {
     const allProducts = await getAllProducts();
@@ -26,7 +34,11 @@ productsRouter.get("/products", cors(), async (req, res) => {
   };
 });
 
-productsRouter.post("/products", cors(), async (req, res) => {
+productsRouter.post(
+  "/products",
+  validateAccessToken,
+  checkRequiredPermissions([adminPermissions.product]),
+  async (req, res) => {
   //Si algún dato no es válido o falta, se lanzan los errores correspondientes. Faltan las funciones validadoras.
   try {
     const { name, description, price, images, category, brand, reviews, questions } = req.body;
@@ -39,7 +51,9 @@ productsRouter.post("/products", cors(), async (req, res) => {
   };
 });
 
-productsRouter.get("/product/:id", cors(), async (req, res) => {
+productsRouter.get(
+  "/product/:id",
+  async (req, res) => {
   try {
     const { id } = req.params;
     const product = await getProduct(id);
@@ -50,7 +64,11 @@ productsRouter.get("/product/:id", cors(), async (req, res) => {
   };
 });
 
-productsRouter.put("/product/:id", cors(), async (req, res) => {
+productsRouter.put(
+  "/product/:id",
+  validateAccessToken,
+  checkRequiredPermissions([adminPermissions.product]),
+  async (req, res) => {
   try {
     const { id } = req.params;
     const update = req.body; //Hay que preguntar a los del frontend si están usando Axios o similares...
@@ -85,7 +103,11 @@ productsRouter.put("/product/:id", cors(), async (req, res) => {
 //   };
 // });
 
-productsRouter.patch("/product/:id", cors(), async (req, res) => { //Ruta para cambiar "active" a true o false
+productsRouter.patch(
+  "/product/:id",
+  validateAccessToken,
+  checkRequiredPermissions([adminPermissions.product]),
+  async (req, res) => { //Ruta para cambiar "active" a true o false
   try {
     const { id } = req.params;
     const { active } = req.body;
@@ -110,7 +132,9 @@ productsRouter.patch("/product/:id", cors(), async (req, res) => { //Ruta para c
 // });
 
 //buscar producto por name
-productsRouter.get('/products/search', cors(), async (req, res, next) => {
+productsRouter.get(
+  '/products/search',
+  async (req, res, next) => {
   try{
       const { name } = req.query;
       if (name) {

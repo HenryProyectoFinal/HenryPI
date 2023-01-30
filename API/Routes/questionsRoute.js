@@ -1,5 +1,11 @@
 const { Router } = require("express");
-const cors = require("cors");
+const {
+  checkRequiredPermissions,
+  validateAccessToken} = require("../Auth0/auth0.middleware.js");
+const {
+  userPermissions,
+  adminPermissions
+} = require("../Auth0/auth0.permissions.js");
 const { 
   getAllQuestions,
   createQuestion,
@@ -9,7 +15,9 @@ const {
 
 questionsRouter = Router();
 
-questionsRouter.get("/questions", cors(), async (req, res) => {
+questionsRouter.get(
+  "/questions",
+  async (req, res) => {
   try {
     const allQuestions = await getAllQuestions();
     res.json(allQuestions);
@@ -18,7 +26,11 @@ questionsRouter.get("/questions", cors(), async (req, res) => {
   };
 });
 
-questionsRouter.post("/questions", cors(), async (req, res) => {
+questionsRouter.post(
+  "/questions",
+  validateAccessToken,
+  checkRequiredPermissions([userPermissions.question]),
+  async (req, res) => {
   try {
     const { user, question } = req.body; //"user" es el id del usuario
     const newQuestion = await createQuestion(user, question);
@@ -28,7 +40,11 @@ questionsRouter.post("/questions", cors(), async (req, res) => {
   };
 });
 
-questionsRouter.get("/question/:id", cors(), async (req, res) => {
+questionsRouter.get(
+  "/question/:id",
+  validateAccessToken,
+  checkRequiredPermissions([userPermissions.question]),
+  async (req, res) => {
   try {
     const { id } = req.params;
     const question = await getQuestion(id);
@@ -39,7 +55,11 @@ questionsRouter.get("/question/:id", cors(), async (req, res) => {
   };
 });
 
-questionsRouter.put("/question/:id", cors(), async(req, res) => {
+questionsRouter.put(
+  "/question/:id",
+  validateAccessToken,
+  checkRequiredPermissions([adminPermissions.question]),
+  async(req, res) => {
   try {
     const { id } = req.params;
     const update = req.body;
@@ -51,7 +71,11 @@ questionsRouter.put("/question/:id", cors(), async(req, res) => {
   };
 });
 
-questionsRouter.patch("/question/:id", cors(), async(req, res) => {
+questionsRouter.patch(
+  "/question/:id",
+  validateAccessToken,
+  checkRequiredPermissions([adminPermissions.question]),
+  async(req, res) => {
   try {
     const { id } = req.params;
     const { active } = req.body;
