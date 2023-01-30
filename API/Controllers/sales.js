@@ -1,6 +1,6 @@
 const { Types } = require("mongoose");
 require("../connection.js");
-const Sale = require("../Models/sale.js");
+const Sale = require("../models/sale.js");
 
 const getAllSales = async ()=>{
     try {
