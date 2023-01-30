@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const cors = require("cors");
 const {
   checkRequiredPermissions,
   validateAccessToken} = require("../Auth0/auth0.middleware.js");
@@ -15,10 +16,9 @@ const {
   // recoverProduct, 
   switchProduct,
   getNameProduct} = require("../Controllers/products.js");
+const {validateNewProduct} = require("../Validators/product.js")
+const {validate} = require("../Helpers/validateHelper.js")
 
-  /*updateProduct, 
-  deleteProduct,
-  getNameProduct } = require("../Controllers/products.js");*/
 
 productsRouter = Router();
 
@@ -34,22 +34,8 @@ productsRouter.get(
   };
 });
 
-productsRouter.post(
-  "/products",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.product]),
-  async (req, res) => {
+productsRouter.post("/products", cors(), validateAccessToken, checkRequiredPermissions([adminPermissions.product]), validate(validateNewProduct), createProduct)
   //Si algún dato no es válido o falta, se lanzan los errores correspondientes. Faltan las funciones validadoras.
-  try {
-    const { name, description, price, images, category, brand, reviews, questions } = req.body;
-    const newProduct = await createProduct(
-      name, description, price, images, category, brand, reviews, questions
-    );
-    res.status(201).json(newProduct);
-  } catch (error) {
-    console.log(error);
-  };
-});
 
 productsRouter.get(
   "/product/:id",

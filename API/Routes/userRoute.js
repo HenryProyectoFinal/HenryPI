@@ -8,6 +8,12 @@ const {
   } = require("../Auth0/auth0.permissions.js");
 const {getUsers, getUsersId, createUser, deletedUser, updateUsers}= require('../Controllers/users.js');
 const usersRouter = Router();
+const cors = require("cors");     //Prueba para validators
+const {validateNewUser} = require('../Validators/user.js')
+const {validate} = require("../Helpers/validateHelper.js")
+
+
+
 
 //traer todos los usuarios
 usersRouter.get(
@@ -40,21 +46,7 @@ usersRouter.get(
 
 
 // Post crear nuevo usuario
-usersRouter.post(
-    '/user',
-    validateAccessToken,
-    checkRequiredPermissions([]),
-    async (req, res) => {
-    try {
-        const { firstName, lastName, userName, phoneNumber, email, password, location } = req.body;
-        const newUser = await createUser(
-            firstName, lastName, userName, phoneNumber, email, password, location
-        )
-        res.status(201).json(newUser);
-    } catch (err) {
-        res.status(404).send(err.message)
-    }
-})
+usersRouter.post('/user', cors(), validateAccessToken, checkRequiredPermissions([]), validate(validateNewUser), createUser)
 
 // Delete usuario (borrado lógico de usuario)
 usersRouter.delete(
