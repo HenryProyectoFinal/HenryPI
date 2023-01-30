@@ -1,14 +1,20 @@
 const { Types } = require("mongoose");
 require("../connection.js");
-const Product = require("../Models/product.js");
+const Product = require("../models/product.js");
+const {uploadImage} = require('../cloudinary/cloudinary.js');
 
 const getAllProducts = async () => {
   const products = await Product.find({})
   .populate('category', {
     name: 1,
+    _id: 0,
     _id: 0
   }).populate('brand', {
     name: 1,
+    _id: 0,
+    _id: 0
+  }).populate('reviews', {
+    review: 1,
     _id: 0
   });
   return products;
@@ -27,6 +33,10 @@ const createProduct = async (req, res) => {
       //En el estado global se cargan al iniciar categorías y marcas(objetos), el Json que se recibe por body contiene los IDs...
     });
     const savedProduct = await newProduct.save();
+     if (images) {
+      const imageUploaded = await uploadImage(images) 
+      return imageUploaded
+  };
     res.status(201).json(savedProduct);
   } catch (error) {
     res.status(404).send(error.message);
@@ -112,7 +122,6 @@ const getNameProduct = async (name) => {
   }
 }
 
-
 module.exports = {
   getAllProducts,
   createProduct,
@@ -121,6 +130,6 @@ module.exports = {
   // deleteProduct,
   // recoverProduct,
   switchProduct,
-  deleteProduct,
+  //deleteProduct,
   getNameProduct
 };

@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const {getUsers, getUsersId, createUser, deletedUser,updateUsers}= require('../Controllers/users.js')
-const router = Router();
+const usersRouter = Router();
 const cors = require("cors");     //Prueba para validators
 const {validateNewUser} = require('../Validators/user.js')
 const {validate} = require("../Helpers/validateHelper.js")
@@ -9,7 +9,7 @@ const {validate} = require("../Helpers/validateHelper.js")
 
 
 //traer todos los usuarios
-router.get('/users',async (req, res) => {
+usersRouter.get('/users',async (req, res) => {
     try{
         const users= await getUsers();
         return res.send(users);
@@ -19,7 +19,7 @@ router.get('/users',async (req, res) => {
 });
 
 //buscar usuario por id
-router.get('/users/:id',async (req, res) => {
+usersRouter.get('/users/:id',async (req, res) => {
     const {id}=req.params;
     try{
         const userId= await getUsersId(id);
@@ -29,11 +29,12 @@ router.get('/users/:id',async (req, res) => {
     };
 });
 
+
 // Post crear nuevo usuario
-router.post('/user', cors(), validate(validateNewUser), createUser)
+usersRouter.post('/user', cors(), validate(validateNewUser), createUser)
 
 // Delete usuario (borrado lógico de usuario)
-router.delete("/users/:id", async (req, res) => {
+usersRouter.delete("/users/:id", async (req, res) => {
     const { id } = req.params;
     try {
         await deletedUser(id);
@@ -44,7 +45,7 @@ router.delete("/users/:id", async (req, res) => {
 })
 
 //modificar usuario
-router.put("/users/:id", async (req, res) => {
+usersRouter.put("/users/:id", async (req, res) => {
     const {id}= req.params;
     const update=req.body;
     try{
@@ -54,5 +55,8 @@ router.put("/users/:id", async (req, res) => {
         res.status(404).json(err.message);
     }
 })
+
+const router = Router();
+router.use("/", usersRouter);
 
 module.exports = router;
