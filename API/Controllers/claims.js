@@ -1,4 +1,4 @@
-const Claim = require("../Models/claim.js");
+const Claim = require("../models/claim.js");
 
 const getAllClaims = async () => {
   const claims = await Claim.find()

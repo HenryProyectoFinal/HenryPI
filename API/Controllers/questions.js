@@ -1,4 +1,4 @@
-const Question = require("../Models/question.js");
+const Question = require("../models/question.js");
 
 const getAllQuestions = async () => {
   const questions = await Question.find()

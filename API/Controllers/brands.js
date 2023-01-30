@@ -1,5 +1,5 @@
 const { Types } = require("mongoose");
-const Brand = require("../Models/brand.js");
+const Brand = require("../models/brand.js");
 
 const getAllBrands = async () => {
   const brands = await Brand.find({});
