@@ -1,5 +1,5 @@
 const { body } = require('express-validator');
-const user = require("../Models/user.js");
+const user = require("../models/user.js");
 
 
 
