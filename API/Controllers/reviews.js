@@ -1,4 +1,4 @@
-const Review = require("../models/review.js");
+const Review = require("../Models/review.js");
 
 const getAllReviews = async () => {
   const reviews = await Review.find();
