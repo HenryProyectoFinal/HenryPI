@@ -6,7 +6,7 @@ const mercadopago = require("mercadopago");
 
 mercadopago.configure({
   sandbox: true,
-  access_token: 'TEST-755464907478831-012523-437728e9301c03e9e1a2c87894d46995-3863482'
+  access_token: 'TEST-4568191331731835-012500-0e00faf39ed94415d18c606bc4bf9f57-1294898135' ///'TEST-755464907478831-012523-437728e9301c03e9e1a2c87894d46995-3863482'
 });
 
 const mercadoPagoRouter = express.Router();
@@ -21,9 +21,9 @@ mercadoPagoRouter.post("/api/pay", async (req, res, next) => {
   let preference = {
     items: [],
     back_urls: {
-      "success": "http://localhost:3000/feedback",
-      "failure": "http://localhost:3000/feedback",
-      "pending": "http://localhost:3000/feedback"
+      "success": "http://localhost:3000/cart",
+      "failure": "http://localhost:3000/cart",
+      "pending": "http://localhost:3000/cart"
     },
     auto_return: 'approved'
   }
@@ -46,7 +46,7 @@ mercadoPagoRouter.post("/api/pay", async (req, res, next) => {
   res.send(response);
 });
 
-mercadoPagoRouter.get('/feedback', function(req, res){
+mercadoPagoRouter.get('/cart', function(req, res){
   res.json({
     Payment: req.query.payment_id,
     Status: req.query.status,
