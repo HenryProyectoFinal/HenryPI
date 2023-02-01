@@ -36,6 +36,7 @@ productsRouter.get("/products", async (req, res) => {
 productsRouter.post(
   "/products",
   cors(),
+  // ;
   // validateAccessToken,
   // checkRequiredPermissions([adminPermissions.product]),
   validate(validateNewProduct),
