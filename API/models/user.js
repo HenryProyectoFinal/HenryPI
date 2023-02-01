@@ -26,12 +26,6 @@ const userSchema = new Schema ({
         unique: true,
         //default: true
     },
-    // password: {
-    //     type: String,
-    //     // required: true,
-    //     // unique: true,
-    //     minlength: 8
-    // },
     phoneNumber: {
         type: String,
         required: true,

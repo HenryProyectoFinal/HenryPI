@@ -35,14 +35,13 @@ const deletedUser= async (id) => {
 //funcion para crear usuario
 const createUser = async (req, res) => {
     try {
-        const { firstName, lastName, userName, phoneNumber, email, password, location } = req.body;
+        const { firstName, lastName, userName, phoneNumber, email, location } = req.body;
         const createUser = new User({
             firstName,
             lastName,
             userName,
             phoneNumber,
             email,
-            password,
             location: Types.ObjectId(location),
             }
         )

@@ -46,7 +46,7 @@ usersRouter.get(
 
 
 // Post crear nuevo usuario
-usersRouter.post('/user', cors(), validateAccessToken, checkRequiredPermissions([]), validate(validateNewUser), createUser)
+usersRouter.post('/user', validateAccessToken, validate(validateNewUser), createUser)
 
 // Delete usuario (borrado lógico de usuario)
 usersRouter.delete(
