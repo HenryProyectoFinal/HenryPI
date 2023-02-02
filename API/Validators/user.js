@@ -16,11 +16,7 @@ const validateNewUser =
                 })
             })
             .isLength({min: 5})
-            .withMessage('must be at least 5 chars long'),
-
-        body('password')
-            .isLength({min: 8})
-            .withMessage('must be at least 8 chars long'),        
+            .withMessage('must be at least 5 chars long'),      
         body('email')
             .isEmail()
             .normalizeEmail()
