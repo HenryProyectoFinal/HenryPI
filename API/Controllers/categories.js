@@ -36,22 +36,10 @@ const getCategoryById = async id => {
 };
 
 const updateCategory = async (id, update) => {
-    await Category.findByIdAndUpdate(id, { //Devuelve el categoryo sin actualizar...
-      name: update.name,
-      description: update.description,
-      father: Types.ObjectId(update.father)
-    });
-    const categoryDB = await Category.findById(id); //Devuelve el categoryo actualizado...
-    if(categoryDB === null) throw new Error("The category with the provided id could not be found.");
-    const updatedCategory = {
-      name: categoryDB.name,
-      description: categoryDB.description,
-      father: categoryDB.father.toString(),
-      active: categoryDB.active,
-      createdAt: categoryDB.createdAt,
-      updatedAt: categoryDB.updatedAt
-    };
-    return updatedCategory;
+    const category = await Category.findByIdAndUpdate(id, { $set: update }, { new: true })
+    if(category === null) throw new Error("The branch office with the provided id could not be found.");
+
+    return category;
 };
 
 const deleteCategory = async id => {
