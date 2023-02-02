@@ -34,8 +34,8 @@ brandRouter.get(
 
 brandRouter.post(
     "/brands",
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.brand]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.brand]),
     async (req, res, next) => {
     try {
         const newBrand = await createBrand(req.body);
@@ -49,8 +49,8 @@ brandRouter.post(
 
 brandRouter.put(
     "/brands",
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.brand]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.brand]),
     async (req, res, next) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /brands');
