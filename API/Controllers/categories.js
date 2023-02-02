@@ -22,7 +22,7 @@ const getCategoryById = async id => {
     const category = {
         name: categoryDB.name,
         description: categoryDB.description,
-        father: categoryDB.category.toString(),
+        father: categoryDB.category?.toString(),
         active: categoryDB.active,
         createdAt: categoryDB.createdAt,
         updatedAt: categoryDB.updatedAt
