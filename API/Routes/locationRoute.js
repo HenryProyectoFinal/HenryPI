@@ -68,7 +68,9 @@ router.post(
         )
         res.status(201).json(newLocation)
     } catch (err) {
-        res.status(404).send(err.message)
+        console.log(err);
+        // res.status(404).send(err.message)
+        //Confunde que siempre mande un 404, el error puede ser de otra naturaleza.
     }
 })
 

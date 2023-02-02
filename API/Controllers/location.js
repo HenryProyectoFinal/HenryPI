@@ -33,7 +33,7 @@ const createLocation= async (address, province, city, zip) => {
             return newLocation
         
     } catch (error) {
-        res.status(400).json(error.message)
+        console.log(error);
     }
 }
 
