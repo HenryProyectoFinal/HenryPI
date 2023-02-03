@@ -28,8 +28,8 @@ questionsRouter.get(
 
 questionsRouter.post(
   "/questions",
-  validateAccessToken,
-  checkRequiredPermissions([userPermissions.question]),
+  // validateAccessToken,
+  // checkRequiredPermissions([userPermissions.question]),
   async (req, res) => {
   try {
     const { user, question } = req.body; //"user" es el id del usuario
@@ -42,8 +42,8 @@ questionsRouter.post(
 
 questionsRouter.get(
   "/question/:id",
-  validateAccessToken,
-  checkRequiredPermissions([userPermissions.question]),
+  // validateAccessToken,
+  // checkRequiredPermissions([userPermissions.question]),
   async (req, res) => {
   try {
     const { id } = req.params;
@@ -57,8 +57,8 @@ questionsRouter.get(
 
 questionsRouter.put(
   "/question/:id",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.question]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.question]),
   async(req, res) => {
   try {
     const { id } = req.params;
@@ -73,8 +73,8 @@ questionsRouter.put(
 
 questionsRouter.patch(
   "/question/:id",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.question]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.question]),
   async(req, res) => {
   try {
     const { id } = req.params;

@@ -14,8 +14,8 @@ saleRouter = Router();
 
 saleRouter.get(
     "/sale",
-    validateAccessToken,
-    checkRequiredPermissions([]),
+    // validateAccessToken,
+    // checkRequiredPermissions([]),
     async (req, res) => {
     //Si no hay productos en la BD, devuelve un arreglo vacío. NO es un error...
     try {
@@ -26,13 +26,18 @@ saleRouter.get(
     };
   });
 
-saleRouter.post("/sale", cors(), validateAccessToken, checkRequiredPermissions([]), validate(validateNewSale), createSale);
+saleRouter.post("/sale", 
+    cors(), 
+    // validateAccessToken, 
+    // checkRequiredPermissions([]), 
+    validate(validateNewSale), 
+    createSale);
   //Si algún dato no es válido o falta, se lanzan los errores correspondientes. Faltan las funciones validadoras.
 
 saleRouter.get(
     "/sale/:id",
-    validateAccessToken,
-    checkRequiredPermissions([]),
+    // validateAccessToken,
+    // checkRequiredPermissions([]),
     async (req, res) => {
     try {
         const { id } = req.params;
@@ -45,8 +50,8 @@ saleRouter.get(
 
 saleRouter.put(
     "/sale/:id",
-    validateAccessToken,
-    checkRequiredPermissions([]),
+    // validateAccessToken,
+    // checkRequiredPermissions([]),
     async (req, res) => {
     try {
         const { id } = req.params;
@@ -61,8 +66,8 @@ saleRouter.put(
 
 saleRouter.delete(
     "/sale/:id",
-    validateAccessToken,
-    checkRequiredPermissions([]),
+    // validateAccessToken,
+    // checkRequiredPermissions([]),
     async (req, res) => {
     try {
         const { id } = req.params;

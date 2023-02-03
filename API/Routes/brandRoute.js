@@ -80,8 +80,8 @@ brandRouter.get(
 
 brandRouter.post(
     "/brands/:brandId",
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.brand]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.brand]),
     async (req, res, next) => {
     res.statusCode = 403;
     res.end('POST operation not supported on /brands/' + req.params.brandId);
@@ -89,8 +89,8 @@ brandRouter.post(
 
 brandRouter.put(
     "/brands/:brandId",
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.brand]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.brand]),
     async (req, res, next) => {
     try {
         const { brandId } = req.params;
