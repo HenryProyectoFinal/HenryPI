@@ -18,8 +18,8 @@ const {validate} = require("../Helpers/validateHelper.js")
 //traer todos los usuarios
 usersRouter.get(
     '/users',
-    validateAccessToken,
-    checkRequiredPermissions([]),
+    // validateAccessToken,
+    // checkRequiredPermissions([]),
     async (req, res) => {
     try{
         const users= await getUsers();
@@ -32,8 +32,8 @@ usersRouter.get(
 //buscar usuario por id
 usersRouter.get(
     '/users/:id',
-    validateAccessToken,
-    checkRequiredPermissions([]),
+    // validateAccessToken,
+    // checkRequiredPermissions([]),
     async (req, res) => {
     const {id}=req.params;
     try{
@@ -51,8 +51,8 @@ usersRouter.post('/user', validateAccessToken, validate(validateNewUser), create
 // Delete usuario (borrado lógico de usuario)
 usersRouter.delete(
     "/users/:id",
-    validateAccessToken,
-    checkRequiredPermissions([]),
+    // validateAccessToken,
+    // checkRequiredPermissions([]),
     async (req, res) => {
     const { id } = req.params;
     try {
@@ -66,8 +66,8 @@ usersRouter.delete(
 //modificar usuario
 usersRouter.put(
     "/users/:id",
-    validateAccessToken,
-    checkRequiredPermissions([]),
+    // validateAccessToken,
+    // checkRequiredPermissions([]),
     async (req, res) => {
     const {id}= req.params;
     const update=req.body;

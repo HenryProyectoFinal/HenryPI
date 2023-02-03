@@ -34,7 +34,12 @@ productsRouter.get(
   };
 });
 
-productsRouter.post("/products", cors(), validateAccessToken, checkRequiredPermissions([adminPermissions.product]), validate(validateNewProduct), createProduct)
+productsRouter.post("/products",
+  cors(),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.product]),
+  validate(validateNewProduct),
+  createProduct)
   //Si algún dato no es válido o falta, se lanzan los errores correspondientes. Faltan las funciones validadoras.
 
 productsRouter.get(
@@ -52,8 +57,8 @@ productsRouter.get(
 
 productsRouter.put(
   "/product/:id",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.product]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.product]),
   async (req, res) => {
   try {
     const { id } = req.params;
@@ -91,8 +96,8 @@ productsRouter.put(
 
 productsRouter.patch(
   "/product/:id",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.product]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.product]),
   async (req, res) => { //Ruta para cambiar "active" a true o false
   try {
     const { id } = req.params;

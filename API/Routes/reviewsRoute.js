@@ -16,8 +16,8 @@ reviewsRouter = Router();
 
 reviewsRouter.get(
   "/reviews",
-  validateAccessToken,
-  checkRequiredPermissions([]),
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
   async (req, res) => {
   try {
     const allReviews = await getAllReviews();
@@ -29,8 +29,8 @@ reviewsRouter.get(
 
 reviewsRouter.post(
   "/reviews",
-  validateAccessToken,
-  checkRequiredPermissions([]),
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
   async (req, res) => {
   try {
     const { description, review } = req.body;
@@ -43,8 +43,8 @@ reviewsRouter.post(
 
 reviewsRouter.get(
   "/review/:id",
-  validateAccessToken,
-  checkRequiredPermissions([]),
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
   async (req, res) => {
   try {
     const { id } = req.params;
@@ -58,8 +58,8 @@ reviewsRouter.get(
 
 reviewsRouter.put(
   "/review/:id",
-  validateAccessToken,
-  checkRequiredPermissions([]),
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
   async(req, res) => {
   try {
     const { id } = req.params;
@@ -74,8 +74,8 @@ reviewsRouter.put(
 
 reviewsRouter.patch(
   "/review/:id",
-  validateAccessToken,
-  checkRequiredPermissions([]),
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
   async(req, res) => {
   try {
     const { id } = req.params;

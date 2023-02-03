@@ -16,6 +16,10 @@ const getAllProducts = async () => {
   }).populate('reviews', {
     review: 1,
     _id: 0
+  }).populate('questions', {
+    question: 1,
+    answer:1,
+    _id: 0
   });
   return products;
 };
@@ -48,7 +52,11 @@ const getProduct = async id => {
   .populate("category")
   .populate("brand")
   .populate("reviews")
-  .populate("questions");
+  .populate("questions",{
+    question: 1,
+    answer: 1,
+    _id: 0
+  });
   if(product === null) throw new Error("The product with the provided id could not be found.");
   return product;
 };
@@ -114,7 +122,11 @@ const getNameProduct = async (name) => {
       name: 1,
       _id: 0
     })
-    /* .populate('questions') */
+    .populate("questions",{
+      question: 1,
+      answer: 1,
+      _id: 0
+    })
     .populate('reviews')
     return productName
   } catch (error) {
