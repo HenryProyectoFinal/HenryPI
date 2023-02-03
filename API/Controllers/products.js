@@ -19,6 +19,11 @@ const getAllProducts = async () => {
   return products;
 };
 
+const allProducts = async () => {
+  const products = await Product.find({})
+  .populate('category')
+  return products;
+};
 const createProduct = async (name, description, price, images, category, brand) => {
   const newProduct = new Product({
     name,
@@ -114,6 +119,7 @@ const getNameProduct = async (name) => {
 
 module.exports = {
   getAllProducts,
+  allProducts,
   createProduct,
   getProduct,
   updateProduct,
