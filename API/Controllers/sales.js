@@ -1,71 +1,87 @@
 const { Types } = require("mongoose");
 require("../connection.js");
-const Category = require("../Models/category.js");
+const Sale = require("../models/sale.js");
 
-const getAllCategories = async ()=>{
+const getAllSales = async ()=>{
+    try {
+        const sales = await Sale.find()
+            return sales
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+};
 
-    const categoriesDB = await Category.find();
-    const categories = categoriesDB.map(categoryDB => {
-        return {
-            name: categoryDB.name,
-            description: categoryDB.description,
-            father: categoryDB.category.toString(),
-            active: categoryDB.active,
-            createdAt: categoryDB.createdAt,
-            updatedAt: categoryDB.updatedAt
-        };
-    });
+const createSale = async (req, res) => {
+    try {
 
-    return categories;
+        const { products, user, location, paymentMethod, trackingCode, subtotal, shippingCost, taxes, total } = req.body;
+        const sale = new Sale({
+            products,
+            user,
+            location,
+            paymentMethod,
+            trackingCode,
+            subtotal,
+            shippingCost,
+            taxes,
+            total,
+        });
+
+        const newSale = await sale.save()
+        res.status(201).json({ msg: "Sale saved", newSale });
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+};
+
+const getSaleById = async (id) => {
+    try {
+        const saleId = await Sale.findOne({_id: id}).exec()
+            return saleId;
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
 
 };
 
-const createCategory = async (name, description, father) => {
-    const newCategory = new Category({
-        name,
-        description,
-        father
-    });
-    const savedCategory = await newCategory.save();
-    return savedCategory;
-  };
-
-const getCategoryById = async id => {
-    const categoryDB = await Category.findById(id);
-    if(categoryDB === null) throw new Error("The category with the provided id could not be found.");
-    const category = {
-        name: categoryDB.name,
-        description: categoryDB.description,
-        father: categoryDB.category.toString(),
-        active: categoryDB.active,
-        createdAt: categoryDB.createdAt,
-        updatedAt: categoryDB.updatedAt
-    };
-    return category;
+const updateSale = async (id, update) => {
+    try {
+        await Sale.findByIdAndUpdate({_id: id},
+            {
+                status: update.status,
+                products: update.products,
+                user: Types.ObjectId(update.user),
+                location: Types.ObjectId(update.location),
+                paymentMethod: update.paymentMethod,
+                trackingCode: update.trackingCode,
+                subtotal: update.subtotal,
+                shippingCost: update.shippingCost,
+                taxes: update.taxes,
+                total: update.total,
+            })
+            const newSale = await Sale.findById({_id: id}); //Devuelve el categoryo actualizado...
+            if(newSale === null) throw new Error("The category with the provided id could not be found.");
+            const updatedSale = {
+                status: newSale.status,
+                products: newSale.products.toString(),
+                user: newSale.father.toString(),
+                location: newSale.location.toString(),
+                paymentMethod: newSale.paymentMethod,
+                trackingCode: newSale.trackingCode,
+                subtotal: newSale.subtotal,
+                shippingCost: newSale.shippingCost,
+                taxes: newSale.taxes,
+                total: newSale.total
+            };
+        return updatedSale;     
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
 };
 
-const updateCategory = async (id, update) => {
-    await Category.findByIdAndUpdate(id, { //Devuelve el categoryo sin actualizar...
-      name: update.name,
-      description: update.description,
-      father: Types.ObjectId(update.father)
-    });
-    const categoryDB = await Category.findById(id); //Devuelve el categoryo actualizado...
-    if(categoryDB === null) throw new Error("The category with the provided id could not be found.");
-    const updatedCategory = {
-      name: categoryDB.name,
-      description: categoryDB.description,
-      father: categoryDB.father.toString(),
-      active: categoryDB.active,
-      createdAt: categoryDB.createdAt,
-      updatedAt: categoryDB.updatedAt
-    };
-    return updatedCategory;
+const deleteSale = async (id) => {
+    const sale = await Sale.findByIdAndUpdate(id, { $set: {'active': false} }, { new: true             });
+    if(sale === null) throw new Error("The sale with the provided id could not be found.");
 };
 
-const deleteCategory = async id => {
-    const categoryDB = await Category.findByIdAndUpdate(id, { $set: {'active': false} }, { new: true             });
-    if(categoryDB === null) throw new Error("The category                with the provided id could not be found.");
-};
-
-module.exports = { getAllCategories, createCategory, getCategoryById, updateCategory, deleteCategory }
+module.exports = { getAllSales, createSale, getSaleById, updateSale, deleteSale }

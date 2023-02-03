@@ -5,8 +5,8 @@ require("./connection.js");
 // const location = require("./models/location.js");
 // const user = require("./models/user.js");
 // const cartProduct = require("./models/cartProduct.js");
-// const category = require("./models/category.js");
-// const brand = require("./models/brand.js");
+ const category = require("./models/category.js");
+ const brand = require("./models/brand.js");
 // const product = require("./models/product.js");
 // const claim = require("./models/claim.js");
 // const question = require("./models/question.js");
@@ -66,22 +66,22 @@ const sale = require("./models/sale.js");
 //   console.log(savedUser);
 // };
 
-// const createCategory = async () => {
-//   const newCategory = new category({
-//     name: "Laptop",
-//     description: "XXXXX XXXXX XXXXXX",
-//   });
-//   const savedCategory = await newCategory.save();
-//   console.log(savedCategory);
-// };
+const createCategory = async () => {
+  const newCategory = new category({
+    name: "Motherboards",
+    description: "The motherboard, also known as a motherboard, motherboard, or main board, is a printed circuit card to which the components that make up the computer are connected. It is a fundamental part to mount any desktop or laptop personal computer or some device.",
+  });
+  const savedCategory = await newCategory.save();
+  console.log(savedCategory);
+};
 
-// const createBrand = async () => {
-//   const newBrand = new brand({
-//     name: "Dell"
-//   });
-//   const savedBrand = await newBrand.save();
-//   console.log(savedBrand);
-// };
+const createBrand = async () => {
+  const newBrand = new brand({
+    name: "DeepCool"
+  });
+  const savedBrand = await newBrand.save();
+  console.log(savedBrand);
+};
 
 // const createProduct = async () => {
 //   const newProduct = new product({
@@ -151,4 +151,4 @@ const createSale = async () => {
   console.log(savedSale);
 };
 
-createSale();
+createCategory();
