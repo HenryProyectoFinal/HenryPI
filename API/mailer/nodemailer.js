@@ -52,7 +52,13 @@ const mandarEmail= async (email) => {
     <h2>Bienvenido a AllTech</h2>
     <p>Somos un ecommerce dedicado a la tecnogia. En donde te brindamos una gran variedad de productos.</p>
     <p>GRACIAS POR SER PARTE DE NUESTRA COMUNIDAD</p>
-    <P style="margin-bottom: 20px;"><i>Atentamente:</i><br> Equipo AllTech</P>
+    <div style="display: flex; padding: 20px 10px 20px 10px; ">
+      <div style=" padding: 10px 0px 10px 0px; width: 100%; text-align: center;">
+        <img src="https://res.cloudinary.com/dy5msftwe/image/upload/v1675628467/Products/AllTech_ft12pq.png" alt="" style="width: 300px;" />
+        <p > Cualquie consulta <br>comunicate con nosotros <br>desde nuestra pagina <br> o por whatsapp. <br> TE ESPERAMOS </p>
+      </div>
+    </div>
+    <P style="margin-bottom: 10px;"><i>Atentamente:</i><br> Equipo AllTech</P>
     <a style="background-color: gray; border: 2px solid gray; color: black; padding: 16px 32px; text-align: center; text-decoration: none; font-weight: bold; display: inline-block; font-size: 16px; margin: 4px 2px;
     transition-duration: 0.4s; cursor: pointer;" href="https://client-zodieth.vercel.app/">AllTech</a>
     <div style="background-color: rgb(36, 36, 36); color: #e3e3e3; padding: 5px 0px 0px 0px; width: 100%; text-align: center;">
