@@ -1,5 +1,8 @@
 const { Types } = require("mongoose");
 const User = require("../models/user.js");
+const nodemailer= require('nodemailer')
+const {mandarEmail} =require('../mailer/nodemailer.js')
+
 
 //funcion en la que me traigo todos los usurios
 const getUsers= async () => {
@@ -33,21 +36,22 @@ const deletedUser= async (id) => {
 
 
 //funcion para crear usuario
-const createUser = async (firstName, lastName, userName, phoneNumber, email, password, location) => {
+const createUser = async (req, res) => {
     try {
+        const { firstName, lastName, userName, phoneNumber, email, location } = req.body;
         const createUser = new User({
             firstName,
             lastName,
             userName,
             phoneNumber,
             email,
-            password,
             location: Types.ObjectId(location),
             }
         )
+        mandarEmail(email)
         const newUser= await createUser.save()
-        return newUser
-        } catch (error) {
+        res.status(201).json(newUser) 
+    } catch (error) {
         res.status(400).json(error.message)
     }
 }
@@ -70,7 +74,7 @@ const updateUsers= async (id, update) => {
             )
             const newUser = await User.findById({_id: id}); 
             if(newUser === null) {
-                const updatUser= {
+                const updateUser= {
                     firstName: newUser.firstName,
                     lastName: newUser.lastName,
                     userName:newUser.userName,
@@ -79,10 +83,10 @@ const updateUsers= async (id, update) => {
                     password:newUser.password,
                     location: Types.ObjectId(newUser.location),
                 }
-                return updatUser
+                return updateUser
             }
     } catch (error) {
-    res.status(400).json(error.message)
+        res.status(400).json(error.message)
 }
 }
 

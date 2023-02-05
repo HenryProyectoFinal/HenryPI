@@ -1,6 +1,7 @@
 const { Types } = require("mongoose");
 require("../connection.js");
 const Product = require("../models/product.js");
+const {uploadImage} = require('../cloudinary/cloudinary.js');
 
 const getAllProducts = async () => {
   const products = await Product.find({})
@@ -15,27 +16,35 @@ const getAllProducts = async () => {
   }).populate('reviews', {
     review: 1,
     _id: 0
+  }).populate('questions', {
+    question: 1,
+    answer:1,
+    _id: 0
   });
   return products;
 };
 
-const allProducts = async () => {
-  const products = await Product.find({})
-  .populate('category')
-  return products;
-};
-const createProduct = async (name, description, price, images, category, brand) => {
-  const newProduct = new Product({
-    name,
-    description,
-    price,
-    images,
-    category: Types.ObjectId(category), //Puede ser un arreglo de categorías...
-    brand: Types.ObjectId(brand),
-    //En el estado global se cargan al iniciar categorías y marcas(objetos), el Json que se recibe por body contiene los IDs...
-  });
-  const savedProduct = await newProduct.save();
-  return savedProduct;
+const createProduct = async (req, res) => {
+  try {
+    const { name, description, price, images, category, brand } = req.body;
+    const newProduct = new Product({
+      name,
+      description,
+      price,
+      images,
+      category: Types.ObjectId(category), //Puede ser un arreglo de categorías...
+      brand: Types.ObjectId(brand),
+      //En el estado global se cargan al iniciar categorías y marcas(objetos), el Json que se recibe por body contiene los IDs...
+    });
+    const savedProduct = await newProduct.save();
+     if (images) {
+      const imageUploaded = await uploadImage(images) 
+      return imageUploaded
+  };
+    res.status(201).json(savedProduct);
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
 };
 
 const getProduct = async id => {
@@ -43,7 +52,11 @@ const getProduct = async id => {
   .populate("category")
   .populate("brand")
   .populate("reviews")
-  .populate("questions");
+  .populate("questions",{
+    question: 1,
+    answer: 1,
+    _id: 0
+  });
   if(product === null) throw new Error("The product with the provided id could not be found.");
   return product;
 };
@@ -72,11 +85,11 @@ const updateProduct = async (id, update) => {
   return product;
 };
 
-// const deleteProduct = async id => { //Borrado lógico con petición delete
-//   const productDB = await Product.findById(id);
-//   if(productDB === null) throw new Error("The product with the provided id could not be found.");
-//   await Product.findByIdAndUpdate(id, {active: false});
-// };
+const deleteProduct = async id => { //Borrado lógico con petición delete
+  const productDB = await Product.findById(id);
+  if(productDB === null) throw new Error("The product with the provided id could not be found.");
+  await Product.findByIdAndUpdate(id, {active: false});
+};
 
 // const recoverProduct = async id => { //Borrado lógico con petición patch (también lo revierte)
 //   const product = await Product.findById(id);
@@ -109,7 +122,11 @@ const getNameProduct = async (name) => {
       name: 1,
       _id: 0
     })
-    /* .populate('questions') */
+    .populate("questions",{
+      question: 1,
+      answer: 1,
+      _id: 0
+    })
     .populate('reviews')
     return productName
   } catch (error) {
@@ -119,11 +136,13 @@ const getNameProduct = async (name) => {
 
 module.exports = {
   getAllProducts,
-  allProducts,
+  // allProducts,
   createProduct,
   getProduct,
   updateProduct,
+  // deleteProduct,
+  // recoverProduct,
   switchProduct,
-  getNameProduct,
+  //deleteProduct,
   getNameProduct
 };

@@ -10,11 +10,10 @@ const categorySchema = new Schema ({
         type: String,
         required: true,
     },
-    father:
-        {
-          type: Schema.ObjectId,
-          ref: "Category"
-        },
+    father: {
+        type: Schema.ObjectId,
+        ref: "Category"
+    },
     active: {
         type: Boolean,
         required: true,

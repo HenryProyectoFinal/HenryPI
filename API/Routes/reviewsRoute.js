@@ -1,5 +1,10 @@
 const { Router } = require("express");
-const cors = require("cors");
+const {
+  checkRequiredPermissions,
+  validateAccessToken} = require("../Auth0/auth0.middleware.js");
+const {
+
+} = require("../Auth0/auth0.permissions.js");
 const { 
   getAllReviews,
   createReview,
@@ -9,7 +14,11 @@ const {
 
 reviewsRouter = Router();
 
-reviewsRouter.get("/reviews", cors(), async (req, res) => {
+reviewsRouter.get(
+  "/reviews",
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
+  async (req, res) => {
   try {
     const allReviews = await getAllReviews();
     res.json(allReviews);
@@ -18,7 +27,11 @@ reviewsRouter.get("/reviews", cors(), async (req, res) => {
   };
 });
 
-reviewsRouter.post("/reviews", cors(), async (req, res) => {
+reviewsRouter.post(
+  "/reviews",
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
+  async (req, res) => {
   try {
     const { description, review } = req.body;
     const newReview = await createReview(description, review);
@@ -28,7 +41,11 @@ reviewsRouter.post("/reviews", cors(), async (req, res) => {
   };
 });
 
-reviewsRouter.get("/review/:id", cors(), async (req, res) => {
+reviewsRouter.get(
+  "/review/:id",
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
+  async (req, res) => {
   try {
     const { id } = req.params;
     const review = await getReview(id);
@@ -39,7 +56,11 @@ reviewsRouter.get("/review/:id", cors(), async (req, res) => {
   };
 });
 
-reviewsRouter.put("/review/:id", cors(), async(req, res) => {
+reviewsRouter.put(
+  "/review/:id",
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
+  async(req, res) => {
   try {
     const { id } = req.params;
     const update = req.body;
@@ -51,7 +72,11 @@ reviewsRouter.put("/review/:id", cors(), async(req, res) => {
   };
 });
 
-reviewsRouter.patch("/review/:id", cors(), async(req, res) => {
+reviewsRouter.patch(
+  "/review/:id",
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
+  async(req, res) => {
   try {
     const { id } = req.params;
     const { active } = req.body;

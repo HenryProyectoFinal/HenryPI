@@ -1,10 +1,21 @@
 const { Router } = require('express');
+const {
+    checkRequiredPermissions,
+    validateAccessToken} = require("../Auth0/auth0.middleware.js");
+  const {
+    userPermissions,
+    adminPermissions
+  } = require("../Auth0/auth0.permissions.js");
 const {getLocations, createLocation, getLocationsId, updateLocations, deletedLocation }= require('../Controllers/location.js')
 
 const router = Router();
 
 //traer todos los location
-router.get('/location',async (req, res) => {
+router.get(
+    '/location',
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.location]),
+    async (req, res) => {
     try{
         const allLocation= await getLocations()
         return res.send(allLocation);
@@ -14,7 +25,11 @@ router.get('/location',async (req, res) => {
 });
 
 //buscar location por id
-router.get('/location/:id',async (req, res) => {
+router.get(
+    '/location/:id',
+    // validateAccessToken,
+    // checkRequiredPermissions([userPermissions.location]),
+    async (req, res) => {
     const {id}=req.params
     try{
         const locationId= await getLocationsId(id)
@@ -26,7 +41,11 @@ router.get('/location/:id',async (req, res) => {
 
 
 // Delete location
-router.delete("/location/:id", async (req, res) => {
+router.delete(
+    "/location/:id",
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.location]),
+    async (req, res) => {
     const { id } = req.params
     try {
         await deletedLocation(id)
@@ -37,7 +56,11 @@ router.delete("/location/:id", async (req, res) => {
 })
 
 // Post crear nueva Location
-router.post('/location', async (req, res) => {
+router.post(
+    '/location',
+    // validateAccessToken,
+    // checkRequiredPermissions([userPermissions.location]),
+    async (req, res) => {
     const {address, province, city, zip} = req.body
     try {
         const newLocation = await createLocation(
@@ -45,12 +68,18 @@ router.post('/location', async (req, res) => {
         )
         res.status(201).json(newLocation)
     } catch (err) {
-        res.status(404).send(err.message)
+        console.log(err);
+        // res.status(404).send(err.message)
+        //Confunde que siempre mande un 404, el error puede ser de otra naturaleza.
     }
 })
 
 //modificar usuario
-router.put("/location/:id", async (req, res) => {
+router.put(
+    "/location/:id",
+    // validateAccessToken,
+    // checkRequiredPermissions([userPermissions.location]),
+    async (req, res) => {
     const { id }= req.params;
     const update= req.body;
     try{
