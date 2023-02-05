@@ -3,10 +3,11 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 const { Router, request } = require("express");
 const mercadopago = require("mercadopago");
+const axios = require('axios');
 
 mercadopago.configure({
   sandbox: true,
-  access_token: 'TEST-4568191331731835-012500-0e00faf39ed94415d18c606bc4bf9f57-1294898135'
+  access_token: 'TEST-4568191331731835-012500-0e00faf39ed94415d18c606bc4bf9f57-1294898135' ///'TEST-755464907478831-012523-437728e9301c03e9e1a2c87894d46995-3863482'
 });
 
 const mercadoPagoRouter = express.Router();
@@ -15,27 +16,32 @@ mercadoPagoRouter.use(bodyParser.json());
 
 mercadoPagoRouter.post("/api/pay", async (req, res, next) => {
   const productos = req.body;
-  //const productsCopy = await 
-  
+  //const productsCopy = await
+
   let error = false;
   let preference = {
     items: [],
     back_urls: {
-      "success": "http://localhost:3000/cart",
-      "failure": "http://localhost:3000/cart",
-      "pending": "http://localhost:3000/cart"
+      success: "http://localhost:3000/cart",
+      failure: "http://localhost:3000/cart",
+      pending: "http://localhost:3000/cart",
     },
-    auto_return: 'approved'
-  }
+    auto_return: "approved",
+  };
+
+  const dolarBlue = await axios
+    .get("https://api.bluelytics.com.ar/v2/latest")
+    .then((data) => data.data.blue.value_avg);
 
   productos.map((producto) => {
     //Buscamos el producto y chequeamos el stock con un if
+
     preference.items.push({
       title: producto.name,
-      unit_price: producto.price,
-      quantity: producto.count
+      unit_price: producto.price * dolarBlue,
+      quantity: producto.count,
     });
-  })
+  });
 
   if(error) res.send("Sin stock").status(400);
 
