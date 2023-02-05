@@ -136,6 +136,7 @@ const getNameProduct = async (name) => {
 
 module.exports = {
   getAllProducts,
+  // allProducts,
   createProduct,
   getProduct,
   updateProduct,

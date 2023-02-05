@@ -7,7 +7,7 @@ const axios = require('axios');
 
 mercadopago.configure({
   sandbox: true,
-  access_token: 'TEST-4568191331731835-012500-0e00faf39ed94415d18c606bc4bf9f57-1294898135' ///'TEST-755464907478831-012523-437728e9301c03e9e1a2c87894d46995-3863482'
+  access_token: 'TEST-4568191331731835-012500-0e00faf39ed94415d18c606bc4bf9f57-1294898135'
 });
 
 const mercadoPagoRouter = express.Router();
