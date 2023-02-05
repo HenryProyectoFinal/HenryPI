@@ -48,8 +48,8 @@ const mandarEmail= async (email) => {
     <img src="cid:logo2" alt="" style="width: 300px; height: 70px;">
     </div>
   </div>
-  <div style="background-color: #e3e3e3; padding: 20px 0px 5px 0px; text-align: center;">
-    <h1>Bienvenido a AllTech</h1>
+  <div style="background-color: #e3e3e3; margin-top: 0px; padding: 20px 0px 5px 0px; text-align: center;">
+    <h2>Bienvenido a AllTech</h2>
     <p>Somos un ecommerce dedicado a la tecnogia. En donde te brindamos una gran variedad de productos.</p>
     <p>GRACIAS POR SER PARTE DE NUESTRA COMUNIDAD</p>
     <div style="display: flex; margin-top: 50px; margin-block-end: 50px;">
