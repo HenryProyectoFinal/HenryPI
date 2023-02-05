@@ -1,13 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Router } = require("express");
-const {
-    checkRequiredPermissions,
-    validateAccessToken} = require("../Auth0/auth0.middleware.js");
-const {
-    userPermissions,
-    adminPermissions
-  } = require("../Auth0/auth0.permissions.js");
+// const {
+//     checkRequiredPermissions,
+//     validateAccessToken} = require("../Auth0/auth0.middleware.js");
+// const {
+//     userPermissions,
+//     adminPermissions
+//   } = require("../Auth0/auth0.permissions.js");
 const { 
     getAllBrands,
     createBrand,
@@ -58,8 +58,8 @@ brandRouter.put(
 
 brandRouter.delete(
     "/brands",
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.brand]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.brand]),
     async (req, res, next) => {
     res.statusCode = 403;
     res.end('DELETE operation not supported on /brands');
@@ -108,8 +108,8 @@ brandRouter.put(
 
 brandRouter.delete(
     "/brands/:brandId",
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.brand]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.brand]),
     async (req, res, next) => {
     try {
         const { brandId } = req.params;
