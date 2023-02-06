@@ -6,7 +6,13 @@ const {
     userPermissions,
     adminPermissions
   } = require("../Auth0/auth0.permissions.js");
-const {getLocations, createLocation, getLocationsId, updateLocations, deletedLocation }= require('../Controllers/location.js')
+const {
+    getLocations,
+    createLocation,
+    getLocationsId,
+    updateLocations,
+    deletedLocation,
+    findLocation }= require('../Controllers/location.js');
 
 const router = Router();
 
@@ -61,11 +67,15 @@ router.post(
     // validateAccessToken,
     // checkRequiredPermissions([userPermissions.location]),
     async (req, res) => {
-    const {address, province, city, zip} = req.body
     try {
+        const {address, province, city, zip} = req.body;
+        const locationExists = await findLocation(
+            address, province, city, zip
+        );
+        if(locationExists) return res.status(200).json(locationExists);
         const newLocation = await createLocation(
             address, province, city, zip
-        )
+        );
         res.status(201).json(newLocation)
     } catch (err) {
         console.log(err);

@@ -1,47 +1,31 @@
 const { Types } = require("mongoose");
 require("../connection.js");
 const Product = require("../models/product.js");
-const {uploadImage} = require('../cloudinary/cloudinary.js');
 
 const getAllProducts = async () => {
   const products = await Product.find({})
   .populate('category', {
     name: 1,
-    _id: 0,
-    _id: 0
+    _id: 1,
   }).populate('brand', {
     name: 1,
-    _id: 0,
-    _id: 0
+    _id: 1,
   }).populate('reviews', {
     review: 1,
-    _id: 0
+    _id: 1
   }).populate('questions', {
     question: 1,
     answer:1,
-    _id: 0
+    _id: 1
   });
   return products;
 };
 
 const createProduct = async (req, res) => {
   try {
-    const { name, description, price, images, category, brand } = req.body;
-    const newProduct = new Product({
-      name,
-      description,
-      price,
-      images,
-      category: Types.ObjectId(category), //Puede ser un arreglo de categorías...
-      brand: Types.ObjectId(brand),
-      //En el estado global se cargan al iniciar categorías y marcas(objetos), el Json que se recibe por body contiene los IDs...
-    });
-    const savedProduct = await newProduct.save();
-     if (images) {
-      const imageUploaded = await uploadImage(images) 
-      return imageUploaded
-  };
-    res.status(201).json(savedProduct);
+    const newProduct = new Product(req.body);
+    newProduct.save()
+    res.status(201).json(newProduct);
   } catch (error) {
     res.status(404).send(error.message);
   }
@@ -62,7 +46,11 @@ const getProduct = async id => {
 };
 
 const updateProduct = async (id, update) => {
-  await Product.findByIdAndUpdate(id, { //Devuelve el producto sin actualizar...
+  const product = await Product.findByIdAndUpdate(id, { $set: update }, { new: true }).populate("category")
+  .populate("brand")
+  .populate("reviews")
+  .populate("questions");;
+  /* await Product.findByIdAndUpdate(id, { //Devuelve el producto sin actualizar...
     name: update.name,
     description: update.description,
     price: update.price,
@@ -80,7 +68,8 @@ const updateProduct = async (id, update) => {
   .populate("category")
   .populate("brand")
   .populate("reviews")
-  .populate("questions");
+  .populate("questions"); */
+
   if(product === null) throw new Error("The product with the provided id could not be found.");
   return product;
 };
