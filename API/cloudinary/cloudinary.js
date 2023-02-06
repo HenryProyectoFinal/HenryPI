@@ -9,7 +9,6 @@ cloudinary.config({
 
 //que se guarde en una carpeta llamada folder
 const uploadImage = async (filePath) => {
-    console.log('lulu2', cloudinary);
     const cosa= await cloudinary.uploader.upload(filePath, {
     folder: "Products",
 });

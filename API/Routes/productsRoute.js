@@ -37,7 +37,7 @@ productsRouter.post("/products",
   cors(),
   // validateAccessToken,
   // checkRequiredPermissions([adminPermissions.product]),
-  //validate(validateNewProduct),
+  validate(validateNewProduct),
   createProduct)
   //Si algún dato no es válido o falta, se lanzan los errores correspondientes. Faltan las funciones validadoras.
 

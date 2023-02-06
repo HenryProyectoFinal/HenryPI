@@ -1,47 +1,29 @@
 const { Types } = require("mongoose");
 require("../connection.js");
 const Product = require("../models/product.js");
-const {uploadImage} = require('../cloudinary/cloudinary.js');
 
 const getAllProducts = async () => {
   const products = await Product.find({})
   .populate('category', {
     name: 1,
-    _id: 0,
-    _id: 0
+    _id: 1,
   }).populate('brand', {
     name: 1,
-    _id: 0,
-    _id: 0
+    _id: 1,
   }).populate('reviews', {
     review: 1,
-    _id: 0
+    _id: 1
   }).populate('questions', {
     question: 1,
     answer:1,
-    _id: 0
+    _id: 1
   });
   return products;
 };
 
 const createProduct = async (req, res) => {
   try {
-    /* const { name, description, price, images, category, brand } = req.body;
-    const newProduct = new Product({
-      name,
-      description,
-      price,
-      images,
-      category: Types.ObjectId(category), //Puede ser un arreglo de categorías...
-      brand: Types.ObjectId(brand),
-      //En el estado global se cargan al iniciar categorías y marcas(objetos), el Json que se recibe por body contiene los IDs...
-    });
-    const savedProduct = await newProduct.save();
-     if (images) {
-      const imageUploaded = await uploadImage(images) 
-      return imageUploaded
-  }; */
-    const newProduct = new Product(req);
+    const newProduct = new Product(req.body);
     newProduct.save()
     res.status(201).json(newProduct);
   } catch (error) {
