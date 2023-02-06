@@ -1,11 +1,11 @@
 const { Router } = require("express");
-const {
-  checkRequiredPermissions,
-  validateAccessToken} = require("../Auth0/auth0.middleware.js");
-const {
-  userPermissions,
-  adminPermissions
-} = require("../Auth0/auth0.permissions.js");
+// const {
+//   checkRequiredPermissions,
+//   validateAccessToken} = require("../Auth0/auth0.middleware.js");
+// const {
+//   userPermissions,
+//   adminPermissions
+// } = require("../Auth0/auth0.permissions.js");
 const {
   getAllClaims,
   createClaim,
@@ -17,8 +17,8 @@ claimsRouter = Router();
 
 claimsRouter.get(
   "/claims",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.claim]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.claim]),
   async (req, res) => {
   try {
     const allClaims = await getAllClaims();

@@ -12,7 +12,7 @@ const userSchema = new Schema ({
     lastName: {
         type: String,
         required: true,
-        minlength: 5
+        minlength: 4
     },
     userName: {
         type: String,

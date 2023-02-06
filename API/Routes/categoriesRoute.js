@@ -1,12 +1,12 @@
 const { Router } = require("express");
 const { getAllCategories, createCategory, getCategoryById, updateCategory, deleteCategory } = require('../Controllers/categories.js')
-const {
-    checkRequiredPermissions,
-    validateAccessToken} = require("../Auth0/auth0.middleware.js");
-const {
-    userPermissions,
-    adminPermissions
-  } = require("../Auth0/auth0.permissions.js");
+// const {
+//     checkRequiredPermissions,
+//     validateAccessToken} = require("../Auth0/auth0.middleware.js");
+// const {
+//     userPermissions,
+//     adminPermissions
+//   } = require("../Auth0/auth0.permissions.js");
 categoryRouter = Router();
 
 categoryRouter.get(
@@ -68,8 +68,8 @@ categoryRouter.put(
 
 categoryRouter.delete(
     "/category/:id",
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.category]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.category]),
     async (req, res) => {
     try {
         const { id } = req.params;
