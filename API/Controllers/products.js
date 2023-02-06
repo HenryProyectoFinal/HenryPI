@@ -16,13 +16,17 @@ const getAllProducts = async () => {
   }).populate('reviews', {
     review: 1,
     _id: 0
+  }).populate('questions', {
+    question: 1,
+    answer:1,
+    _id: 0
   });
   return products;
 };
 
 const createProduct = async (req, res) => {
   try {
-    const { name, description, price, images, category, brand } = req.body;
+    /* const { name, description, price, images, category, brand } = req.body;
     const newProduct = new Product({
       name,
       description,
@@ -36,8 +40,10 @@ const createProduct = async (req, res) => {
      if (images) {
       const imageUploaded = await uploadImage(images) 
       return imageUploaded
-  };
-    res.status(201).json(savedProduct);
+  }; */
+    const newProduct = new Product(req);
+    newProduct.save()
+    res.status(201).json(newProduct);
   } catch (error) {
     res.status(404).send(error.message);
   }
@@ -48,13 +54,21 @@ const getProduct = async id => {
   .populate("category")
   .populate("brand")
   .populate("reviews")
-  .populate("questions");
+  .populate("questions",{
+    question: 1,
+    answer: 1,
+    _id: 0
+  });
   if(product === null) throw new Error("The product with the provided id could not be found.");
   return product;
 };
 
 const updateProduct = async (id, update) => {
-  await Product.findByIdAndUpdate(id, { //Devuelve el producto sin actualizar...
+  const product = await Product.findByIdAndUpdate(id, { $set: update }, { new: true }).populate("category")
+  .populate("brand")
+  .populate("reviews")
+  .populate("questions");;
+  /* await Product.findByIdAndUpdate(id, { //Devuelve el producto sin actualizar...
     name: update.name,
     description: update.description,
     price: update.price,
@@ -72,7 +86,8 @@ const updateProduct = async (id, update) => {
   .populate("category")
   .populate("brand")
   .populate("reviews")
-  .populate("questions");
+  .populate("questions"); */
+
   if(product === null) throw new Error("The product with the provided id could not be found.");
   return product;
 };
@@ -114,7 +129,11 @@ const getNameProduct = async (name) => {
       name: 1,
       _id: 0
     })
-    /* .populate('questions') */
+    .populate("questions",{
+      question: 1,
+      answer: 1,
+      _id: 0
+    })
     .populate('reviews')
     return productName
   } catch (error) {
@@ -124,6 +143,7 @@ const getNameProduct = async (name) => {
 
 module.exports = {
   getAllProducts,
+  // allProducts,
   createProduct,
   getProduct,
   updateProduct,

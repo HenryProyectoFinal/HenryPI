@@ -13,8 +13,8 @@ const router = Router();
 //traer todos los location
 router.get(
     '/location',
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.location]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.location]),
     async (req, res) => {
     try{
         const allLocation= await getLocations()
@@ -27,8 +27,8 @@ router.get(
 //buscar location por id
 router.get(
     '/location/:id',
-    validateAccessToken,
-    checkRequiredPermissions([userPermissions.location]),
+    // validateAccessToken,
+    // checkRequiredPermissions([userPermissions.location]),
     async (req, res) => {
     const {id}=req.params
     try{
@@ -43,8 +43,8 @@ router.get(
 // Delete location
 router.delete(
     "/location/:id",
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.location]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.location]),
     async (req, res) => {
     const { id } = req.params
     try {
@@ -68,15 +68,17 @@ router.post(
         )
         res.status(201).json(newLocation)
     } catch (err) {
-        res.status(404).send(err.message)
+        console.log(err);
+        // res.status(404).send(err.message)
+        //Confunde que siempre mande un 404, el error puede ser de otra naturaleza.
     }
 })
 
 //modificar usuario
 router.put(
     "/location/:id",
-    validateAccessToken,
-    checkRequiredPermissions([userPermissions.location]),
+    // validateAccessToken,
+    // checkRequiredPermissions([userPermissions.location]),
     async (req, res) => {
     const { id }= req.params;
     const update= req.body;

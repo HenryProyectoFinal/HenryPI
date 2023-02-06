@@ -1,12 +1,12 @@
 const { Router } = require("express");
+// const {
+//   checkRequiredPermissions,
+//   validateAccessToken} = require("../Auth0/auth0.middleware.js");
+// const {
+//   userPermissions,
+//   adminPermissions
+// } = require("../Auth0/auth0.permissions.js");
 const {
-  checkRequiredPermissions,
-  validateAccessToken} = require("../Auth0/auth0.middleware.js");
-const {
-  userPermissions,
-  adminPermissions
-} = require("../Auth0/auth0.permissions.js");
-const { 
   getAllClaims,
   createClaim,
   getClaim,
@@ -17,8 +17,8 @@ claimsRouter = Router();
 
 claimsRouter.get(
   "/claims",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.claim]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.claim]),
   async (req, res) => {
   try {
     const allClaims = await getAllClaims();
@@ -30,8 +30,8 @@ claimsRouter.get(
 
 claimsRouter.post(
   "/claims",
-  validateAccessToken,
-  checkRequiredPermissions([userPermissions.claim]),
+  // validateAccessToken,
+  // checkRequiredPermissions([userPermissions.claim]),
   async (req, res) => {
   try {
     const { sale, issue, description, user, status, solution } = req.body;
@@ -44,8 +44,8 @@ claimsRouter.post(
 
 claimsRouter.get(
   "/claim/:id",
-  validateAccessToken,
-  checkRequiredPermissions([userPermissions.claim]),
+  // validateAccessToken,
+  // checkRequiredPermissions([userPermissions.claim]),
   async (req, res) => {
   try {
     const { id } = req.params;
@@ -59,8 +59,8 @@ claimsRouter.get(
 
 claimsRouter.put(
   "/claim/:id",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.claim]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.claim]),
   async(req, res) => {
   try {
     const { id } = req.params;
@@ -75,8 +75,8 @@ claimsRouter.put(
 
 claimsRouter.patch(
   "/claim/:id",
-  validateAccessToken,
-  checkRequiredPermissions([userPermissions.claim]),
+  // validateAccessToken,
+  // checkRequiredPermissions([userPermissions.claim]),
   async(req, res) => {
   try {
     const { id } = req.params;

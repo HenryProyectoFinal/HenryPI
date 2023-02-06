@@ -1,13 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Router } = require("express");
-const {
-    checkRequiredPermissions,
-    validateAccessToken} = require("../Auth0/auth0.middleware.js");
-const {
-    userPermissions,
-    adminPermissions
-  } = require("../Auth0/auth0.permissions.js");
+// const {
+//     checkRequiredPermissions,
+//     validateAccessToken} = require("../Auth0/auth0.middleware.js");
+// const {
+//     userPermissions,
+//     adminPermissions
+//   } = require("../Auth0/auth0.permissions.js");
 const { 
   getAllBranchOffices,
   createBranchOffice,
@@ -34,8 +34,8 @@ branchOfficeRouter.get(
 
 branchOfficeRouter.post(
   "/branchs",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.branchOffice]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.branchOffice]),
   async (req, res, next) => {
     try {
         const newBranchOffice = await createBranchOffice(req.body);
@@ -49,8 +49,8 @@ branchOfficeRouter.post(
 
   branchOfficeRouter.put(
     "/branchs",
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.branchOffice]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.branchOffice]),
     async (req, res, next) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /branchs');
@@ -58,8 +58,8 @@ branchOfficeRouter.post(
 
 branchOfficeRouter.delete(
   "/branchs",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.branchOffice]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.branchOffice]),
   async (req, res, next) => {
     res.statusCode = 403;
     res.end('DELETE operation not supported on /branchs');
@@ -80,8 +80,8 @@ branchOfficeRouter.get(
 
 branchOfficeRouter.post(
   "/branchs/:brandId",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.branchOffice]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.branchOffice]),
   async (req, res, next) => {
     res.statusCode = 403;
     res.end('POST operation not supported on /branchs/' + req.params.brandId);
@@ -89,8 +89,8 @@ branchOfficeRouter.post(
 
 branchOfficeRouter.put(
   "/branchs/:branchId",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.branchOffice]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.branchOffice]),
   async (req, res, next) => {
     try {
         const { branchId } = req.params;
@@ -108,8 +108,8 @@ branchOfficeRouter.put(
 
 branchOfficeRouter.delete(
   "/branchs/:branchId",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.branchOffice]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.branchOffice]),
   async (req, res, next) => {
     try {
         const { branchId } = req.params;

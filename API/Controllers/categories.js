@@ -1,4 +1,3 @@
-const { Types } = require("mongoose");
 const Category = require("../models/category.js");
 
 const getAllCategories = async ()=>{
@@ -27,7 +26,7 @@ const getCategoryById = async id => {
     const category = {
         name: categoryDB.name,
         description: categoryDB.description,
-        father: categoryDB.category.toString(),
+        father: categoryDB.category?.toString(),
         active: categoryDB.active,
         createdAt: categoryDB.createdAt,
         updatedAt: categoryDB.updatedAt
@@ -37,8 +36,8 @@ const getCategoryById = async id => {
 
 const updateCategory = async (id, update) => {
     const category = await Category.findByIdAndUpdate(id, { $set: update }, { new: true })
-    if(category === null) throw new Error("The branch office with the provided id could not be found.");
-
+    if(category === null) throw new Error("The category with the provided id could not be found.");
+    
     return category;
 };
 
