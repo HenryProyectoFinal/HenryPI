@@ -24,6 +24,16 @@ const getUsersId= async (id) => {
     }
 }
 
+//Función para buscar usuario por email
+const getUserEmail = async email => {
+    try {
+        const user = await User.findOne({email: email});
+        return user;
+    } catch (error) {
+        res.status(400).json(error.message);
+    };
+};
+
 //funcion para eliminar usuario por id
 const deletedUser= async (id) => {
     try {
@@ -90,4 +100,4 @@ const updateUsers= async (id, update) => {
 }
 }
 
-module.exports = {getUsers,getUsersId, createUser, deletedUser, updateUsers}
+module.exports = {getUsers,getUsersId, createUser, deletedUser, updateUsers, getUserEmail}
