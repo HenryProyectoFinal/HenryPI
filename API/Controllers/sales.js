@@ -36,8 +36,7 @@ const getAllSales = async ()=>{
 
 const createSale = async (user) => {
     try {
-        const userId = await User.find({"name": {$regex: user}})
-        
+        const userId = await User.find({"userName": {$regex: user}})
         const sale = new Sale({
             user:userId
         });
