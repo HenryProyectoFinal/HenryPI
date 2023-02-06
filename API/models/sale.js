@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const User = require("./user.js")
 
 const saleSchema = new Schema({
   // date: { //¿Es necesario si usamos timeStamps? 
@@ -7,7 +8,7 @@ const saleSchema = new Schema({
   // },
   status: {
     type: String,
-    enum: ["ordered", "paid", "shipped", "delivered", "claim", "canceled", "closed"],
+    enum: ["ordered", "shipped", "claim", "closed"],
     //ordered: el usuario hizo el pedido...
     //paid: el usuario pagó la compra...
     //shipped: se envió el pedido al usuario...
@@ -17,19 +18,19 @@ const saleSchema = new Schema({
     //closed: la venta se concretó, debido a que 1) no hubo reclamo antes del tiempo establecido, o 2) el reclamo se resolvió y el usuario se mostró conforme...
     default: "ordered"
   },
-  claim: {
-    type: Schema.ObjectId,
-    ref: "claim",
-    required: function() {
-      return this.status === "claim";
-    }
-  },
+  // claim: {
+  //   type: Schema.ObjectId,
+  //   ref: "claim",
+  //   required: function() {
+  //     return this.status === "claim";
+  //   }
+  // },
   products: {
     type: [
       {
         _id: false,
         product: {
-          type: Schema.ObjectId,
+          type: Schema.Types.ObjectId,
           ref: "product",
           required: true
         },
@@ -41,43 +42,39 @@ const saleSchema = new Schema({
     ],
   },
   user: {
-    type: Schema.ObjectId,
-    ref: "user",
+    type: Schema.Types.ObjectId,
+    ref: "User",
     required: true
   },
-  location: {
-    type: Schema.ObjectId,
-    ref: "location",
-    required: true
-  },
-  paymentMethod: { //Depende de los métodos que ofrezca MercadoPago...
-    type: String,
-    enum: ["debitCard", "creditCard", "cash", "balance"],
-    //Quizás requiera detalles específicos según el método...
-    //cash: en puntos de pago (ejemplo: rapiPago)...
-    //balance: saldo disponible en la cuenta de MercadoPago...
-    required: true
-  },
-  trackingCode: { //tal vez debería ser un arreglo dependiendo del número de productos y su procedencia (sucursal), en tal caso se requeriría un modelo "shipment" para cada envío...
-    type: String,
-    //required: true
-  },
-  subtotal: { //Suma de los precios de los productos...
-    type: Number,
-    required: true
-  },
-  shippingCost: { //tal vez debería ser un arreglo dependiendo del número de productos y su procedencia (sucursal), en tal caso se requeriría un modelo "shipment" para cada envío...
-    type: Number,
-    required: true
-  },
-  taxes: {
-    type: Number,
-    required: true
-  },
-  total: {
-    type: Number,
-    required: true
-  },
+  // location: {
+  //   type: Schema.ObjectId,
+  //   ref: "location",
+  //   required: true
+  // },
+  // paymentMethod: { //Depende de los métodos que ofrezca MercadoPago...
+  //   type: String,
+  //   enum: ["debitCard", "creditCard", "cash", "balance"],
+  //   //Quizás requiera detalles específicos según el método...
+  //   //cash: en puntos de pago (ejemplo: rapiPago)...
+  //   //balance: saldo disponible en la cuenta de MercadoPago...
+  //   required: true
+  // },
+  // subtotal: { //Suma de los precios de los productos...
+  //   type: Number,
+  //   required: true
+  // },
+  // shippingCost: { //tal vez debería ser un arreglo dependiendo del número de productos y su procedencia (sucursal), en tal caso se requeriría un modelo "shipment" para cada envío...
+  //   type: Number,
+  //   required: true
+  // },
+  // taxes: {
+  //   type: Number,
+  //   required: true
+  // },
+  // total: {
+  //   type: Number,
+  //   required: true
+  // },
   active: {
     type: Boolean,
     default: true
