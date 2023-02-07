@@ -34,13 +34,14 @@ saleRouter.get(
 //     createSale);
   //Si algún dato no es válido o falta, se lanzan los errores correspondientes. Faltan las funciones validadoras.
   saleRouter.post("/sale", async (req, res) => {
-    const {user, products} = req.body
-    console.log("usuario",user)
+    const {user, products, totalCompra} = req.body
     try{
         const newSale = await createSale(
-            user
+            user,
+            products,
+            totalCompra
         )
-        res.status(201).json( newSale)
+        res.status(201).json({newSale})
     } catch (error) {
         return res.status(400).json({ message: error.message })
     }

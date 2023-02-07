@@ -1,4 +1,6 @@
 const { Types } = require("mongoose");
+const product = require("../models/product.js");
+const Product = require("../models/product.js");
 require("../connection.js");
 const Sale = require("../models/sale.js");
 const User = require("../models/user.js");
@@ -12,36 +14,38 @@ const getAllSales = async ()=>{
     }
 };
 
-// const createSale = async (req, res) => {
-//     try {
-
-//         // const { products, user, location, paymentMethod, subtotal } = req.body;
-//         const sale = new Sale({
-//             //products,
-//             user,
-//             // location,
-//             // paymentMethod,
-//             // trackingCode,
-//             // subtotal,
-//             // shippingCost,
-//             // taxes: subtotal*1.21,
-//             // total,
-//         });
-//         const newSale = await sale.save()
-//         res.status(201).json({ msg: "Sale saved", newSale });
-//     } catch (error) {
-//         res.status(400).json({ message: error.message })
-//     }
-// };
-
-const createSale = async (user) => {
+const createSale = async (user, products, totalCompra) => {
     try {
-        const userId = await User.find({"userName": {$regex: user}})
+        const userByEmail = await User.find({"email": {$regex: user}});
+        const userId = userByEmail[0];
+        const arrayProducts = [];
+        const productsIds = await Product.find({"name": products.map((e)=>{
+            return e.name;
+        })})
+        for(let i=0; i<productsIds.length; i++){
+            arrayProducts.push({
+                product: productsIds[i],
+                quantity: products[i].count
+            });
+        };
+        let shippingCost = 70;
+        const taxes = Math.round(totalCompra*0.21);
+        if(taxes+totalCompra>= 1000){
+            shippingCost=0;
+        };
+        const total = totalCompra+taxes+shippingCost;
+
+
         const sale = new Sale({
-            user:userId
+            user: userId,
+            products: arrayProducts,
+            subtotal: totalCompra,
+            taxes: taxes,
+            shippingCost: shippingCost,
+            total
         });
         const newSale = await sale.save()
-        res.status(201).json({ msg: "Sale saved", newSale });
+        res.status(201).json({ newSale });
     } catch (error) {
         console.log(error);
     }
