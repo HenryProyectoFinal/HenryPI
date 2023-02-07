@@ -1,5 +1,4 @@
 const { Types } = require("mongoose");
-const product = require("../models/product.js");
 const Product = require("../models/product.js");
 require("../connection.js");
 const Sale = require("../models/sale.js");
