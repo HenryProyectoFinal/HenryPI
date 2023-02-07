@@ -24,6 +24,10 @@ const productSchema = new Schema(
             type: Number,
             required: true
         },
+        stock: {
+            type: Number,
+            default: 20
+        },
         images:{
             type: [String],
             required: true

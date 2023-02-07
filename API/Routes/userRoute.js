@@ -6,7 +6,7 @@ const {
     userPermissions,
     adminPermissions
   } = require("../Auth0/auth0.permissions.js");
-const {getUsers, getUsersId, createUser,getUsersName, deletedUser, updateUsers}= require('../Controllers/users.js');
+const {getUsers, getUsersId, createUser, deletedUser, updateUsers, getUserEmail}= require('../Controllers/users.js');
 const usersRouter = Router();
 const cors = require("cors");     //Prueba para validators
 const {validateNewUser} = require('../Validators/user.js')
@@ -44,6 +44,24 @@ usersRouter.get(
     };
 });
 
+//Comprobar si existe un usuario con un email dado
+usersRouter.get(
+    '/user/:email',
+    // validateAccessToken,
+    // checkRequiredPermissions([]),
+    async (req, res) => {
+    try {
+        const { email } = req.params;
+        const userExists = await getUserEmail(email);
+        if(userExists) {
+            res.status(200).json(true);
+        } else {
+            res.status(200).json(false);
+        };
+    } catch (error) {
+        res.status(404).json(error.message);
+    };
+    });
 
 usersRouter.get(
     '/users/:name',

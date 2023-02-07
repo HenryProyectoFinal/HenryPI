@@ -1,6 +1,7 @@
 const { Types } = require("mongoose");
 require("../connection.js");
 const Sale = require("../models/sale.js");
+const User = require("../models/user.js");
 
 const getAllSales = async ()=>{
     try {
@@ -11,28 +12,41 @@ const getAllSales = async ()=>{
     }
 };
 
-const createSale = async (req, res) => {
+// const createSale = async (req, res) => {
+//     try {
+
+//         // const { products, user, location, paymentMethod, subtotal } = req.body;
+//         const sale = new Sale({
+//             //products,
+//             user,
+//             // location,
+//             // paymentMethod,
+//             // trackingCode,
+//             // subtotal,
+//             // shippingCost,
+//             // taxes: subtotal*1.21,
+//             // total,
+//         });
+//         const newSale = await sale.save()
+//         res.status(201).json({ msg: "Sale saved", newSale });
+//     } catch (error) {
+//         res.status(400).json({ message: error.message })
+//     }
+// };
+
+const createSale = async (user) => {
     try {
-
-        const { products, user, location, paymentMethod, trackingCode, subtotal, shippingCost, taxes, total } = req.body;
+        const userId = await User.find({"userName": {$regex: user}})
         const sale = new Sale({
-            products,
-            user,
-            location,
-            paymentMethod,
-            trackingCode,
-            subtotal,
-            shippingCost,
-            taxes,
-            total,
+            user:userId
         });
-
         const newSale = await sale.save()
         res.status(201).json({ msg: "Sale saved", newSale });
     } catch (error) {
-        res.status(400).json({ message: error.message })
+        console.log(error);
     }
 };
+
 
 const getSaleById = async (id) => {
     try {

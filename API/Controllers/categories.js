@@ -4,7 +4,7 @@ const getAllCategories = async ()=>{
     const categoriesDB = await Category.find({})
     .populate("father", {
     name: 1,
-    _id: 0
+    _id: 1
     });
 
     return categoriesDB;
@@ -37,7 +37,7 @@ const getCategoryById = async id => {
 const updateCategory = async (id, update) => {
     const category = await Category.findByIdAndUpdate(id, { $set: update }, { new: true })
     if(category === null) throw new Error("The category with the provided id could not be found.");
-
+    
     return category;
 };
 
