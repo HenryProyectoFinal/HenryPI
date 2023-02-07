@@ -26,13 +26,27 @@ saleRouter.get(
     };
   });
 
-saleRouter.post("/sale", 
-    cors(), 
-    // validateAccessToken, 
-    // checkRequiredPermissions([]), 
-    validate(validateNewSale), 
-    createSale);
+// saleRouter.post("/sale", 
+//     cors(), 
+//     // validateAccessToken, 
+//     // checkRequiredPermissions([]), 
+//     // validate(validateNewSale), 
+//     createSale);
   //Si algún dato no es válido o falta, se lanzan los errores correspondientes. Faltan las funciones validadoras.
+  saleRouter.post("/sale", async (req, res) => {
+    const {user, products, totalCompra} = req.body
+    try{
+        const newSale = await createSale(
+            user,
+            products,
+            totalCompra
+        )
+        res.status(201).json({newSale})
+    } catch (error) {
+        return res.status(400).json({ message: error.message })
+    }
+})
+
 
 saleRouter.get(
     "/sale/:id",
