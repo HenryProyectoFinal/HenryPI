@@ -83,7 +83,7 @@ const mandarEmail= async (email) => {
             from: '"AllTech" <lourdesrosaa1@gmail.com>', // sender address
             to: email, // list of receivers
             subject: " Notificación", // Subject line
-            text: "USUARIO CREADO CORRECTAMENTE ", // plain text body
+            text: "DESCUENTO", // plain text body
             html: mensaHTM,
             attachments: [
                 {
