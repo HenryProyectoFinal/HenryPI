@@ -23,6 +23,15 @@ const getUsersId= async (id) => {
         res.status(400).json(error.message)
     }
 }
+//funcion en la que busco usuario por id
+const getUsersName= async (userName) => {
+    try {
+        const usersId = await User.findOne({userName}).exec()
+            return usersId
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
 
 //funcion para eliminar usuario por id
 const deletedUser= async (id) => {
@@ -90,4 +99,4 @@ const updateUsers= async (id, update) => {
 }
 }
 
-module.exports = {getUsers,getUsersId, createUser, deletedUser, updateUsers}
+module.exports = {getUsers,getUsersId,getUsersName, createUser, deletedUser, updateUsers}

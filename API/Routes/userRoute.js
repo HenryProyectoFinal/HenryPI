@@ -6,7 +6,7 @@ const {
     userPermissions,
     adminPermissions
   } = require("../Auth0/auth0.permissions.js");
-const {getUsers, getUsersId, createUser, deletedUser, updateUsers}= require('../Controllers/users.js');
+const {getUsers, getUsersId, createUser,getUsersName, deletedUser, updateUsers}= require('../Controllers/users.js');
 const usersRouter = Router();
 const cors = require("cors");     //Prueba para validators
 const {validateNewUser} = require('../Validators/user.js')
@@ -39,6 +39,21 @@ usersRouter.get(
     try{
         const userId= await getUsersId(id);
         return res.send(userId);
+    }catch (error) {
+        res.status(404).json(error.message);
+    };
+});
+
+
+usersRouter.get(
+    '/users/:name',
+    // validateAccessToken,
+    // checkRequiredPermissions([]),
+    async (req, res) => {
+    const {userName}=req.params;
+    try{
+        const userNameS= await getUsersName(userName);
+        return res.send(userNameS);
     }catch (error) {
         res.status(404).json(error.message);
     };
