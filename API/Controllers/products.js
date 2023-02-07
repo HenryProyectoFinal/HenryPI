@@ -16,6 +16,7 @@ const getAllProducts = async () => {
   }).populate('questions', {
     question: 1,
     answer:1,
+    active:1,
     _id: 1
   });
   return products;
@@ -36,11 +37,17 @@ const getProduct = async id => {
   .populate("category")
   .populate("brand")
   .populate("reviews")
-  .populate("questions",{
-    question: 1,
-    answer: 1,
-    _id: 0
-  });
+  .populate("questions");
+  if(product === null) throw new Error("The product with the provided id could not be found.");
+  return product;
+};
+
+const updateQuestionsProduct = async (id, update) => {
+  const product = await Product.findByIdAndUpdate(id, { $push: { questions: update } }, { new: true }).populate("category")
+  .populate("brand")
+  .populate("reviews")
+  .populate("questions");
+
   if(product === null) throw new Error("The product with the provided id could not be found.");
   return product;
 };
@@ -49,26 +56,7 @@ const updateProduct = async (id, update) => {
   const product = await Product.findByIdAndUpdate(id, { $set: update }, { new: true }).populate("category")
   .populate("brand")
   .populate("reviews")
-  .populate("questions");;
-  /* await Product.findByIdAndUpdate(id, { //Devuelve el producto sin actualizar...
-    name: update.name,
-    description: update.description,
-    price: update.price,
-    images: update.images,
-    category: Types.ObjectId(update.category),
-    brand: Types.ObjectId(update.brand),
-    reviews: update.reviews.map(review => {
-      return Types.ObjectId(review);
-    }),
-    questions: update.questions.map(question => {
-      return Types.ObjectId(question);
-    }),
-  });
-  const product = await Product.findById(id) //Devuelve el producto actualizado...
-  .populate("category")
-  .populate("brand")
-  .populate("reviews")
-  .populate("questions"); */
+  .populate("questions");
 
   if(product === null) throw new Error("The product with the provided id could not be found.");
   return product;
@@ -133,5 +121,6 @@ module.exports = {
   // recoverProduct,
   switchProduct,
   //deleteProduct,
-  getNameProduct
+  getNameProduct,
+  updateQuestionsProduct
 };

@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-const User = require("./user.js")
 
 const saleSchema = new Schema({
   // date: { //¿Es necesario si usamos timeStamps? 
@@ -18,13 +17,13 @@ const saleSchema = new Schema({
     //closed: la venta se concretó, debido a que 1) no hubo reclamo antes del tiempo establecido, o 2) el reclamo se resolvió y el usuario se mostró conforme...
     default: "ordered"
   },
-  // claim: {
-  //   type: Schema.ObjectId,
-  //   ref: "claim",
-  //   required: function() {
-  //     return this.status === "claim";
-  //   }
-  // },
+  claim: {
+    type: Schema.ObjectId,
+    ref: "claim",
+    required: function() {
+      return this.status === "claim";
+    }
+  },
   products: {
     type: [
       {
@@ -59,22 +58,22 @@ const saleSchema = new Schema({
   //   //balance: saldo disponible en la cuenta de MercadoPago...
   //   required: true
   // },
-  // subtotal: { //Suma de los precios de los productos...
-  //   type: Number,
-  //   required: true
-  // },
-  // shippingCost: { //tal vez debería ser un arreglo dependiendo del número de productos y su procedencia (sucursal), en tal caso se requeriría un modelo "shipment" para cada envío...
-  //   type: Number,
-  //   required: true
-  // },
-  // taxes: {
-  //   type: Number,
-  //   required: true
-  // },
-  // total: {
-  //   type: Number,
-  //   required: true
-  // },
+  subtotal: { //Suma de los precios de los productos...
+    type: Number,
+    required: true
+  },
+  shippingCost: { //tal vez debería ser un arreglo dependiendo del número de productos y su procedencia (sucursal), en tal caso se requeriría un modelo "shipment" para cada envío...
+    type: Number,
+    required: true
+  },
+  taxes: {
+    type: Number,
+    required: true
+  },
+  total: {
+    type: Number,
+    required: true
+  },
   active: {
     type: Boolean,
     default: true

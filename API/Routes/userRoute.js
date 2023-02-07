@@ -12,9 +12,6 @@ const cors = require("cors");     //Prueba para validators
 const {validateNewUser} = require('../Validators/user.js')
 const {validate} = require("../Helpers/validateHelper.js")
 
-
-
-
 //traer todos los usuarios
 usersRouter.get(
     '/users',
@@ -64,7 +61,21 @@ usersRouter.get(
     };
     });
 
-        //Traer todos los datos del usuario con el email
+usersRouter.get(
+    '/users/:name',
+    // validateAccessToken,
+    // checkRequiredPermissions([]),
+    async (req, res) => {
+    const {userName}=req.params;
+    try{
+        const userNameS= await getUsersName(userName);
+        return res.send(userNameS);
+    }catch (error) {
+        res.status(404).json(error.message);
+    };
+});
+
+//Traer todos los datos del usuario con el email
 usersRouter.get(
     '/useremail/:email',
     // validateAccessToken,
