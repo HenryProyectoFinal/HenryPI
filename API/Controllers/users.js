@@ -23,6 +23,15 @@ const getUsersId= async (id) => {
         res.status(400).json(error.message)
     }
 }
+//funcion en la que busco usuario por id
+const getUsersName= async (userName) => {
+    try {
+        const usersId = await User.findOne({userName}).exec()
+            return usersId
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
 
 //Función para buscar usuario por email
 const getUserEmail = async email => {
