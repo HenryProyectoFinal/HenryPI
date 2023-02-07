@@ -9,7 +9,7 @@ const getAllQuestions = async () => {
 const createQuestion = async (user, question) => {
   const newQuestion = new Question({
     user, //id del usuario
-    question
+    question,
   });
   newQuestion.save();
   return newQuestion;
@@ -23,10 +23,7 @@ const getQuestion = async id => {
 };
 
 const updateQuestion = async (id, update) => {
-  await Question.findByIdAndUpdate(id, {
-    answer: update.answer
-  });
-  const question = await Question.findById(id)
+  const question = await Question.findByIdAndUpdate(id, { $set: update }, { new: true })
   .populate("user");
   if(question === null) throw new Error("The question with the provided id could not be found.");
   return question;
