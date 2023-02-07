@@ -12,9 +12,6 @@ const cors = require("cors");     //Prueba para validators
 const {validateNewUser} = require('../Validators/user.js')
 const {validate} = require("../Helpers/validateHelper.js")
 
-
-
-
 //traer todos los usuarios
 usersRouter.get(
     '/users',
