@@ -41,7 +41,7 @@ saleRouter.get(
             products,
             totalCompra
         )
-        console.log("usuario", user.toString())
+        console.log("usuario", "user")
         res.status(201).json({newSale})
     } catch (error) {
         return res.status(400).json({ message: error.message })
