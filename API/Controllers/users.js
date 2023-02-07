@@ -78,7 +78,7 @@ const updateUsers= async (id, update) => {
                     userName:update.userName,
                     phoneNumber: update.phoneNumber,
                     email: update.email,
-                    password:update.password,
+                    // password:update.password,
                     location: Types.ObjectId(update.location),
             }
             )
@@ -90,7 +90,7 @@ const updateUsers= async (id, update) => {
                     userName:newUser.userName,
                     phoneNumber: newUser.phoneNumber,
                     email: newUser.email,
-                    password:newUser.password,
+                    // password:newUser.password,
                     location: Types.ObjectId(newUser.location),
                 }
                 return updateUser
