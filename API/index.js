@@ -14,6 +14,7 @@ const reviewsRoute = require("./Routes/reviewsRoute.js");
 const questionsRoute = require("./Routes/questionsRoute.js");
 const claimsRoute = require("./Routes/claimsRoute.js");
 const mercadoPagoRouter = require("./Routes/mercadoPagoRoute");
+const emailRouter= require("./Routes/emailRouter.js")
 
 const app = express();
 app.use(express.urlencoded({extended: true}));
@@ -46,6 +47,7 @@ app.use("/", mercadoPagoRouter);
 app.use("/", reviewsRoute);
 app.use("/", questionsRoute);
 app.use("/", claimsRoute);
+app.use("/", emailRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);
