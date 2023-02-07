@@ -16,8 +16,7 @@ const getAllSales = async ()=>{
 
 const createSale = async (user, products, totalCompra) => {
     try {
-        const userByEmail = await User.find({"email": {$regex: user}});
-        const userId = userByEmail[0];
+        const userByEmail = await User.findOne({"email": {$regex: user}});
         const arrayProducts = [];
         const productsIds = await Product.find({"name": products.map((e)=>{
             return e.name;
@@ -37,7 +36,7 @@ const createSale = async (user, products, totalCompra) => {
 
 
         const sale = new Sale({
-            user: userId,
+            user: userByEmail,
             products: arrayProducts,
             subtotal: totalCompra,
             taxes: taxes,
