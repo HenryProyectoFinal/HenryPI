@@ -40,7 +40,7 @@ reviewsRouter.post(
     const { description, productoID, rating, } = req.body;
     const newReview = await createReview(description, rating);
     const updatedProduct = await updateReviewProduct(productoID, newReview._id);
-    res.status(201).json(newReview);
+    res.status(201).json(updatedProduct);
   } catch (error) {
     console.log(error);
   };
