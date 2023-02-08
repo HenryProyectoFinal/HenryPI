@@ -115,7 +115,7 @@ const updateSale = async (id, update) => {
 };
 
 const deleteSale = async (id) => {
-    const sale = await Sale.findByIdAndUpdate(id, { $set: {'active': false} }, { new: true             });
+    const sale = await Sale.findByIdAndUpdate(id, { $set: {'active': false} }, { new: true });
     if(sale === null) throw new Error("The sale with the provided id could not be found.");
 };
 
