@@ -6,9 +6,12 @@ const {
   const {
   
   } = require("../Auth0/auth0.permissions.js");
-const { getAllSales, createSale, getSaleById, updateSale, deleteSale } = require('../Controllers/sales.js')
+const { getAllSales, getSaleById, updateSale,createSale, deleteSale } = require('../Controllers/sales.js')
 const { validateNewSale } = require("../Validators/sale.js");
 const {validate} = require("../Helpers/validateHelper.js")
+
+
+const {mandarEmail} =require('../mailer/nodemailerClaims.js')
 
 saleRouter = Router();
 
@@ -40,7 +43,8 @@ saleRouter.get(
             userEmail,
             products,
             totalCompra
-        )
+            )            
+            mandarEmail(user, products)
         res.status(201).json({newSale})
     } catch (error) {
         return res.status(400).json({ message: error.message })

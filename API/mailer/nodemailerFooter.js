@@ -56,7 +56,8 @@ const mandarEmail= async (email) => {
           <div style=" padding: 10px 0px 10px 0px; width: 100%; text-align: center;">
             <img src="https://res.cloudinary.com/dy5msftwe/image/upload/v1675726921/Products/Cupon_yn9vcp.png"  style="width: 250px;"/>
             <h4 style="color: orangered;" > Cupón de descuento:</h4><h4 >  5235 8128 1228 </h4>
-          </div>
+            <script  src="../Controllers/createrSale.js"></script>
+            </div>
         </div>
         <P style="margin-bottom: 10px;"><i>Atentamente:</i><br> Equipo AllTech</P>
         <a style="background-color: rgb(170, 170, 170); border: 2px solid gray; color: black; padding: 16px 32px; text-align: center; text-decoration: none; font-weight: bold; display: inline-block; font-size: 16px; margin: 4px 2px;

@@ -4,6 +4,11 @@ require("../connection.js");
 const Sale = require("../models/sale.js");
 const User = require("../models/user.js");
 
+// const lista=document.getElementById("lista");
+// const elemetoHtml=document.createElement("li");
+// elemetoHtml.textContent=createSale();
+// lista.appendChild(elemetoHtml)
+
 const getAllSales = async ()=>{
     const sales = await Sale.find({}).populate('products.product user').populate({
         path: "user",
@@ -38,7 +43,6 @@ const createSale = async (userEmail, products, totalCompra) => {
             shippingCost=0;
         };
         const total = totalCompra+taxes+shippingCost;
-
 
         const sale = new Sale({
             user: userByEmail,

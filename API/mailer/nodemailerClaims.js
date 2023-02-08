@@ -1,5 +1,33 @@
+const { Types } = require("mongoose");
+const User = require("../models/user.js");
+const nodemailer= require('nodemailer')
+const createSale= require('../Controllers/createrSale');
+const product = require("../models/product.js");
+require("dotenv").config()
+const {
+    USER, PASS
+  } = process.env;
 
-<!DOCTYPE html>
+let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    //secure: true, // true for 465, false for other ports
+    auth: {
+      user: `${USER}`, // generated ethereal user
+      pass: `${PASS}`, // generated ethereal password
+    },
+  });
+
+  transporter.verify().then(() => {
+    console.log('ready for send emails');
+  })
+
+
+
+const mandarEmail= async (email) => {
+    
+    let mensaHTM= `
+    <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -49,3 +77,30 @@
 
 </body>
 </html>
+    `;
+        let mensaje = {
+            from: '"AllTech" <lourdesrosaa1@gmail.com>', // sender address
+            to: email, // list of receivers
+            subject: " Notificación", // Subject line
+            text: "Post Venta", // plain text body
+            html: mensaHTM, 
+            attachments: [
+                {
+                    filename:'logo2.jpeg',
+                    path:'https://res.cloudinary.com/dy5msftwe/image/upload/v1675608232/Products/Logo1_spld6d.png',
+                    cid:'logo2'
+                },
+                {
+                    filename:'whatsapp.jpg',
+                    path:'https://i.pinimg.com/originals/6f/49/a3/6f49a3e22941e9ce362b22be78d96b95.jpg',
+                    cid:'whatsapp'
+                }
+            ]
+        };
+
+        const info= await transporter.sendMail(mensaje)
+
+        console.log(info);
+
+}
+  module.exports = {mandarEmail}

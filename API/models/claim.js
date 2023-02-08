@@ -23,6 +23,11 @@ const claimSchema = new Schema({
     ref: "User",
     required: true
   },
+  email:{
+    type: String,
+    required: true,
+    minLength: 7,
+  },
   status: {
     type: String,
     enum: ["pending", "solved"],
