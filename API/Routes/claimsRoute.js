@@ -12,6 +12,8 @@ const {
   getClaim,
   updateClaim,
   switchClaim} = require("../Controllers/claims.js");
+  
+  const {mandarEmail} =require('../mailer/nodemailerClaims.js')
 
 claimsRouter = Router();
 
@@ -34,8 +36,9 @@ claimsRouter.post(
   // checkRequiredPermissions([userPermissions.claim]),
   async (req, res) => {
   try {
-    const { sale, issue, description, user, status, solution } = req.body;
-    const newClaim = await createClaim(sale, issue, description, user, status, solution);
+    const { sale, email,issue, description, user, status, solution } = req.body;
+    const newClaim = await createClaim(sale,email, issue, description, user, status, solution);
+    mandarEmail(email)
     res.status(201).json(newClaim);
   } catch (error) {
     console.log(error);
