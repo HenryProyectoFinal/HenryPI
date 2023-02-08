@@ -6,12 +6,12 @@ const {
   const {
   
   } = require("../Auth0/auth0.permissions.js");
-const { getAllSales, getSaleById, updateSale, deleteSale } = require('../Controllers/sales.js')
+const { getAllSales, getSaleById, updateSale,createSale, deleteSale } = require('../Controllers/sales.js')
 const { validateNewSale } = require("../Validators/sale.js");
 const {validate} = require("../Helpers/validateHelper.js")
 
-const {createSale}=require("../Controllers/createrSale")
-const {mandarEmail} =require('../mailer/nodemailerSale.js')
+
+const {mandarEmail} =require('../mailer/nodemailerClaims.js')
 
 saleRouter = Router();
 
@@ -23,7 +23,7 @@ saleRouter.get(
     //Si no hay productos en la BD, devuelve un arreglo vacío. NO es un error...
     try {
       const allSales = await getAllSales();
-      res.json(allSales);
+      res.status(201).json(allSales);
     } catch (error) {
         return res.status(400).json({ message: error.message })
     };
@@ -37,11 +37,10 @@ saleRouter.get(
 //     createSale);
   //Si algún dato no es válido o falta, se lanzan los errores correspondientes. Faltan las funciones validadoras.
   saleRouter.post("/sale", async (req, res) => {
-    const {user, products, totalCompra} = req.body
-
+    const {userEmail, products, totalCompra} = req.body
     try{
         const newSale = await createSale(
-            user,
+            userEmail,
             products,
             totalCompra
             )            

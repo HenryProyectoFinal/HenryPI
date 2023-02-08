@@ -10,26 +10,32 @@ const User = require("../models/user.js");
 // lista.appendChild(elemetoHtml)
 
 const getAllSales = async ()=>{
-    try {
-        const sales = await Sale.find()
-            return sales
-    } catch (error) {
-        res.status(400).json(error.message)
-    }
+    const sales = await Sale.find({}).populate('products.product user').populate({
+        path: "user",
+        populate: {
+          path: "location"
+        }
+      })
+    return sales
 };
 
-const createSale = async (user, products, totalCompra) => {
+const createSale = async (userEmail, products, totalCompra) => {
     try {
-        const userByEmail = await User.findOne({"email": {$regex: user}});
+        const userByEmail = await User.findOne({"email": {$regex: userEmail}});
         const arrayProducts = [];
         const productsIds = await Product.find({"name": products.map((e)=>{
             return e.name;
-        })})
+        })}).populate("stock")
         for(let i=0; i<productsIds.length; i++){
             arrayProducts.push({
                 product: productsIds[i],
                 quantity: products[i].count
             });
+            productsIds[i].stock = productsIds[i].stock - products[i].count;
+            if(productsIds[i].stock < 0){
+                throw new Error (`No se dispone de stock para el producto `+productsIds[i].name)
+            }
+            const stockManagement = await productsIds[i].save()
         };
         let shippingCost = 70;
         const taxes = Math.round(totalCompra*0.21);
@@ -53,19 +59,28 @@ const createSale = async (user, products, totalCompra) => {
     }
 };
 
-
-const getSaleById = async (id) => {
+const getSaleByUser = async (id) => {
     try {
-        const saleId = await Sale.findOne({_id: id}).exec()
-            return saleId;
+        const userById = await User.findOne({_id: id});
+        const saleByUser = await Sale.find({user: userById})
+            return saleByUser;
     } catch (error) {
         res.status(400).json(error.message)
     }
+}
 
+
+const getSaleById = async (id) => {
+    const saleId = await Sale.findById(id).populate('products.product user')
+    return saleId;
 };
 
 const updateSale = async (id, update) => {
-    try {
+    const sale = await Sale.findByIdAndUpdate(id, { $set: update }, { new: true })
+    .populate('products.product user');
+
+    return sale
+    /* try {
         await Sale.findByIdAndUpdate({_id: id},
             {
                 status: update.status,
@@ -96,7 +111,7 @@ const updateSale = async (id, update) => {
         return updatedSale;     
     } catch (error) {
         res.status(400).json(error.message)
-    }
+    } */
 };
 
 const deleteSale = async (id) => {
@@ -104,4 +119,4 @@ const deleteSale = async (id) => {
     if(sale === null) throw new Error("The sale with the provided id could not be found.");
 };
 
-module.exports = { getAllSales, getSaleById, updateSale, deleteSale }
+module.exports = { getAllSales, createSale, getSaleByUser, getSaleById, updateSale, deleteSale }

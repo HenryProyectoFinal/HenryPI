@@ -24,7 +24,7 @@ let transporter = nodemailer.createTransport({
 
 
 
-const mandarEmail= async (user, products) => {
+const mandarEmail= async (email) => {
     
     let mensaHTM= `
     <!DOCTYPE html>
@@ -51,19 +51,11 @@ const mandarEmail= async (user, products) => {
     </div>
   </div>
   <div style="background-color: #ffffff; margin-top: 0px; padding: 20px 10px 20px 10px; text-align: center;">
-    <h2> Gracias por tu compra  </h2>
-    <p >Somos un ecommerce dedicado a la tecnogia. En donde te brindamos una gran variedad de productos tecnología</p>
-    <p>GRACIAS POR SER PARTE DE NUESTRA COMUNIDAD</p> 
-    
-      <script src="../Controllers/createrSale.js">
-      
-      
-      </script>
-    
+    <h3> Post Venta</h3>    
     <div style="display: flex; padding: 20px 10px 20px 10px; ">
       <div style=" padding: 10px 0px 10px 0px; width: 100%; text-align: center;">
-        <img src="https://res.cloudinary.com/dy5msftwe/image/upload/v1675628467/Products/AllTech_ft12pq.png"  style="width: 250px;"/>
-        <h4 style="color: orangered;" > </h4><h4 >  </h4>
+        <h5 > Estimado recibimos el reclamo por su compra, lo estamos precesando. A la brevedad nos pondremos en contacto.</h5>
+        <p>GRACIAS POR SER PARTE DE NUESTRA COMUNIDAD, DISCULPE LAS MOLESTIAS OCACIONADAS.</p> 
       </div>
     </div>
     <P style="margin-bottom: 10px;"><i>Atentamente:</i><br> Equipo AllTech</P>
@@ -88,10 +80,9 @@ const mandarEmail= async (user, products) => {
     `;
         let mensaje = {
             from: '"AllTech" <lourdesrosaa1@gmail.com>', // sender address
-            to: user, // list of receivers
+            to: email, // list of receivers
             subject: " Notificación", // Subject line
-            text: "USUARIO CREADO CORRECTAMENTE ", // plain text body
-            products:products,
+            text: "Post Venta", // plain text body
             html: mensaHTM, 
             attachments: [
                 {
