@@ -7,6 +7,7 @@ const {
     USER, PASS
   } = process.env;
 
+  
 let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
