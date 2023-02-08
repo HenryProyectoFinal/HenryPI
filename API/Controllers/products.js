@@ -52,6 +52,16 @@ const updateQuestionsProduct = async (id, update) => {
   return product;
 };
 
+const updateReviewProduct = async (id, update) => {
+  const product = await Product.findByIdAndUpdate(id, { $push: { reviews: update } }, { new: true }).populate("category")
+  .populate("brand")
+  .populate("reviews")
+  .populate("questions");
+
+  if(product === null) throw new Error("The product with the provided id could not be found.");
+  return product;
+};
+
 const updateProduct = async (id, update) => {
   const product = await Product.findByIdAndUpdate(id, { $set: update }, { new: true }).populate("category")
   .populate("brand")
@@ -121,6 +131,7 @@ module.exports = {
   // recoverProduct,
   switchProduct,
   //deleteProduct,
+  updateReviewProduct,
   getNameProduct,
   updateQuestionsProduct
 };

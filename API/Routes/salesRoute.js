@@ -23,6 +23,7 @@ saleRouter.get(
     //Si no hay productos en la BD, devuelve un arreglo vacío. NO es un error...
     try {
       const allSales = await getAllSales();
+
       res.status(201).json(allSales);
     } catch (error) {
         return res.status(400).json({ message: error.message })

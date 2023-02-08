@@ -7,7 +7,7 @@ const {mandarEmail} =require('../mailer/nodemailer.js')
 //funcion en la que me traigo todos los usurios
 const getUsers= async () => {
     try {
-        const users = await User.find()
+        const users = await User.find({}).populate("location favorites shoppingCart")
             return users
     } catch (error) {
         res.status(400).json(error.message)
@@ -78,35 +78,8 @@ const createUser = async (req, res) => {
 
 //funcion para cambiar dato
 const updateUsers= async (id, update) => {
-    try {
-        await User.findByIdAndUpdate(
-            {_id: id},
-            {
-                    firstName: update.firstName,
-                    lastName: update.lastName,
-                    userName:update.userName,
-                    phoneNumber: update.phoneNumber,
-                    email: update.email,
-                    // password:update.password,
-                    location: Types.ObjectId(update.location),
-            }
-            )
-            const newUser = await User.findById({_id: id}); 
-            if(newUser === null) {
-                const updateUser= {
-                    firstName: newUser.firstName,
-                    lastName: newUser.lastName,
-                    userName:newUser.userName,
-                    phoneNumber: newUser.phoneNumber,
-                    email: newUser.email,
-                    // password:newUser.password,
-                    location: Types.ObjectId(newUser.location),
-                }
-                return updateUser
-            }
-    } catch (error) {
-        res.status(400).json(error.message)
-}
+    const user = await User.findByIdAndUpdate(id, { $set: update }, { new: true }).populate("location")
+    return user;
 }
 
 module.exports = {getUsers,getUsersId, createUser, deletedUser, updateUsers, getUserEmail}
