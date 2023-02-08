@@ -10,7 +10,11 @@ const {
   createReview,
   getReview,
   updateReview,
-  switchReview} = require("../Controllers/reviews.js");
+  switchReview
+} = require("../Controllers/reviews.js");
+const {
+  updateReviewProduct,
+} = require("../Controllers/products.js");
 
 reviewsRouter = Router();
 
@@ -33,8 +37,9 @@ reviewsRouter.post(
   // checkRequiredPermissions([]),
   async (req, res) => {
   try {
-    const { description, review } = req.body;
-    const newReview = await createReview(description, review);
+    const { description, productoID, rating, } = req.body;
+    const newReview = await createReview(description, rating);
+    const updatedProduct = await updateReviewProduct(productoID, newReview._id);
     res.status(201).json(newReview);
   } catch (error) {
     console.log(error);
