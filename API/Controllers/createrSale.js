@@ -3,7 +3,7 @@ const Product = require("../models/product.js");
 require("../connection.js");
 const Sale = require("../models/sale.js");
 const User = require("../models/user.js");
-const {mandarEmail} =require('../mailer/nodemailerClaims')
+const {mandarEmail} =require('../mailer/nodemailerSale')
 
 
 const createSale = async (user, products, totalCompra) => {

@@ -13,7 +13,7 @@ const {
   updateClaim,
   switchClaim} = require("../Controllers/claims.js");
   
-  const {mandarEmail} =require('../mailer/nodemailerClaims.js')
+  const {mandarEmail} =require('../mailer/nodemailerSale.js')
 
 claimsRouter = Router();
 
