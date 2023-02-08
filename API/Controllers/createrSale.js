@@ -35,9 +35,9 @@ const createSale = async (user, products, totalCompra) => {
             shippingCost: shippingCost,
             total
         });
-
         const newSale = await sale.save()
         res.status(201).json({ newSale });
+        return newSale
     } catch (error) {
         console.log(error);
     }

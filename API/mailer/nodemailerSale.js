@@ -1,7 +1,8 @@
 const { Types } = require("mongoose");
 const User = require("../models/user.js");
 const nodemailer= require('nodemailer')
-
+const createSale= require('../Controllers/createrSale');
+const product = require("../models/product.js");
 require("dotenv").config()
 const {
     USER, PASS
@@ -23,7 +24,7 @@ let transporter = nodemailer.createTransport({
 
 
 
-const mandarEmail= async (user) => {
+const mandarEmail= async (user, products) => {
     
     let mensaHTM= `
     <!DOCTYPE html>
@@ -54,7 +55,10 @@ const mandarEmail= async (user) => {
     <p >Somos un ecommerce dedicado a la tecnogia. En donde te brindamos una gran variedad de productos tecnología</p>
     <p>GRACIAS POR SER PARTE DE NUESTRA COMUNIDAD</p> 
     
-      <script src="../Controllers/createrSale.js"></script>
+      <script src="../Controllers/createrSale.js">
+      
+      
+      </script>
     
     <div style="display: flex; padding: 20px 10px 20px 10px; ">
       <div style=" padding: 10px 0px 10px 0px; width: 100%; text-align: center;">
@@ -87,7 +91,8 @@ const mandarEmail= async (user) => {
             to: user, // list of receivers
             subject: " Notificación", // Subject line
             text: "USUARIO CREADO CORRECTAMENTE ", // plain text body
-            html: mensaHTM,
+            products:products,
+            html: mensaHTM, 
             attachments: [
                 {
                     filename:'logo2.jpeg',

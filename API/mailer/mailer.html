@@ -27,12 +27,21 @@
     <p >Somos un ecommerce dedicado a la tecnogia. En donde te brindamos una gran variedad de productos tecnología</p>
     <p>GRACIAS POR SER PARTE DE NUESTRA COMUNIDAD</p> 
     
-      <script src="../Controllers/createrSale.js"></script>
+      <script>
+        function cupon() {
+          let num=Math.random()
+          console.log(num);
+        }
+        cupon()
+      </script>
+
+    <!-- <script  src="../Controllers/createrSale.js"></script> -->
     
     <div style="display: flex; padding: 20px 10px 20px 10px; ">
       <div style=" padding: 10px 0px 10px 0px; width: 100%; text-align: center;">
-        <img src="https://res.cloudinary.com/dy5msftwe/image/upload/v1675628467/Products/AllTech_ft12pq.png"  style="width: 250px;"/>
-        <h4 style="color: orangered;" > </h4><h4 >  </h4>
+        <img src="https://res.cloudinary.com/dy5msftwe/image/upload/v1675726921/Products/Cupon_yn9vcp.png"  style="width: 250px;"/>
+        <h4 style="color: orangered;" > Cupón de descuento:</h4>
+        <button onclick="(cupon())"> obtener cupon </button>
       </div>
     </div>
     <P style="margin-bottom: 10px;"><i>Atentamente:</i><br> Equipo AllTech</P>

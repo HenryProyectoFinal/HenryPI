@@ -40,14 +40,12 @@ saleRouter.get(
     const {user, products, totalCompra} = req.body
 
     try{
-        mandarEmail(user)
         const newSale = await createSale(
             user,
             products,
             totalCompra
-            )
-            console.log('holis', user);
-            user=`${user}`
+            )            
+            mandarEmail(user, products)
         res.status(201).json({newSale})
     } catch (error) {
         return res.status(400).json({ message: error.message })
