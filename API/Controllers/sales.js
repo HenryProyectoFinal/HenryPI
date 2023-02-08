@@ -5,7 +5,12 @@ const Sale = require("../models/sale.js");
 const User = require("../models/user.js");
 
 const getAllSales = async ()=>{
-    const sales = await Sale.find({}).populate('products.product user')
+    const sales = await Sale.find({}).populate('products.product user').populate({
+        path: "user",
+        populate: {
+          path: "location"
+        }
+      })
     return sales
 };
 
