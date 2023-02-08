@@ -47,17 +47,16 @@ const createSale = async (user, products, totalCompra) => {
 
 
 const getSaleById = async (id) => {
-    try {
-        const saleId = await Sale.findOne({_id: id}).exec()
-            return saleId;
-    } catch (error) {
-        res.status(400).json(error.message)
-    }
-
+    const saleId = await Sale.findById(id).populate('products.product user')
+    return saleId;
 };
 
 const updateSale = async (id, update) => {
-    try {
+    const sale = await Sale.findByIdAndUpdate(id, { $set: update }, { new: true })
+    .populate('products.product user');
+
+    return sale
+    /* try {
         await Sale.findByIdAndUpdate({_id: id},
             {
                 status: update.status,
@@ -88,7 +87,7 @@ const updateSale = async (id, update) => {
         return updatedSale;     
     } catch (error) {
         res.status(400).json(error.message)
-    }
+    } */
 };
 
 const deleteSale = async (id) => {
