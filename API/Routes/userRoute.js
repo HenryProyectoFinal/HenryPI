@@ -7,6 +7,7 @@ const {
     adminPermissions
   } = require("../Auth0/auth0.permissions.js");
 const {getUsers, getUsersId, createUser, deletedUser, updateUsers, getUserEmail}= require('../Controllers/users.js');
+const {getSaleByUser} = require('../Controllers/sales.js')
 const usersRouter = Router();
 const cors = require("cors");     //Prueba para validators
 const {validateNewUser} = require('../Validators/user.js')
@@ -100,6 +101,19 @@ usersRouter.post(
     // validateAccessToken,
     validate(validateNewUser),
     createUser)
+
+usersRouter.get(
+    '/user/:id/sales',
+    async (req, res) => {
+        try {
+            const { id } = req.params;
+            const userSales = await getSaleByUser(id);
+            res.status(200).json(userSales);
+        } catch (error) {
+            res.status(404).json(error.message);
+        }
+    }
+);
 
 // Delete usuario (borrado lógico de usuario)
 usersRouter.delete(
