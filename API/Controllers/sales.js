@@ -5,12 +5,8 @@ const Sale = require("../models/sale.js");
 const User = require("../models/user.js");
 
 const getAllSales = async ()=>{
-    try {
-        const sales = await Sale.find()
-            return sales
-    } catch (error) {
-        res.status(400).json(error.message)
-    }
+    const sales = await Sale.find({}).populate('products.product user')
+    return sales
 };
 
 const createSale = async (user, products, totalCompra) => {
