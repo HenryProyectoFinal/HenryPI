@@ -54,6 +54,16 @@ const createSale = async (userEmail, products, totalCompra) => {
     }
 };
 
+const getSaleByUser = async (id) => {
+    try {
+        const userById = await User.findOne({_id: id});
+        const saleByUser = await Sale.find({user: userById})
+            return saleByUser;
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
+
 
 const getSaleById = async (id) => {
     try {
@@ -105,4 +115,4 @@ const deleteSale = async (id) => {
     if(sale === null) throw new Error("The sale with the provided id could not be found.");
 };
 
-module.exports = { getAllSales, createSale, getSaleById, updateSale, deleteSale }
+module.exports = { getAllSales, createSale, getSaleByUser, getSaleById, updateSale, deleteSale }
