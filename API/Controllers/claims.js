@@ -1,5 +1,6 @@
 const Claim = require("../models/claim.js");
 
+
 const getAllClaims = async () => {
   const claims = await Claim.find()
   .populate("user"); //No se referencia la venta, para evitar bucle infinito de referencias...

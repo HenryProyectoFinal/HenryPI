@@ -22,8 +22,6 @@ let transporter = nodemailer.createTransport({
     console.log('ready for send emails');
   })
 
-
-
 const mandarEmail= async (email) => {
     
     let mensaHTM= `
