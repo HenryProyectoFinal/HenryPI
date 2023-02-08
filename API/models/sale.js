@@ -30,7 +30,7 @@ const saleSchema = new Schema({
         _id: false,
         product: {
           type: Schema.Types.ObjectId,
-          ref: "product",
+          ref: "Product",
           required: true
         },
         quantity: {
