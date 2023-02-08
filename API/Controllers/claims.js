@@ -6,9 +6,10 @@ const getAllClaims = async () => {
   return claims;
 };
 
-const createClaim = async (sale, issue, description, user, status, solution) => {
+const createClaim = async (sale,email, issue, description, user, status, solution) => {
   const newClaim = new Claim({
     sale,
+    email,
     issue,
     description,
     user,

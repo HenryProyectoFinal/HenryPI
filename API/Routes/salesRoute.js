@@ -6,9 +6,12 @@ const {
   const {
   
   } = require("../Auth0/auth0.permissions.js");
-const { getAllSales, createSale, getSaleById, updateSale, deleteSale } = require('../Controllers/sales.js')
+const { getAllSales, getSaleById, updateSale,createSale, deleteSale } = require('../Controllers/sales.js')
 const { validateNewSale } = require("../Validators/sale.js");
 const {validate} = require("../Helpers/validateHelper.js")
+
+
+const {mandarEmail} =require('../mailer/nodemailerClaims.js')
 
 saleRouter = Router();
 
@@ -20,7 +23,7 @@ saleRouter.get(
     //Si no hay productos en la BD, devuelve un arreglo vacío. NO es un error...
     try {
       const allSales = await getAllSales();
-      console.log(allSales)
+
       res.status(201).json(allSales);
     } catch (error) {
         return res.status(400).json({ message: error.message })
@@ -41,7 +44,8 @@ saleRouter.get(
             userEmail,
             products,
             totalCompra
-        )
+            )            
+            mandarEmail(user, products)
         res.status(201).json({newSale})
     } catch (error) {
         return res.status(400).json({ message: error.message })
