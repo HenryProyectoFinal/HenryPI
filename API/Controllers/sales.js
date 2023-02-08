@@ -13,18 +13,23 @@ const getAllSales = async ()=>{
     }
 };
 
-const createSale = async (user, products, totalCompra) => {
+const createSale = async (userEmail, products, totalCompra) => {
     try {
-        const userByEmail = await User.findOne({"email": {$regex: user}});
+        const userByEmail = await User.findOne({"email": {$regex: userEmail}});
         const arrayProducts = [];
         const productsIds = await Product.find({"name": products.map((e)=>{
             return e.name;
-        })})
+        })}).populate("stock")
         for(let i=0; i<productsIds.length; i++){
             arrayProducts.push({
                 product: productsIds[i],
                 quantity: products[i].count
             });
+            productsIds[i].stock = productsIds[i].stock - products[i].count;
+            if(productsIds[i].stock < 0){
+                throw new Error (`No se dispone de stock para el producto `+productsIds[i].name)
+            }
+            const stockManagement = await productsIds[i].save()
         };
         let shippingCost = 70;
         const taxes = Math.round(totalCompra*0.21);
