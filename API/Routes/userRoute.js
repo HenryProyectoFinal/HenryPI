@@ -41,6 +41,7 @@ usersRouter.get(
     };
 });
 
+
 //Comprobar si existe un usuario con un email dado
 usersRouter.get(
     '/user/:email',
@@ -74,6 +75,24 @@ usersRouter.get(
     };
 });
 
+//Traer todos los datos del usuario con el email
+usersRouter.get(
+    '/useremail/:email',
+    // validateAccessToken,
+    // checkRequiredPermissions([]),
+    async (req, res) => {
+    try {
+        const { email } = req.params;
+        const user = await getUserEmail(email);
+        if(user) {
+            res.status(200).json(user);
+        } else {
+            res.status(200).json("No existe un usuario con el correo electrónico proporcionado.");
+        };
+    } catch (error) {
+        res.status(404).json(error.message);
+    };
+    });
 
 // Post crear nuevo usuario
 usersRouter.post(
