@@ -9,8 +9,7 @@ const footerEmail = async (email) => {
         const newEmail = new Email({
             email
             })
-            let cupon=Math.random()
-            console.log(cupon);
+
         mandarEmail(email)
         const newEmails= await newEmail.save()
         return newEmails

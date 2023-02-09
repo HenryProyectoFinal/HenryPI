@@ -22,7 +22,7 @@ let transporter = nodemailer.createTransport({
     console.log('ready for send emails');
   })
 
-const mandarEmail= async (email) => {
+const mandarEmail= async (user) => {
     
     let mensaHTM= `
     <!DOCTYPE html>
@@ -41,30 +41,31 @@ const mandarEmail= async (email) => {
     p, a{font-size: 15px !important;}
   </style>
 </head>
-<body>
 <div style="width: 100%; background-color: #e3e3e3;">
   <div style="padding: 20px 10px 20px 10px;">
-    <div style=" padding: 10px 0px 10px 0px; width: 100%; text-align: center;">
-    <img src="https://res.cloudinary.com/dy5msftwe/image/upload/v1675608232/Products/Logo1_spld6d.png" alt="" style="width: 200px; height: 60px;">
+    <div style="background-color: rgb(153, 152, 152); padding: 10px 0px 10px 0px; width: 100%; text-align: center;">
+    <img src="cid:logo2" alt="" style="width: 300px; height: 70px;">
     </div>
   </div>
-  <div style="background-color: #ffffff; margin-top: 0px; padding: 20px 10px 20px 10px; text-align: center;">
-    <h3> Post Venta</h3>    
+  <div style="background-color: #e3e3e3; margin-top: 0px; padding: 20px 0px 5px 0px; text-align: center;">
+    <h4>Tu compra esta siendo procesada</h4>
+    <p>Somos un ecommerce dedicado a la tecnogia. En donde te brindamos una gran variedad de productos.</p>
+    <p>GRACIAS POR SER PARTE DE NUESTRA COMUNIDAD</p>
     <div style="display: flex; padding: 20px 10px 20px 10px; ">
       <div style=" padding: 10px 0px 10px 0px; width: 100%; text-align: center;">
-        <h5 > Estimado recibimos el reclamo por su compra, lo estamos precesando. A la brevedad nos pondremos en contacto.</h5>
-        <p>GRACIAS POR SER PARTE DE NUESTRA COMUNIDAD, DISCULPE LAS MOLESTIAS OCACIONADAS.</p> 
+        <img src="https://res.cloudinary.com/dy5msftwe/image/upload/v1675628467/Products/AllTech_ft12pq.png" alt="" style="width: 300px;" />
+        <p >Gracias por tu compra, en unos molentos podes ver el detalle de tu compra desde href="https://client-ochre-five.vercel.app/user"  </p>
       </div>
     </div>
     <P style="margin-bottom: 10px;"><i>Atentamente:</i><br> Equipo AllTech</P>
-    <a style="background-color: rgb(170, 170, 170); border: 2px solid gray; color: black; padding: 16px 32px; text-align: center; text-decoration: none; font-weight: bold; display: inline-block; font-size: 16px; margin: 4px 2px;
-    transition-duration: 0.4s; cursor: pointer;" href="https://client-git-juanleiton-zodieth.vercel.app/">AllTech</a>
+    <a style="background-color: gray; border: 2px solid gray; color: black; padding: 16px 32px; text-align: center; text-decoration: none; font-weight: bold; display: inline-block; font-size: 16px; margin: 4px 2px;
+    transition-duration: 0.4s; cursor: pointer;" href="https://client-ochre-five.vercel.app">AllTech</a>
     <div style="background-color: rgb(36, 36, 36); color: #e3e3e3; padding: 5px 0px 0px 0px; width: 100%; text-align: center;">
-      <a href="" ><img src="./whatsapp.jpg" style="width: 30px; height: 30px;"/></a>
+      <a href="" ><img src="cid:whatsapp" style="width: 30px; height: 30px;"/></a>
       <p style="font-size: 20px; padding: 0px 20px 0px 20px;">Soporte</p>
       <p>Comunicate con nosotros por los siguientes medios:<br>  
-        Correo: <a style="color: #e3e3e3;">AllTech@info.com</a><br>
-        WhatsApp: <a style="color: #e3e3e3;">1111 525 465 552</a>
+      Correo: <a style="color: #e3e3e3;">AllTech@info.com</a><br>
+      WhatsApp: <a style="color: #e3e3e3;">1111 525 465 552</a>
       </p>
       <p style="background-color: black; padding: 10px 0px 10px 0px ; font-size: 12 !important;">
       @ 2023 AllTech, todos los derechos reservados.</p>
@@ -72,13 +73,14 @@ const mandarEmail= async (email) => {
   </div>
 <div></div>
 </div>
-
+<body>
+  
 </body>
 </html>
     `;
         let mensaje = {
             from: '"AllTech" <lourdesrosaa1@gmail.com>', // sender address
-            to: email, // list of receivers
+            to: user, // list of receivers
             subject: " Notificación", // Subject line
             text: "Post Venta", // plain text body
             html: mensaHTM, 
