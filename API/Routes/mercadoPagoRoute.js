@@ -22,9 +22,9 @@ mercadoPagoRouter.post("/api/pay", async (req, res, next) => {
   let preference = {
     items: [],
     back_urls: {
-      success: "http://localhost:3000/cart",
-      failure: "http://localhost:3000/cart",
-      pending: "http://localhost:3000/cart",
+      success: "https://client-ochre-five.vercel.app/cart",
+      failure: "https://client-ochre-five.vercel.app/cart",
+      pending: "https://client-ochre-five.vercel.app/cart",
     },
     auto_return: "approved",
   };
