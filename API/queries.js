@@ -72,7 +72,6 @@ const createCategory = async () => {
     description: "The motherboard, also known as a motherboard, motherboard, or main board, is a printed circuit card to which the components that make up the computer are connected. It is a fundamental part to mount any desktop or laptop personal computer or some device.",
   });
   const savedCategory = await newCategory.save();
-  console.log(savedCategory);
 };
 
 const createBrand = async () => {
@@ -80,7 +79,6 @@ const createBrand = async () => {
     name: "DeepCool"
   });
   const savedBrand = await newBrand.save();
-  console.log(savedBrand);
 };
 
 // const createProduct = async () => {
