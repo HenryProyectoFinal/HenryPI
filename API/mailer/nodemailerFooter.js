@@ -62,7 +62,7 @@ const mandarEmail= async (email) => {
         </div>
         <P style="margin-bottom: 10px;"><i>Atentamente:</i><br> Equipo AllTech</P>
         <a style="background-color: rgb(170, 170, 170); border: 2px solid gray; color: black; padding: 16px 32px; text-align: center; text-decoration: none; font-weight: bold; display: inline-block; font-size: 16px; margin: 4px 2px;
-        transition-duration: 0.4s; cursor: pointer;" href="https://client-git-juanleiton-zodieth.vercel.app/">AllTech</a>
+        transition-duration: 0.4s; cursor: pointer;" href="https://client-ochre-five.vercel.app">AllTech</a>
         <div style="background-color: rgb(36, 36, 36); color: #e3e3e3; padding: 5px 0px 0px 0px; width: 100%; text-align: center;">
           <a href="" ><img src="cid:whatsapp" style="width: 30px; height: 30px;"/></a>
           <p style="font-size: 20px; padding: 0px 20px 0px 20px;">Soporte</p>
