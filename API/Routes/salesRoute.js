@@ -45,7 +45,7 @@ saleRouter.get(
             products,
             totalCompra
             )            
-            mandarEmail(user)
+            mandarEmail(userEmail)
         res.status(201).json({newSale})
     } catch (error) {
         return res.status(400).json({ message: error.message })
