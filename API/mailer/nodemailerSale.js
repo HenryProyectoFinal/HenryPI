@@ -57,6 +57,7 @@ const mandarEmail= async (user) => {
         <p >Gracias por tu compra, en unos molentos podes ver el detalle de tu compra desde href="https://client-ochre-five.vercel.app/user"  </p>
       </div>
     </div>
+    
     <P style="margin-bottom: 10px;"><i>Atentamente:</i><br> Equipo AllTech</P>
     <a style="background-color: gray; border: 2px solid gray; color: black; padding: 16px 32px; text-align: center; text-decoration: none; font-weight: bold; display: inline-block; font-size: 16px; margin: 4px 2px;
     transition-duration: 0.4s; cursor: pointer;" href="https://client-ochre-five.vercel.app">AllTech</a>
