@@ -3,7 +3,8 @@ const Claim = require("../models/claim.js");
 
 const getAllClaims = async () => {
   const claims = await Claim.find()
-  .populate("user"); //No se referencia la venta, para evitar bucle infinito de referencias...
+  .populate("user")
+  .populate("sale"); //No se referencia la venta, para evitar bucle infinito de referencias...
   return claims;
 };
 
@@ -23,7 +24,8 @@ const createClaim = async (sale,email, issue, description, user, status, solutio
 
 const getClaim = async id => {
   const claimDB = Claim.findById(id)
-  .populate("user");
+  .populate("user")
+  .populate("sale");
   if(claimDB === null) throw new Error("The claim with the provided id could not be found.");
   return claimDB;
 };
