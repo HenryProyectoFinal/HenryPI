@@ -54,8 +54,7 @@ const mandarEmail= async (userEmail) => {
     <div style="display: flex; padding: 20px 10px 20px 10px; ">
       <div style=" padding: 10px 0px 10px 0px; width: 100%; text-align: center;">
         <img src="https://res.cloudinary.com/dy5msftwe/image/upload/v1675628467/Products/AllTech_ft12pq.png" alt="" style="width: 300px;" />
-        <p >Gracias por tu compra, en unos molentos podes ver el detalle de tu compra desde href="https://client-ochre-five.vercel.app/user"  </p>
-      </div>
+        <p >Gracias por tu compra, en unos momentos podras ver el detalle de tu compra desde: <a href="https://client-ochre-five.vercel.app/user" > Link </a> </p>      </div>
     </div>
 
     <P style="margin-bottom: 10px;"><i>Atentamente:</i><br> Equipo AllTech</P>
