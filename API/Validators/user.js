@@ -19,7 +19,7 @@ const validateNewUser =
             .withMessage('must be at least 5 chars long'),      
         body('email')
             .isEmail()
-            .normalizeEmail()
+            .normalizeEmail({gmail_remove_dots: false })
             .withMessage('add a valid email')
             .custom(async value => {
                 return await user.find({
