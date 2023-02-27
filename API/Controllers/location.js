@@ -33,7 +33,7 @@ const createLocation= async (address, province, city, zip) => {
             return newLocation
         
     } catch (error) {
-        res.status(400).json(error.message)
+        console.log(error);
     }
 }
 
@@ -75,4 +75,18 @@ async function deletedLocation(id) {
     }
 }
 
-module.exports = {getLocations, getLocationsId, updateLocations, createLocation, deletedLocation}
+//Función para encontrar location por cualquiera de los datos menos el id...
+const findLocation = async (address, province, city, zip) => {
+    const location = await Location.findOne({
+        address: address, province: province, city: city, zip: zip
+    });
+    return location;
+};
+
+module.exports = {
+    getLocations,
+    getLocationsId,
+    updateLocations,
+    createLocation,
+    deletedLocation,
+    findLocation};

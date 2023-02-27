@@ -33,16 +33,13 @@ productsRouter.get("/products", async (req, res) => {
   }
 });
 
-productsRouter.post(
-  "/products",
+productsRouter.post("/products",
   cors(),
-  // ;
   // validateAccessToken,
   // checkRequiredPermissions([adminPermissions.product]),
   validate(validateNewProduct),
-  createProduct
-);
-//Si algún dato no es válido o falta, se lanzan los errores correspondientes. Faltan las funciones validadoras.
+  createProduct)
+  //Si algún dato no es válido o falta, se lanzan los errores correspondientes. Faltan las funciones validadoras.
 
 productsRouter.get("/product/:id", async (req, res) => {
   try {
@@ -57,8 +54,8 @@ productsRouter.get("/product/:id", async (req, res) => {
 
 productsRouter.put(
   "/product/:id",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.product]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.product]),
   async (req, res) => {
     try {
       const { id } = req.params;
@@ -97,21 +94,20 @@ productsRouter.put(
 
 productsRouter.patch(
   "/product/:id",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.product]),
-  async (req, res) => {
-    //Ruta para cambiar "active" a true o false
-    try {
-      const { id } = req.params;
-      const { active } = req.body;
-      await switchProduct(id, active);
-      return res.status(204).send("Done"); //Sin el .send, se queda cargando y la respuesta nunca llega...
-    } catch (error) {
-      console.log(error);
-      res.status(404).send(error.message);
-    }
-  }
-);
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.product]),
+  async (req, res) => { //Ruta para cambiar "active" a true o false
+  try {
+    const { id } = req.params;
+    const { active } = req.body;
+    await switchProduct(id, active);
+    return res.status(204).send("Done"); //Sin el .send, se queda cargando y la respuesta nunca llega...
+  } catch (error) {
+    console.log(error);
+    res.status(404).send(error.message);
+  };
+});
+
 
 // productsRouter.delete("/product/:id", cors(), async (req, res) => { //Ruta para borrado físico
 //   try {

@@ -12,7 +12,7 @@ const userSchema = new Schema ({
     lastName: {
         type: String,
         required: true,
-        minlength: 5
+        minlength: 4
     },
     userName: {
         type: String,
@@ -26,12 +26,6 @@ const userSchema = new Schema ({
         unique: true,
         //default: true
     },
-    // password: {
-    //     type: String,
-    //     // required: true,
-    //     // unique: true,
-    //     minlength: 8
-    // },
     phoneNumber: {
         type: String,
         required: true,
@@ -64,10 +58,6 @@ const userSchema = new Schema ({
     favorites: {
         type: [Schema.Types.ObjectId],
         ref: "Product"
-    },
-    isAdmin: {
-        type: Boolean,
-        default: false
     },
     active: {
       type: Boolean,

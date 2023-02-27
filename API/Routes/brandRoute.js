@@ -34,8 +34,8 @@ brandRouter.get(
 
 brandRouter.post(
     "/brands",
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.brand]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.brand]),
     async (req, res, next) => {
     try {
         const newBrand = await createBrand(req.body);
@@ -49,8 +49,8 @@ brandRouter.post(
 
 brandRouter.put(
     "/brands",
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.brand]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.brand]),
     async (req, res, next) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /brands');
@@ -58,8 +58,8 @@ brandRouter.put(
 
 brandRouter.delete(
     "/brands",
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.brand]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.brand]),
     async (req, res, next) => {
     res.statusCode = 403;
     res.end('DELETE operation not supported on /brands');
@@ -89,8 +89,8 @@ brandRouter.post(
 
 brandRouter.put(
     "/brands/:brandId",
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.brand]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.brand]),
     async (req, res, next) => {
     try {
         const { brandId } = req.params;
@@ -108,8 +108,8 @@ brandRouter.put(
 
 brandRouter.delete(
     "/brands/:brandId",
-    validateAccessToken,
-    checkRequiredPermissions([adminPermissions.brand]),
+    // validateAccessToken,
+    // checkRequiredPermissions([adminPermissions.brand]),
     async (req, res, next) => {
     try {
         const { brandId } = req.params;

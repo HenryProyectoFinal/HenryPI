@@ -12,12 +12,13 @@ const questionSchema = new Schema({
     type: String,
     required: true,
     minLength: 5,
-    maxLength: 50
+    maxLength: 250
   },
   answer: {
     type: String,
-    minLength: 5,
-    maxLength: 50
+    minLength: 0,
+    maxLength: 50,
+    default: ""
   },
   active: {
     type: Boolean,

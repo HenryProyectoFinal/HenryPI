@@ -19,7 +19,11 @@ const locationSchema = new Schema({
         type: String,
         required: true,
         minLength: 4
-    }
+    },
+    active: {
+        type: Boolean,
+        default: true
+      }
 })
 
 module.exports = models["Location"] || model("Location", locationSchema);

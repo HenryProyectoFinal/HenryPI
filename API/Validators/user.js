@@ -16,24 +16,34 @@ const validateNewUser =
                 })
             })
             .isLength({min: 5})
-            .withMessage('must be at least 5 chars long'),
-
-        body('password')
-            .isLength({min: 8})
-            .withMessage('must be at least 8 chars long'),        
+            .withMessage('must be at least 5 chars long'),      
         body('email')
             .isEmail()
-            .normalizeEmail()
+            .normalizeEmail({gmail_remove_dots: false })
             .withMessage('add a valid email')
             .custom(async value => {
                 return await user.find({
-                    userName: value
+                    email: value
                 }).then( user => {
                     if( user.length > 0 ){
                        throw ('email already in use') 
                     }
                 })
+            }),
+            body('phoneNumber')
+            .isMobilePhone()
+            .withMessage('add a valid mobile phonenumber')
+            .custom(async value => {
+                return await user.find({
+                    phoneNumber: value
+                }).then( user => {
+                    if( user.length > 0 ){
+                       throw ('phonenumber already in use') 
+                    }
+                })
             })
+            .isLength({min: 8})
+            .withMessage('must be at least 8 chars long')
     ];
 
 

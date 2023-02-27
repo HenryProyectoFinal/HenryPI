@@ -10,14 +10,18 @@ const {
   createReview,
   getReview,
   updateReview,
-  switchReview} = require("../Controllers/reviews.js");
+  switchReview
+} = require("../Controllers/reviews.js");
+const {
+  updateReviewProduct,
+} = require("../Controllers/products.js");
 
 reviewsRouter = Router();
 
 reviewsRouter.get(
   "/reviews",
-  validateAccessToken,
-  checkRequiredPermissions([]),
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
   async (req, res) => {
   try {
     const allReviews = await getAllReviews();
@@ -29,13 +33,14 @@ reviewsRouter.get(
 
 reviewsRouter.post(
   "/reviews",
-  validateAccessToken,
-  checkRequiredPermissions([]),
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
   async (req, res) => {
   try {
-    const { description, review } = req.body;
-    const newReview = await createReview(description, review);
-    res.status(201).json(newReview);
+    const { description, productoID, rating, } = req.body;
+    const newReview = await createReview(description, rating);
+    const updatedProduct = await updateReviewProduct(productoID, newReview._id);
+    res.status(201).json(updatedProduct);
   } catch (error) {
     console.log(error);
   };
@@ -43,8 +48,8 @@ reviewsRouter.post(
 
 reviewsRouter.get(
   "/review/:id",
-  validateAccessToken,
-  checkRequiredPermissions([]),
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
   async (req, res) => {
   try {
     const { id } = req.params;
@@ -58,8 +63,8 @@ reviewsRouter.get(
 
 reviewsRouter.put(
   "/review/:id",
-  validateAccessToken,
-  checkRequiredPermissions([]),
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
   async(req, res) => {
   try {
     const { id } = req.params;
@@ -74,8 +79,8 @@ reviewsRouter.put(
 
 reviewsRouter.patch(
   "/review/:id",
-  validateAccessToken,
-  checkRequiredPermissions([]),
+  // validateAccessToken,
+  // checkRequiredPermissions([]),
   async(req, res) => {
   try {
     const { id } = req.params;

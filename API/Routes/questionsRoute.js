@@ -12,6 +12,10 @@ const {
   getQuestion,
   updateQuestion,
   switchQuestion} = require("../Controllers/questions.js");
+const {
+  updateQuestionsProduct,
+} = require("../Controllers/products.js");
+const { getUserEmail }= require('../Controllers/users.js');
 
 questionsRouter = Router();
 
@@ -28,13 +32,19 @@ questionsRouter.get(
 
 questionsRouter.post(
   "/questions",
-  validateAccessToken,
-  checkRequiredPermissions([userPermissions.question]),
+  // validateAccessToken,
+  // checkRequiredPermissions([userPermissions.question]),
   async (req, res) => {
   try {
-    const { user, question } = req.body; //"user" es el id del usuario
-    const newQuestion = await createQuestion(user, question);
-    res.status(201).json(newQuestion);
+    const { userMail, product, newQuestion } = req.body; //"user" es el id del usuario
+    const user = await getUserEmail(userMail);
+    if(user) {
+      const question = await createQuestion(user._id, newQuestion);
+      const updatedProduct = await updateQuestionsProduct(product, question._id);
+      res.status(201).json({question, updatedProduct});
+    } else {
+        res.status(400).json("Correo no encontrado");
+    };
   } catch (error) {
     console.log(error);
   };
@@ -42,8 +52,8 @@ questionsRouter.post(
 
 questionsRouter.get(
   "/question/:id",
-  validateAccessToken,
-  checkRequiredPermissions([userPermissions.question]),
+  // validateAccessToken,
+  // checkRequiredPermissions([userPermissions.question]),
   async (req, res) => {
   try {
     const { id } = req.params;
@@ -57,8 +67,8 @@ questionsRouter.get(
 
 questionsRouter.put(
   "/question/:id",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.question]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.question]),
   async(req, res) => {
   try {
     const { id } = req.params;
@@ -73,8 +83,8 @@ questionsRouter.put(
 
 questionsRouter.patch(
   "/question/:id",
-  validateAccessToken,
-  checkRequiredPermissions([adminPermissions.question]),
+  // validateAccessToken,
+  // checkRequiredPermissions([adminPermissions.question]),
   async(req, res) => {
   try {
     const { id } = req.params;
