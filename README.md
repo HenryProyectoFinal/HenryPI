@@ -100,7 +100,7 @@ Develop an electronics 🖥️ **e-commerce** 🛒 **full stack Web app** under 
 2. Build a database with the name "test" and create a user for your connection.
 3. Go to the "Network Access" section on the dashboard and click on the "Add IP Address" button, then select "ALLOW ACCESS FROM ANYWHERE" and click on confirm.
 4. Go to the "Database" section on the dashboard and click on "Connect", then select "Connect your application" and copy the "cluster0.xxxx.mongodb.net" part of the string.
-1. Inside "HenryPI/API", create a .env file, then copy and paste the following:
+5. Inside "HenryPI/API", create a .env file, then copy and paste the following:
 ```
 DB_USER = {user}
 DB_PASSWORD = {password}
@@ -118,11 +118,11 @@ PASS=kccbpblgcwqfqapz
 # Replace {user} and {password} with the credentials you provided upon creating your database.
 # Replace {host} with the previously copied string. 
 ```
-2. Using the NPM package manager, inside "HenryPI/API" and "CLIENT" run the following command:
+6. Using the NPM package manager, inside "HenryPI/API" and "CLIENT" run the following command:
 ```
 npm install
 ```
-3. Once all dependencies have been correctly installed, run the following command, first in "HenryPI/API" and then in "CLIENT":
+7. Once all dependencies have been correctly installed, run the following command, first in "HenryPI/API" and then in "CLIENT":
 ```
 npm start
 ```
