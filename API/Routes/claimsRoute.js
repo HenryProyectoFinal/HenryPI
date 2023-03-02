@@ -13,7 +13,7 @@ const {
   updateClaim,
   switchClaim} = require("../Controllers/claims.js");
   
-  const {mandarEmail} =require('../mailer/nodemailerSale.js')
+  // const {mandarEmail} =require('../mailer/nodemailerSale.js')
 
 claimsRouter = Router();
 
@@ -38,7 +38,7 @@ claimsRouter.post(
   try {
     const { sale, email,issue, description, user, status, solution } = req.body;
     const newClaim = await createClaim(sale,email, issue, description, user, status, solution);
-    mandarEmail(email)
+    // mandarEmail(email)
     res.status(201).json(newClaim);
   } catch (error) {
     console.log(error);
