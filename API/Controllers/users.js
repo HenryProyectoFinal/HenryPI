@@ -1,7 +1,7 @@
 const { Types } = require("mongoose");
 const User = require("../models/user.js");
-const nodemailer= require('nodemailer')
-const {mandarEmail} =require('../mailer/nodemailer.js')
+// const nodemailer= require('nodemailer')
+// const {mandarEmail} =require('../mailer/nodemailer.js')
 
 
 //funcion en la que me traigo todos los usurios
@@ -67,7 +67,7 @@ const createUser = async (req, res) => {
             location: Types.ObjectId(location),
             }
         )
-        mandarEmail(email)
+        // mandarEmail(email)
         const newUser= await createUser.save()
         res.status(201).json(newUser) 
     } catch (error) {
